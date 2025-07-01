@@ -4,12 +4,22 @@ import { ref } from 'vue';
 const email = ref('');
 const password = ref('');
 
-function loginUser() {
+// function loginUser() {
+//     console.log('User logged in');
+//     console.log('email ref', email);
+//     console.log('email', email.value);
+//     console.log('password', password.value);
+// }
+
+async function loginUser() {
     console.log('User logged in');
     console.log('email ref', email);
     console.log('email', email.value);
     console.log('password', password.value);
+
+    await fetch('http://localhost:3000/')
 }
+
 </script>
 
 <template>
