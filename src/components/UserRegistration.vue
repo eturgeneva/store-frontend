@@ -1,16 +1,16 @@
 <template>
-    <div class="userLoginRegister">
+    <div class="userRegistration">
         <form>
-            <label for="email">Email</label>
-            <!-- <br> -->
+             <label for="email">Email</label>
             <input type="text" name="email" id="email">
-            <!-- <br> -->
+
             <label for="password">Password</label>
-            <!-- <br> -->
             <input type="password" name="password" id="password">
-            <!-- <br> -->
+
+            <label for="password">Confirm Password</label>
+            <input type="password" name="passwordConfirm" id="passwordConfirm">
+            
             <div class="buttons">
-                <button class="loginButton">Log in</button>
                 <button class="registerButton">Register</button>
             </div>
         </form>
@@ -18,7 +18,6 @@
 </template>
 
 <style scoped>
-
 form {
     display: flex;
     flex-direction: column;
@@ -47,5 +46,4 @@ button {
 .loginButton {
     background-color: rgb(163, 168, 170);
 }
-
 </style>

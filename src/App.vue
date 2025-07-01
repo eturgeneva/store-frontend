@@ -2,7 +2,9 @@
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 
+// My components
 import UserInput from './components/UserInput.vue';
+import UserRegistration from './components/UserRegistration.vue';
 </script>
 
 <template>
@@ -16,6 +18,7 @@ import UserInput from './components/UserInput.vue';
 
   <main>
     <UserInput />
+    <UserRegistration />
     <TheWelcome />
   </main>
 </template>
