@@ -34,7 +34,7 @@ a,
   }
 } */
 
-form {
+form, .userLogin {
     display: flex;
     flex-direction: column;
     width: 15rem;

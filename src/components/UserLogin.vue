@@ -1,20 +1,32 @@
 <script setup>
-    function loginUser() {
-        console.log('User logged in');
-    }
+import { ref } from 'vue';
+
+const email = ref('');
+const password = ref('');
+
+function loginUser() {
+    console.log('User logged in');
+    console.log('email ref', email);
+    console.log('email', email.value);
+    console.log('password', password.value);
+}
 </script>
 
 <template>
     <div class="userLogin">
         <!-- <form class="unframed"> -->
             <label for="email">Email</label>
-            <!-- <br> -->
-            <input type="text" name="email" id="email">
-            <!-- <br> -->
+            <input v-model="email"
+                    type="text" 
+                    name="email" 
+                    id="email">
+
             <label for="password">Password</label>
-            <!-- <br> -->
-            <input type="password" name="password" id="password">
-            <!-- <br> -->
+            <input v-model="password"
+                    type="password" 
+                    name="password" 
+                    id="password">
+
             <div class="buttons">
                 <button @click="loginUser" class="loginButton">Log in</button>
                 <button class="registerButton">Register</button>
