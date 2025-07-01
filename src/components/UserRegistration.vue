@@ -22,6 +22,9 @@ form {
     display: flex;
     flex-direction: column;
     width: 15rem;
+    border: 1px grey solid;
+    border-radius: 5px;
+    padding: 2rem;
 }
 
 input {
