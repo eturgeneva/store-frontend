@@ -1,5 +1,5 @@
 <template>
-    <div class="userRegistration">
+    <div class="userRegister">
         <form class="framed">
             <label for="email">Email</label>
             <input type="text" name="email" id="email">

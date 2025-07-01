@@ -3,8 +3,8 @@ import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
 
 // My components
-import UserInput from './components/UserInput.vue';
-import UserRegistration from './components/UserRegistration.vue';
+import UserLogin from './components/UserLogin.vue';
+import UserRegister from './components/UserRegister.vue';
 </script>
 
 <template>
@@ -17,8 +17,8 @@ import UserRegistration from './components/UserRegistration.vue';
   </header>
 
   <main>
-    <UserInput />
-    <UserRegistration />
+    <UserLogin />
+    <UserRegister />
     <TheWelcome />
   </main>
 </template>
