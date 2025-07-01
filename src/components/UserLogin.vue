@@ -1,6 +1,12 @@
+<script setup>
+    function loginUser() {
+        console.log('User logged in');
+    }
+</script>
+
 <template>
     <div class="userLogin">
-        <form class="unframed">
+        <!-- <form class="unframed"> -->
             <label for="email">Email</label>
             <!-- <br> -->
             <input type="text" name="email" id="email">
@@ -10,10 +16,10 @@
             <input type="password" name="password" id="password">
             <!-- <br> -->
             <div class="buttons">
-                <button class="loginButton">Log in</button>
+                <button @click="loginUser" class="loginButton">Log in</button>
                 <button class="registerButton">Register</button>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </template>
 
