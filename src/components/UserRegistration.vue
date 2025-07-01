@@ -1,7 +1,7 @@
 <template>
     <div class="userRegistration">
-        <form>
-             <label for="email">Email</label>
+        <form class="framed">
+            <label for="email">Email</label>
             <input type="text" name="email" id="email">
 
             <label for="password">Password</label>
@@ -17,7 +17,7 @@
     </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 form {
     display: flex;
     flex-direction: column;
@@ -49,4 +49,4 @@ button {
 .loginButton {
     background-color: rgb(163, 168, 170);
 }
-</style>
+</style> -->

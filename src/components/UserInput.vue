@@ -1,6 +1,6 @@
 <template>
     <div class="userLoginRegister">
-        <form>
+        <form class="unframed">
             <label for="email">Email</label>
             <!-- <br> -->
             <input type="text" name="email" id="email">
@@ -17,7 +17,7 @@
     </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 
 form {
     display: flex;
@@ -48,4 +48,4 @@ button {
     background-color: rgb(163, 168, 170);
 }
 
-</style>
+</style> -->
