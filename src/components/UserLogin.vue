@@ -10,6 +10,8 @@ const loggedInUser = ref({});
 const editProfile = ref(false);
 
 const address = ref('');
+const firstName = ref('');
+const lastName = ref('');
 
 // Login User:
 async function loginUser() {
@@ -43,7 +45,7 @@ async function loginUser() {
     }
 }
 
-// Edit Profile:
+// Update User Info:
 function toggleEditProfile() {
     editProfile.value = !editProfile.value;
 }
@@ -52,11 +54,19 @@ async function editUserInfo() {
     editProfile.value = false;
     try {
         const response = await fetch('http://localhost:3000/users/5', {
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ address: address.value }),
+            // body: JSON.stringify({ first_name: firstName.value, last_name: lastName.value, address: address.value }),
+            body: JSON.stringify({ 
+                first_name: loggedInUser.value.first_name, 
+                last_name: loggedInUser.value.last_name, 
+                address: loggedInUser.value.address 
+            }),
             credentials: 'include'
         });
+
+        const result = await response.json();
+        loggedInUser.value = result.user;
     } catch (err) {
         console.error(err);
     }
@@ -108,10 +118,14 @@ async function logoutUser() {
 
         <div class="userProfile" v-if="loggedIn">
             <h1>Welcome, {{ loggedInUser.first_name }}</h1>
-            <div>First Name: {{ loggedInUser.first_name }}</div>
-            <div>Last Name: {{ loggedInUser.last_name }}</div>
+            <div>First Name: {{ loggedInUser.first_name }}
+                <input v-if="editProfile" v-model="loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
+            </div>
+            <div>Last Name: {{ loggedInUser.last_name }}
+                <input v-if="editProfile" v-model="loggedInUser.last_name" type="text" name="lastName" id="lastName"></input>
+            </div>
             <div>Address: {{ loggedInUser.address || ""}}
-                <input v-if="editProfile" v-model="address" type="text" name="address" id="address"></input>
+                <input v-if="editProfile" v-model="loggedInUser.address" type="text" name="address" id="address"></input>
             </div>
             <!-- <p>Phone Number: {{ loggedInUser.phone_number || "—"}}</p> -->
             <div class="buttons">
