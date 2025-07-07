@@ -46,6 +46,26 @@ function toggleEditProfile() {
     editProfile.value = !editProfile.value;
 }
 
+// Logout User:
+async function logoutUser() {
+    try {
+        const response = await fetch('http://localhost:3000/logout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+
+        if (response.ok) {
+            loggedIn.value = false;
+        }
+
+        if (!response.ok) {
+            throw new Error('Logout failed');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 </script>
 
@@ -82,7 +102,7 @@ function toggleEditProfile() {
                 <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit Info</button>
                 <button v-if="editProfile" @click="toggleEditProfile">Save</button>
 
-                <button class="logoutButton">Log Out</button>
+                <button class="logoutButton" @click="logoutUser">Log Out</button>
             </div>
         </div>
     </div>
