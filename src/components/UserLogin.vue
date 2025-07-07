@@ -9,10 +9,6 @@ const loggedInUser = ref({});
 
 const editProfile = ref(false);
 
-const address = ref('');
-const firstName = ref('');
-const lastName = ref('');
-
 // Login User:
 async function loginUser() {
     console.log('loggedIn', loggedIn.value);
@@ -53,10 +49,9 @@ function toggleEditProfile() {
 async function editUserInfo() {
     editProfile.value = false;
     try {
-        const response = await fetch('http://localhost:3000/users/5', {
+        const response = await fetch(`http://localhost:3000/users/${loggedInUser.value.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify({ first_name: firstName.value, last_name: lastName.value, address: address.value }),
             body: JSON.stringify({ 
                 first_name: loggedInUser.value.first_name, 
                 last_name: loggedInUser.value.last_name, 
@@ -66,7 +61,8 @@ async function editUserInfo() {
         });
 
         const result = await response.json();
-        loggedInUser.value = result.user;
+        // loggedInUser.value = result;
+        Object.assign(loggedInUser.value, { ...result });
     } catch (err) {
         console.error(err);
     }
