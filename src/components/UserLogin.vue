@@ -72,14 +72,16 @@ function toggleEditProfile() {
 
         <div class="userProfile" v-if="loggedIn">
             <h1>Welcome, {{ loggedInUser.first_name }}</h1>
-            <p>First Name: {{ loggedInUser.first_name }}</p>
-            <p>Last Name: {{ loggedInUser.last_name }}</p>
-            <p>Address: {{ loggedInUser.address || "—"}}</p>
+            <div>First Name: {{ loggedInUser.first_name }}</div>
+            <div>Last Name: {{ loggedInUser.last_name }}</div>
+            <div>Address: {{ loggedInUser.address || ""}}
+                <input v-if="editProfile"></input>
+            </div>
             <!-- <p>Phone Number: {{ loggedInUser.phone_number || "—"}}</p> -->
             <div class="buttons">
                 <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit Info</button>
-                <!-- <button v-if="!editProfile" @click="toggleEditProfile">{{ 'Edit Info' || 'Save Changes' }}</button> -->
                 <button v-if="editProfile" @click="toggleEditProfile">Save</button>
+
                 <button class="logoutButton">Log Out</button>
             </div>
         </div>

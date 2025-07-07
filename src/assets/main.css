@@ -47,6 +47,11 @@ form, .userLogin {
 
 .userProfile {
   margin: 0.5rem 3rem;
+  padding: 0.3rem;
+}
+
+.userProfile input {
+  padding: 0;
 }
 
 .framed {
