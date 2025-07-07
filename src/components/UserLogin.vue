@@ -41,7 +41,8 @@ async function loginUser() {
 </script>
 
 <template>
-    <div class="userLogin">
+    <div class="userArea">
+        <div class="userLogin">
             <label for="email">Email</label>
             <input v-model="email"
                     type="text" 
@@ -58,9 +59,14 @@ async function loginUser() {
                 <button @click="loginUser" class="loginButton">Log in</button>
                 <button type="button" class="registerButton">Register</button>
             </div>
-        
-        <div v-if="loggedIn">
+        </div>
+
+        <div class="userProfile" v-if="loggedIn">
             <h1>Welcome, {{ loggedInUser.first_name }}</h1>
+            <p>First Name: {{ loggedInUser.first_name }}</p>
+            <p>Last Name: {{ loggedInUser.last_name }}</p>
+            <p>Address: {{ loggedInUser.address || "—"}}</p>
+            <!-- <p>Phone Number: {{ loggedInUser.phone_number || "—"}}</p> -->
         </div>
     </div>
 </template>

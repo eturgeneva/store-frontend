@@ -41,6 +41,14 @@ form, .userLogin {
     padding: 1rem;
 }
 
+.userArea {
+  display: flex;
+}
+
+.userProfile {
+  margin: 0.5rem 3rem;
+}
+
 .framed {
     border: 1px grey solid;
     border-radius: 5px;
