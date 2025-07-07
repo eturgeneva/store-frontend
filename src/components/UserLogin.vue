@@ -9,6 +9,8 @@ const loggedInUser = ref({});
 
 const editProfile = ref(false);
 
+const address = ref('');
+
 // Login User:
 async function loginUser() {
     console.log('loggedIn', loggedIn.value);
@@ -44,6 +46,20 @@ async function loginUser() {
 // Edit Profile:
 function toggleEditProfile() {
     editProfile.value = !editProfile.value;
+}
+
+async function editUserInfo() {
+    editProfile.value = false;
+    try {
+        const response = await fetch('http://localhost:3000/users/5', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ address: address.value }),
+            credentials: 'include'
+        });
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 // Logout User:
@@ -95,12 +111,12 @@ async function logoutUser() {
             <div>First Name: {{ loggedInUser.first_name }}</div>
             <div>Last Name: {{ loggedInUser.last_name }}</div>
             <div>Address: {{ loggedInUser.address || ""}}
-                <input v-if="editProfile"></input>
+                <input v-if="editProfile" v-model="address" type="text" name="address" id="address"></input>
             </div>
             <!-- <p>Phone Number: {{ loggedInUser.phone_number || "—"}}</p> -->
             <div class="buttons">
                 <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit Info</button>
-                <button v-if="editProfile" @click="toggleEditProfile">Save</button>
+                <button v-if="editProfile" @click="editUserInfo">Save</button>
 
                 <button class="logoutButton" @click="logoutUser">Log Out</button>
             </div>
