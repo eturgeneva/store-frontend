@@ -7,6 +7,9 @@ const password = ref('');
 const loggedIn = ref(false);
 const loggedInUser = ref({});
 
+const editProfile = ref(false);
+
+// Login User:
 async function loginUser() {
     console.log('loggedIn', loggedIn.value);
 
@@ -38,6 +41,12 @@ async function loginUser() {
     }
 }
 
+// Edit Profile:
+function toggleEditProfile() {
+    editProfile.value = !editProfile.value;
+}
+
+
 </script>
 
 <template>
@@ -67,6 +76,12 @@ async function loginUser() {
             <p>Last Name: {{ loggedInUser.last_name }}</p>
             <p>Address: {{ loggedInUser.address || "—"}}</p>
             <!-- <p>Phone Number: {{ loggedInUser.phone_number || "—"}}</p> -->
+            <div class="buttons">
+                <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit Info</button>
+                <!-- <button v-if="!editProfile" @click="toggleEditProfile">{{ 'Edit Info' || 'Save Changes' }}</button> -->
+                <button v-if="editProfile" @click="toggleEditProfile">Save</button>
+                <button class="logoutButton">Log Out</button>
+            </div>
         </div>
     </div>
 </template>

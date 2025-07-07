@@ -75,6 +75,10 @@ button {
     padding: 0.3rem;
 }
 
-.loginButton {
+button:hover {
+  cursor: pointer;
+}
+
+.loginButton, .logoutButton, .editButton {
     background-color: rgb(163, 168, 170);
 }
