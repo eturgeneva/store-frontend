@@ -4,20 +4,25 @@ import { ref } from 'vue';
 const email = ref('');
 const password = ref('');
 
-// function loginUser() {
-//     console.log('User logged in');
-//     console.log('email ref', email);
-//     console.log('email', email.value);
-//     console.log('password', password.value);
-// }
-
 async function loginUser() {
-    console.log('User logged in');
-    console.log('email ref', email);
-    console.log('email', email.value);
-    console.log('password', password.value);
+    // console.log('User logged in');
+    // console.log('email ref', email);
+    // console.log('email', email.value);
+    // console.log('password', password.value);
 
-    await fetch('http://localhost:3000/')
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email.value, password: password.value }),
+            credentials: 'include'
+        });
+        console.log('Response', response);
+        const result = await response.json();
+        console.log('Server response', result);
+    } catch (err) {
+        console.error('Error:', err);
+    }
 }
 
 </script>
