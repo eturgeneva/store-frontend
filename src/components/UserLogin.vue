@@ -18,12 +18,12 @@ async function loginUser() {
             credentials: 'include'
         });
         console.log('Response', response);
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+
         const result = await response.json();
         console.log('Server response', result);
-
-        if (!response.ok) {
-            throw new Error(result.message || 'Login failed');
-        }
 
         loggedIn.value = true;
         console.log('loggedIn', loggedIn.value);
@@ -32,7 +32,7 @@ async function loginUser() {
         console.log('loggedInUser', loggedInUser.value);
 
     } catch (err) {
-        console.error('Error:', err);
+        console.error(err);
         loggedIn.value = false;
         console.log('loggedIn', loggedIn.value);
     }
