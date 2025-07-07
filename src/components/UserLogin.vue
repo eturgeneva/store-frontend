@@ -4,11 +4,11 @@ import { ref } from 'vue';
 const email = ref('');
 const password = ref('');
 
+const loggedIn = ref(false);
+const loggedInUser = ref({});
+
 async function loginUser() {
-    // console.log('User logged in');
-    // console.log('email ref', email);
-    // console.log('email', email.value);
-    // console.log('password', password.value);
+    console.log('loggedIn', loggedIn.value);
 
     try {
         const response = await fetch('http://localhost:3000/login', {
@@ -20,8 +20,21 @@ async function loginUser() {
         console.log('Response', response);
         const result = await response.json();
         console.log('Server response', result);
+
+        if (!response.ok) {
+            throw new Error(result.message || 'Login failed');
+        }
+
+        loggedIn.value = true;
+        console.log('loggedIn', loggedIn.value);
+
+        loggedInUser.value = result.user;
+        console.log('loggedInUser', loggedInUser.value);
+
     } catch (err) {
         console.error('Error:', err);
+        loggedIn.value = false;
+        console.log('loggedIn', loggedIn.value);
     }
 }
 
@@ -29,7 +42,6 @@ async function loginUser() {
 
 <template>
     <div class="userLogin">
-        <!-- <form class="unframed"> -->
             <label for="email">Email</label>
             <input v-model="email"
                     type="text" 
@@ -44,9 +56,12 @@ async function loginUser() {
 
             <div class="buttons">
                 <button @click="loginUser" class="loginButton">Log in</button>
-                <button class="registerButton">Register</button>
+                <button type="button" class="registerButton">Register</button>
             </div>
-        <!-- </form> -->
+        
+        <div v-if="loggedIn">
+            <h1>Welcome, {{ loggedInUser.first_name }}</h1>
+        </div>
     </div>
 </template>
 
