@@ -1,13 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
+
+onBeforeMount(() => {
+    getProfile();
+})
 
 const email = ref('');
 const password = ref('');
 
-const loggedIn = ref(false);
+// const loggedIn = ref(false);
+const loggedIn = ref(null);
 const loggedInUser = ref({});
 
 const editProfile = ref(false);
+
+// Get Profile
+async function getProfile() {
+    try {
+        const response = await fetch('http://localhost:3000/profile', {
+                credentials: 'include'
+        })
+        if (response.ok) {
+            loggedIn.value = true;
+            loggedInUser.value = await response.json();
+            return;
+        }
+        loggedIn.value = false;
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 // Login User:
 async function loginUser() {
@@ -25,13 +47,10 @@ async function loginUser() {
             throw new Error('Login failed');
         }
 
-        const result = await response.json();
-        console.log('Server response', result);
-
         loggedIn.value = true;
         console.log('loggedIn', loggedIn.value);
 
-        loggedInUser.value = result.user;
+        await getProfile();
         console.log('loggedInUser', loggedInUser.value);
 
     } catch (err) {
