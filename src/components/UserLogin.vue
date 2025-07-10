@@ -62,30 +62,7 @@ async function loginUser() {
 
 // Login User with Google:
 async function loginUserGoogle() {
-    console.log('loggedIn', loggedIn.value);
-
-    try {
-        // const response = await fetch('http://localhost:3000/login/google', {
-        //     headers: { 'Content-Type': 'application/json' },
-        //     credentials: 'include'
-        // });
-        window.location.href = 'http://localhost:3000/login/google';
-
-        // console.log('Response', response);
-        // if (!response.ok) {
-        //     throw new Error('Login with Google failed');
-        // }
-
-        loggedIn.value = true;
-        console.log('loggedIn', loggedIn.value);
-
-        await getProfile();
-        console.log('loggedInUser', loggedInUser.value);
-    } catch (err) {
-        console.error(err);
-        loggedIn.value = false;
-        console.log('loggedIn', loggedIn.value);
-    }
+    window.location.href = 'http://localhost:3000/login/google';
 }
 
 // Update User Info:
