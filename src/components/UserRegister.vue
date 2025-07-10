@@ -1,3 +1,38 @@
+<script setup>
+import { ref } from 'vue';
+
+const email = ref('');
+const password = ref('');
+const passwordConfirm = ref('');
+
+function comparePasswords(password1, password2) {
+    if (password1 === password2) {
+        return true;
+    }
+}
+
+async function registerUser() {
+    if (comparePasswords(password.value, passwordConfirm.value)) {
+        try {
+            const response = await fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email.value, password: password.value }),
+                credentials: 'include'
+            })
+            console.log('Response', response);
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    return 'Please type your password again';
+}
+
+</script>
+
 <template>
     <div class="userRegister">
         <form class="framed">
@@ -11,11 +46,13 @@
             <input type="password" name="passwordConfirm" id="passwordConfirm">
             
             <div class="buttons">
-                <button class="registerButton">Register</button>
+                <button @click="registerUser" class="registerButton">Register</button>
             </div>
         </form>
     </div>
 </template>
+
+
 
 <!-- <style scoped>
 form {
