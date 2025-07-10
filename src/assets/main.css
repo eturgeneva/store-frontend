@@ -34,7 +34,14 @@ a,
   }
 } */
 
-form, .userLogin, .userRegister {
+form, .userLogin {
+    display: flex;
+    flex-direction: column;
+    /* width: 15rem; */
+    padding: 1rem;
+}
+
+.userRegister {
     display: flex;
     flex-direction: column;
     width: 15rem;
@@ -68,6 +75,7 @@ input {
 .buttons {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 }
 
 button {
@@ -86,4 +94,15 @@ button:hover {
 
 .loginButton, .logoutButton, .editButton {
     background-color: rgb(163, 168, 170);
+}
+
+.oauthButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.oauthButton {
+  /* width: auto;*/
+  width: 10rem;
+  margin: 0.2rem;
 }

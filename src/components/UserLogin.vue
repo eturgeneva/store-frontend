@@ -126,8 +126,13 @@ async function logoutUser() {
                     id="password">
 
             <div class="buttons">
-                <button @click="loginUser" class="loginButton">Log in</button>
-                <button type="button" class="registerButton">Register</button>
+                <div>
+                    <button @click="loginUser" class="loginButton">Log in</button>
+                    <button type="button" class="registerButton">Register</button>
+                </div>
+                <div class="oauthButtons">
+                    <button type="button" class="loginButton oauthButton">Login with Google</button>
+                </div>
             </div>
         </div>
 

@@ -14,7 +14,7 @@ import UserRegister from './components/UserRegister.vue';
   <main>
     <UserLogin />
     <UserRegister />
-    <TheWelcome />
+    <!-- <TheWelcome /> -->
   </main>
 </template>
 
