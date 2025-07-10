@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 
-const username = ref('');
-const firstName = ref('');
-const lastName = ref('');
+// const username = ref('');
+// const firstName = ref('');
+// const lastName = ref('');
 const email = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
@@ -42,14 +42,14 @@ async function registerUser() {
 <template>
     <div class="userRegister framed">
         <!-- <form class="framed"> -->
-            <!-- <label for="email">Username</label>
-            <input type="text" name="username" id="username">
+            <!-- <label for="username">Username</label>
+            <input v-model="username" type="text" name="username" id="username">
 
             <label for="first_name">First Name</label>
-            <input type="text" name="first_name" id="first_name">
+            <input v-model="firstName" type="text" name="first_name" id="first_name">
 
             <label for="last_name">Last Name</label>
-            <input type="text" name="last_name" id="last_name"> -->
+            <input v-model="lastName" type="text" name="last_name" id="last_name"> -->
 
             <label for="email">Email</label>
             <input v-model="email" type="text" name="email" id="email">

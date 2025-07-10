@@ -132,7 +132,7 @@ async function logoutUser() {
         </div>
 
         <div class="userProfile" v-if="loggedIn">
-            <h1>Welcome, {{ loggedInUser.first_name }}</h1>
+            <h1>Welcome {{ loggedInUser.first_name }}</h1>
             <div>First Name: {{ loggedInUser.first_name }}
                 <input v-if="editProfile" v-model="loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
             </div>
