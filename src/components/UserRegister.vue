@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 
+const username = ref('');
+const firstName = ref('');
+const lastName = ref('');
 const email = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
@@ -9,10 +12,13 @@ function comparePasswords(password1, password2) {
     if (password1 === password2) {
         return true;
     }
+    return false;
 }
 
 async function registerUser() {
+    console.log('Register button clicked');
     if (comparePasswords(password.value, passwordConfirm.value)) {
+        console.log('Password confirmed');
         try {
             const response = await fetch('http://localhost:3000/users', {
                 method: 'POST',
@@ -34,21 +40,30 @@ async function registerUser() {
 </script>
 
 <template>
-    <div class="userRegister">
-        <form class="framed">
+    <div class="userRegister framed">
+        <!-- <form class="framed"> -->
+            <!-- <label for="email">Username</label>
+            <input type="text" name="username" id="username">
+
+            <label for="first_name">First Name</label>
+            <input type="text" name="first_name" id="first_name">
+
+            <label for="last_name">Last Name</label>
+            <input type="text" name="last_name" id="last_name"> -->
+
             <label for="email">Email</label>
-            <input type="text" name="email" id="email">
+            <input v-model="email" type="text" name="email" id="email">
 
             <label for="password">Password</label>
-            <input type="password" name="password" id="password">
+            <input v-model="password" type="password" name="password" id="password">
 
             <label for="password">Confirm Password</label>
-            <input type="password" name="passwordConfirm" id="passwordConfirm">
+            <input v-model="passwordConfirm" type="password" name="passwordConfirm" id="passwordConfirm">
             
             <div class="buttons">
                 <button @click="registerUser" class="registerButton">Register</button>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </template>
 
