@@ -5,6 +5,7 @@ import TheWelcome from './components/TheWelcome.vue'
 // My components
 import UserLogin from './components/UserLogin.vue';
 import UserRegister from './components/UserRegister.vue';
+import Products from './components/Products.vue';
 </script>
 
 <template>
@@ -14,6 +15,7 @@ import UserRegister from './components/UserRegister.vue';
   <main>
     <UserLogin />
     <UserRegister />
+    <Products />
     <!-- <TheWelcome /> -->
   </main>
 </template>
