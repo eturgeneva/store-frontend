@@ -29,9 +29,11 @@ async function getAllProducts() {
         <!-- <li v-for="product in products">
             {{ product }}
         </li> -->
-        <div v-for="product in products" class="productPreview">
+        <div v-for="product in products" :key="product.id" class="productPreview">
             <div>{{ product.name }}</div>
             <div>{{ product.price_cents }}</div>
+            <img v-if="product.img_url" :src="product.img_url" class="productImage">
+            <!-- <img src="https://www.ikea.com/de/en/images/products/dvaerghare-soft-toy-bunny-beige__1388010_pe964452_s5.jpg"> -->
             <div>
                 <button>❤</button>
                 <button>🛒</button>
