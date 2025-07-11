@@ -29,13 +29,10 @@ async function getAllProducts() {
 
 <template>
     <div class="productsSection">
-        <!-- <li v-for="product in products">
-            {{ product }}
-        </li> -->
         <div v-for="product in products" :key="product.id" class="productPreview">
             <img :src="productImgURL + product.name + '.png'" class="productImage">
             <div>{{ product.name }}</div>
-            <div>{{ product.price_cents }}</div>
+            <div>{{ product.price_cents / 100 + ' €'}}</div>
             <div>
                 <button type="button" class="likeButton">❤</button>
                 <button type="button" class="buyButton">🛒</button>
