@@ -92,7 +92,7 @@ button:hover {
   cursor: pointer;
 }
 
-.loginButton, .logoutButton, .editButton {
+.loginButton, .logoutButton, .editButton, .likeButton {
     background-color: rgb(163, 168, 170);
 }
 
@@ -107,6 +107,24 @@ button:hover {
   margin: 0.2rem;
 }
 
+/* Products*/
+.productsSection {
+  display: flex;
+  flex-flow: wrap;
+  width: 90%;
+}
+
 .productImage {
   width: 10rem;
+  margin-top: 0.5rem;
+  border-radius: 3px;
+}
+
+.productPreview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem;
+  background-color: rgb(44, 44, 44);
+  border-radius: 5px;
 }

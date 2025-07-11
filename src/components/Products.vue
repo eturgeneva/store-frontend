@@ -1,11 +1,14 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 
+const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
 const products = ref([]);
 onBeforeMount(() => {
     getAllProducts();
 })
 // const products = ref(['item1', 'item2']);
+
 
 async function getAllProducts() {
     try {
@@ -30,13 +33,12 @@ async function getAllProducts() {
             {{ product }}
         </li> -->
         <div v-for="product in products" :key="product.id" class="productPreview">
+            <img :src="productImgURL + product.name + '.png'" class="productImage">
             <div>{{ product.name }}</div>
             <div>{{ product.price_cents }}</div>
-            <img v-if="product.img_url" :src="product.img_url" class="productImage">
-            <!-- <img src="https://www.ikea.com/de/en/images/products/dvaerghare-soft-toy-bunny-beige__1388010_pe964452_s5.jpg"> -->
             <div>
-                <button>❤</button>
-                <button>🛒</button>
+                <button type="button" class="likeButton">❤</button>
+                <button type="button" class="buyButton">🛒</button>
             </div>
         </div>
     </div>

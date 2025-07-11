@@ -132,7 +132,7 @@ async function logoutUser() {
 
             <div class="buttons">
                 <div>
-                    <button @click="loginUser" class="loginButton">Log in</button>
+                    <button @click="loginUser" type="button" class="loginButton">Log in</button>
                     <button type="button" class="registerButton">Register</button>
                 </div>
                 <div class="oauthButtons">
