@@ -21,14 +21,21 @@ async function getAllProducts() {
     } catch (err) {
         console.error(err);
     }
-
 }
 </script>
 
 <template>
     <div class="productsSection">
-        <li v-for="product in products">
+        <!-- <li v-for="product in products">
             {{ product }}
-        </li>
+        </li> -->
+        <div v-for="product in products" class="productPreview">
+            <div>{{ product.name }}</div>
+            <div>{{ product.price_cents }}</div>
+            <div>
+                <button>❤</button>
+                <button>🛒</button>
+            </div>
+        </div>
     </div>
 </template>
