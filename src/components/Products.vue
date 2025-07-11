@@ -9,7 +9,6 @@ onBeforeMount(() => {
 })
 // const products = ref(['item1', 'item2']);
 
-
 async function getAllProducts() {
     try {
         console.log('Fetching products');

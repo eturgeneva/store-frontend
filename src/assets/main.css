@@ -116,7 +116,7 @@ button:hover {
 .productsSection {
   display: flex;
   flex-flow: wrap;
-  width: 90%;
+  width: 80%;
 }
 
 .productImage {
@@ -130,6 +130,7 @@ button:hover {
   scale: 1.05;
   /* transition: 20ms; */
   transition-duration: 0.3s;
+  cursor: pointer;
 }
 
 .productPreview {
