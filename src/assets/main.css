@@ -113,6 +113,10 @@ button:hover {
 }
 
 /* Products*/
+.products {
+  display: flex;
+}
+
 .productsSection {
   display: flex;
   flex-flow: wrap;
@@ -124,6 +128,10 @@ button:hover {
   /* margin-top: 0.5rem; */
   margin: 0.5rem 0;
   border-radius: 3px;
+}
+
+.productDetailsImage {
+  width: 15rem;
 }
 
 .productImage:hover {
