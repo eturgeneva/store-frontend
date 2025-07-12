@@ -40,6 +40,19 @@ async function getProductById(productId) {
         console.error(err);
     }
 }
+
+async function createCart() {
+    try {
+        const response = await fetch('http://localhost:3000/carts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+            credentials: 'include'
+        })
+    } catch (err) {
+        console.error(err);
+    }
+}
 </script>
 
 <template>
@@ -53,7 +66,7 @@ async function getProductById(productId) {
                 <div>{{ product.price_cents / 100 + ' €'}}</div>
                 <div>
                     <button type="button" class="likeButton">❤</button>
-                    <button type="button" class="buyButton">🛒</button>
+                    <button @click="createCart" type="button" class="buyButton">🛒</button>
                 </div>
             </div>
         </div>
