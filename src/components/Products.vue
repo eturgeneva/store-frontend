@@ -74,8 +74,9 @@ async function createUpdateCart(productId) {
             })
             const cartUpdateReponse = await response.json();
             console.log('cart update', cartUpdateReponse);
-            store.setCart(cartUpdateReponse);
+            // store.setCart(cartUpdateReponse);
             console.log('Store cart update', store.cart);
+            return store.setCart(cartUpdateReponse);
         }
     } catch (err) {
         console.error(err);

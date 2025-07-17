@@ -51,6 +51,9 @@ async function getCart() {
 <template>
     <div class="userCart">
         <h3>Cart</h3>
-        <div>{{ store.cart.product_id }}</div>
+        <div v-for="product in store.cart" :key="store.cart.product_id">
+            <!-- <div>{{ product.product_id }}</div> -->
+            <div>{{ product.name }}</div>
+        </div>
     </div>
 </template>
