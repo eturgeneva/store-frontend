@@ -61,8 +61,19 @@ async function createUpdateCart() {
                 // store.setCart(cartUpdate);
                 // console.log('Store cart property', store.cart);
             }
+        } else {
+            const response = await fetch('http://localhost:3000/carts/me', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    cart_id: 29, 
+                    product_id: 2
+                }),
+                credentials: 'include'
+            })
+            const cartUpdate = await response.json();
+            store.setCart(cartUpdate);
         }
-
     } catch (err) {
         console.error(err);
     }
