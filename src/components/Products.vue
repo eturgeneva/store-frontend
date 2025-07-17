@@ -42,7 +42,7 @@ async function getProductById(productId) {
     }
 }
 
-async function createUpdateCart() {
+async function createUpdateCart(productId) {
     try {
         if (!store.cartId) {
             const response = await fetch('http://localhost:3000/carts', {
@@ -53,8 +53,8 @@ async function createUpdateCart() {
             });
     
             if (response.ok) {
-                const cartId = await response.json();
-                store.setCartId(cartId);
+                const responseData = await response.json();
+                store.setCartId(responseData.cartId);
                 console.log('Store cart ID', store.cartId);
     
                 // const cartUpdate = await response.json();
@@ -66,13 +66,15 @@ async function createUpdateCart() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
-                    productId: 2,
-                    cartId: 29
+                    productId: productId,
+                    // cartId: 29
+                    cartId: store.cartId
                 }),
                 credentials: 'include'
             })
-            const cartUpdate = await response.json();
-            store.setCart(cartUpdate);
+            const cartUpdateReponse = await response.json();
+            console.log('cart update', cartUpdateReponse);
+            store.setCart(cartUpdateReponse);
             console.log('Store cart update', store.cart);
         }
     } catch (err) {
@@ -92,7 +94,7 @@ async function createUpdateCart() {
                 <div>{{ product.price_cents / 100 + ' €'}}</div>
                 <div>
                     <button type="button" class="likeButton">❤</button>
-                    <button @click="createUpdateCart" type="button" class="buyButton">🛒</button>
+                    <button @click="createUpdateCart(product.id)" type="button" class="buyButton">🛒</button>
                 </div>
             </div>
         </div>
