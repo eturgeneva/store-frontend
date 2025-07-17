@@ -66,8 +66,8 @@ async function createUpdateCart() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
-                    cart_id: 29, 
-                    product_id: 2
+                    productId: 2,
+                    cartId: 29
                 }),
                 credentials: 'include'
             })
