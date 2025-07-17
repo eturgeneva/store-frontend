@@ -51,6 +51,6 @@ async function getCart() {
 <template>
     <div class="userCart">
         <h3>Cart</h3>
-        <div></div>
+        <div>{{ store.cart.product_id }}</div>
     </div>
 </template>

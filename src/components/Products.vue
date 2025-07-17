@@ -73,6 +73,7 @@ async function createUpdateCart() {
             })
             const cartUpdate = await response.json();
             store.setCart(cartUpdate);
+            console.log('Store cart update', store.cart);
         }
     } catch (err) {
         console.error(err);
