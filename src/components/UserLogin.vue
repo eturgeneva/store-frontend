@@ -18,7 +18,7 @@ const editProfile = ref(false);
 // Get Profile
 async function getProfile() {
     try {
-        const response = await fetch('http://localhost:3000/profile', {
+        const response = await fetch('http://localhost:3000/users/me', {
                 credentials: 'include'
         })
         if (response.ok) {
