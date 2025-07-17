@@ -16,7 +16,7 @@ import Cart from './components/Cart.vue';
   <main>
     <UserLogin />
     <UserRegister />
-    <Cart />
+    <!-- <Cart /> -->
     <Products />
     <!-- <TheWelcome /> -->
   </main>

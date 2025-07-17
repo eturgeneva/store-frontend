@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
+import Cart from './Cart.vue';
 
 onBeforeMount(() => {
     getProfile();
@@ -160,6 +161,7 @@ async function logoutUser() {
                 <button class="logoutButton" @click="logoutUser">Log Out</button>
             </div>
         </div>
+        <Cart />
     </div>
 </template>
 
