@@ -42,19 +42,25 @@ async function getProductById(productId) {
     }
 }
 
-async function createCart() {
+async function createUpdateCart() {
     try {
-        const response = await fetch('http://localhost:3000/carts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({}),
-            credentials: 'include'
-        });
-
-        if (response.ok) {
-            const cartUpdate = await response.json();
-            store.setCart(cartUpdate);
-            console.log('Store cart property', store.cart);
+        if (!store.cartId) {
+            const response = await fetch('http://localhost:3000/carts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({}),
+                credentials: 'include'
+            });
+    
+            if (response.ok) {
+                const cartId = await response.json();
+                store.setCartId(cartId);
+                console.log('Store cart ID', store.cartId);
+    
+                // const cartUpdate = await response.json();
+                // store.setCart(cartUpdate);
+                // console.log('Store cart property', store.cart);
+            }
         }
 
     } catch (err) {
@@ -74,7 +80,7 @@ async function createCart() {
                 <div>{{ product.price_cents / 100 + ' €'}}</div>
                 <div>
                     <button type="button" class="likeButton">❤</button>
-                    <button @click="createCart" type="button" class="buyButton">🛒</button>
+                    <button @click="createUpdateCart" type="button" class="buyButton">🛒</button>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ export const store = reactive({
         this.userProfile = profileObject;
     },
 
-    updateCartId(cartId) {
+    setCartId(cartId) {
         this.cartId = cartId;
     },
 
