@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
+import { store } from '@/store';
 
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
@@ -48,7 +49,14 @@ async function createCart() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({}),
             credentials: 'include'
-        })
+        });
+
+        if (response.ok) {
+            const cartUpdate = await response.json();
+            store.setCart(cartUpdate);
+            console.log('Store cart property', store.cart);
+        }
+
     } catch (err) {
         console.error(err);
     }

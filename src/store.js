@@ -4,6 +4,7 @@ export const store = reactive({
     loggedIn: false,
     userProfile: {},
     cartId: null,
+    cart: {},
 
     setLoggedIn(boolean) {
         this.loggedIn = boolean;
@@ -15,5 +16,9 @@ export const store = reactive({
 
     updateCartId(cartId) {
         this.cartId = cartId;
+    },
+
+    setCart(cart) {
+        this.cart = cart;
     }
 });
