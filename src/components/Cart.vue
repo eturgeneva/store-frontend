@@ -1,8 +1,12 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { store } from '../store.js';
 
-onBeforeMount(() => {
+// onBeforeMount(() => {
+//     getCart();
+// });
+
+onMounted(() => {
     getCart();
 });
 
@@ -51,7 +55,8 @@ async function getCart() {
 <template>
     <div class="userCart">
         <h3>Cart</h3>
-        <div v-for="product in store.cart.products" :key="product.product_id">
+        <!-- <div v-for="product in store.cart.products" :key="product.product_id"> -->
+        <div v-for="product in store.cart" :key="product.product_id">
             <div>{{ product.name }}</div>
         </div>
     </div>
