@@ -1,18 +1,18 @@
 <script setup>
-import { ref, onBeforeMount, onMounted } from 'vue';
+import { ref, onBeforeMount, onMounted, onUpdated, nextTick } from 'vue';
 import { store } from '../store.js';
 
-// onBeforeMount(() => {
-//     getCart();
-// });
-
-onMounted(() => {
-    getCart();
+onBeforeMount(async () => {
+    await getCart();
 });
+
+// onMounted(async () => {
+//     await getCart();
+// });
 
 async function getCart() {
     try {
-        console.log('Store cart property:', store.cart);
+        console.log('Store cart property:', store.cart.products);
         console.log('Fetching cart');
 
         // if (!store.cartId) {
@@ -23,9 +23,10 @@ async function getCart() {
                 const cart = await response.json();
                 console.log('Cart', cart);
                 store.setCart(cart);
-                console.log('Store cart property:', store.cart);
-                // return store.cart;
+                console.log('Store cart property:', store.cart.products);
+                // await nextTick();
             }
+            // await nextTick();
         // }
     } catch (err) {
         console.error(err);
@@ -55,9 +56,12 @@ async function getCart() {
 <template>
     <div class="userCart">
         <h3>Cart</h3>
+        <div v-if="store.cart.products.length === 0">Loading cart...</div>
         <!-- <div v-for="product in store.cart.products" :key="product.product_id"> -->
-        <div v-for="product in store.cart" :key="product.product_id">
-            <div>{{ product.name }}</div>
+        <div v-else>
+            <div v-for="product in store.cart.products" :key="product.product_id">
+                <div>{{ product.name }}</div>
+            </div>
         </div>
     </div>
 </template>
