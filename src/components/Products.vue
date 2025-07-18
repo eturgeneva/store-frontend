@@ -42,6 +42,28 @@ async function getProductById(productId) {
     }
 }
 
+async function getCart() {
+    try {
+        console.log('Store cart property:', store.cart);
+        console.log('Fetching cart');
+
+        if (!store.cartId) {
+            const response = await fetch('http://localhost:3000/carts/me', {
+                credentials: 'include'
+            })
+            if (response.ok) {
+                const cart = await response.json();
+                console.log('Cart', cart);
+                store.setCart(cart);
+                console.log('Store cart property:', store.cart);
+                return store.cart;
+            }
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 async function createUpdateCart(productId) {
     try {
         if (!store.cartId) {
@@ -56,10 +78,11 @@ async function createUpdateCart(productId) {
                 const responseData = await response.json();
                 store.setCartId(responseData.cartId);
                 console.log('Store cart ID', store.cartId);
-    
-                // const cartUpdate = await response.json();
-                // store.setCart(cartUpdate);
-                // console.log('Store cart property', store.cart);
+                
+                // Now fetch the cart:
+                await getCart();
+                // Add the product to the newly created cart:
+                return await createUpdateCart(productId);
             }
         } else {
             const response = await fetch('http://localhost:3000/carts/me', {
@@ -67,14 +90,13 @@ async function createUpdateCart(productId) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     productId: productId,
-                    // cartId: 29
-                    cartId: store.cartId
+                    cartId: store.cartId,
+                    quantity: 1
                 }),
                 credentials: 'include'
             })
             const cartUpdateReponse = await response.json();
             console.log('cart update', cartUpdateReponse);
-            // store.setCart(cartUpdateReponse);
             console.log('Store cart update', store.cart);
             return store.setCart(cartUpdateReponse);
         }

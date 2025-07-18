@@ -11,7 +11,7 @@ async function getCart() {
         console.log('Store cart property:', store.cart);
         console.log('Fetching cart');
 
-        if (!store.cartId) {
+        // if (!store.cartId) {
             const response = await fetch('http://localhost:3000/carts/me', {
                 credentials: 'include'
             })
@@ -20,9 +20,9 @@ async function getCart() {
                 console.log('Cart', cart);
                 store.setCart(cart);
                 console.log('Store cart property:', store.cart);
-                return;
+                // return store.cart;
             }
-        }
+        // }
     } catch (err) {
         console.error(err);
     }
@@ -51,8 +51,7 @@ async function getCart() {
 <template>
     <div class="userCart">
         <h3>Cart</h3>
-        <div v-for="product in store.cart" :key="store.cart.product_id">
-            <!-- <div>{{ product.product_id }}</div> -->
+        <div v-for="product in store.cart.products" :key="product.product_id">
             <div>{{ product.name }}</div>
         </div>
     </div>
