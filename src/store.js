@@ -2,6 +2,7 @@ import { reactive, ref } from 'vue';
 
 export const store = reactive({
     loggedIn: false,
+    loggedInUser: {},
     userProfile: {},
     cartId: null,
     cart: {
