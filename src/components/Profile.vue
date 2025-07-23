@@ -23,8 +23,9 @@ async function getProfile() {
                 credentials: 'include'
         })
         if (response.ok) {
-            store.setLoggedIn(true);
             const userResponse = await response.json();
+            store.setLoggedIn(userResponse.id !== null);
+            
             Object.assign(store.loggedInUser, { ...userResponse });
             return;
         }
@@ -121,8 +122,9 @@ async function logoutUser() {
 <template>
     <div class="userArea">
         <!-- <div class="userLogin" v-if="!store.loggedIn || store.userProfile.first_name === 'guest'"> -->
-        <div class="userLogin" v-if="!store.loggedIn || store.loggedInUser.first_name === 'guest'">
-            <UserLogin />
+        <div class="userLogin" v-if="!store.loggedIn">
+            <h3>Welcome, guest</h3>
+            <UserLogin :onLogin="getProfile"/>
             <UserRegister />
         </div>
 

@@ -1,5 +1,11 @@
 <script setup>
 import { store } from '../store.js';
+import { ref } from 'vue';
+
+const props = defineProps(['onLogin']);
+
+const email = ref('');
+const password = ref('');
 
 // Login User:
 async function loginUser() {
@@ -20,7 +26,8 @@ async function loginUser() {
         store.setLoggedIn(true);
         console.log('loggedIn', store.loggedIn);
 
-        await getProfile();
+        // await getProfile();
+        await props.onLogin();
         console.log('loggedInUser', store.loggedInUser);
 
     } catch (err) {
