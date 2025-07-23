@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 
 import Homepage from './components/Homepage.vue';
+import Profile from './components/Profile.vue';
 import UserLogin from './components/UserLogin.vue';
 import UserRegister from './components/UserRegister.vue';
 import Products from './components/Products.vue';
@@ -10,6 +11,7 @@ import Cart from './components/Cart.vue';
 const routes = {
   '/': Homepage,
   '/products': Products,
+  '/profile': Profile,
 }
 
 const currentPath = ref(window.location.hash);
@@ -29,6 +31,7 @@ const currentView = computed(() => {
   <div>
     <a href="#/">Homepage</a>
     <a href="#/products">Products</a>
+    <a href="#/profile">Profile</a>
   </div>
 
   <component :is="currentView" />
