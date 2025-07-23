@@ -11,6 +11,7 @@ onBeforeMount(async () => {
 // });
 
 async function getCart() {
+    store.setCartIsLoading(true);
     try {
         console.log('Store cart property:', store.cart.products);
         console.log('Fetching cart');
@@ -23,6 +24,7 @@ async function getCart() {
 
         if (!cartId) {
             console.warn('No cart ID found for user');
+            store.setCartIsLoading(false);
             return;
         }
         
@@ -34,10 +36,12 @@ async function getCart() {
             console.log('Cart', cart);
             store.setCart(cart);
             console.log('Store cart property:', store.cart.products);
+            store.setCartIsLoading(false);
         }
 
     } catch (err) {
         console.error(err);
+        store.setCartIsLoading(false);
     }
 }
 
@@ -64,8 +68,8 @@ async function getCart() {
 <template>
     <div class="userCart">
         <h3>Cart</h3>
-        <div v-if="store.cart.products.length === 0">Loading cart...</div>
-        <!-- <div v-for="product in store.cart.products" :key="product.product_id"> -->
+        <div v-if="store.cart.products.length === 0">Your cart is empty</div>
+        <div v-else-if="store.cartIsLoading">Cart is loading...</div>
         <div v-else>
             <div v-for="product in store.cart.products" :key="product.product_id">
                 <div>{{ product.name }}</div>
