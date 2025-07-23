@@ -7,6 +7,11 @@
   font-weight: normal;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
 a,
 .green {
   text-decoration: none;

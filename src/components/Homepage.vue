@@ -5,7 +5,6 @@ import Products from './Products.vue';
 </script>
 
 <template>
-    <Header />
     <main>
         <Products/>
     </main>

@@ -1,5 +1,6 @@
 <script setup>
 // import { ref, computed } from 'vue';
+import Header from './components/Header.vue';
 
 // Hashchange routing
 // const routes = {
@@ -23,15 +24,13 @@
 
 <template>
   <!-- Vue Router -->
-  <div>
-    <nav>
+  <!-- <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/products">Products</router-link> |
-      <router-link to="/profile">Profile</router-link>
-
+      <router-link to="/profile">Profile</router-link> -->
+      <Header />
       <router-view />
-    </nav>
-  </div>
+  <!-- </nav> -->
 
   <!-- Hashchange routing -->
   <!-- <div>
