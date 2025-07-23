@@ -9,9 +9,6 @@ onBeforeMount(() => {
 const email = ref('');
 const password = ref('');
 
-// const loggedIn = ref(null);
-// const loggedInUser = ref({});
-
 const editProfile = ref(false);
 
 // Get Profile
@@ -34,7 +31,7 @@ async function getProfile() {
 
 // Login User:
 async function loginUser() {
-    console.log('loggedIn', loggedIn.value);
+    console.log('loggedIn', store.loggedIn);
 
     try {
         const response = await fetch('http://localhost:3000/login', {
@@ -103,6 +100,7 @@ async function logoutUser() {
 
         if (response.ok) {
             store.setLoggedIn(false);
+            console.log('loggedIn global state after logout', store.loggedIn);
         }
 
         if (!response.ok) {
