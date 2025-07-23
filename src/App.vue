@@ -1,21 +1,35 @@
 <script setup>
-// My components
+import { ref, computed } from 'vue';
+
+import Homepage from './components/Homepage.vue';
 import UserLogin from './components/UserLogin.vue';
 import UserRegister from './components/UserRegister.vue';
 import Products from './components/Products.vue';
 import Cart from './components/Cart.vue';
+
+const routes = {
+  '/': Homepage,
+}
+
+const currentPath = ref(window.location.hash);
+
 </script>
 
-<template>
+<!-- <template>
   <header>
   </header>
 
   <main>
     <UserLogin />
     <UserRegister />
-    <!-- <Cart /> -->
     <Products />
   </main>
+</template> -->
+
+<template>
+
+
+
 </template>
 
 <style scoped>
