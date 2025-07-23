@@ -23,7 +23,7 @@ export const store = reactive({
     },
 
     setCartIsLoading(boolean) {
-        this.cartIsLoading(boolean);
+        this.cartIsLoading = boolean;
     },
 
     setCart(cartData) {
