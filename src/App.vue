@@ -9,11 +9,30 @@ import Cart from './components/Cart.vue';
 
 const routes = {
   '/': Homepage,
+  '/products': Products,
 }
 
 const currentPath = ref(window.location.hash);
 
+window.addEventListener('hashchange', () => {
+  currentPath.value = window.location.hash;
+});
+
+const currentView = computed(() => {
+  //  removes the #
+  return routes[currentPath.value.slice(1) || '/'];
+});
+
 </script>
+
+<template>
+  <div>
+    <a href="#/">Homepage</a>
+    <a href="#/products">Products</a>
+  </div>
+
+  <component :is="currentView" />
+</template>
 
 <!-- <template>
   <header>
@@ -25,12 +44,6 @@ const currentPath = ref(window.location.hash);
     <Products />
   </main>
 </template> -->
-
-<template>
-
-
-
-</template>
 
 <style scoped>
 
