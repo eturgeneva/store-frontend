@@ -13,6 +13,7 @@ const editProfile = ref(false);
 
 // Get Profile
 async function getProfile() {
+    console.log('user profile onBeforeMount', store.loggedInUser);
     try {
         const response = await fetch('http://localhost:3000/users/me', {
                 credentials: 'include'
@@ -115,7 +116,7 @@ async function logoutUser() {
 
 <template>
     <div class="userArea">
-        <div class="userLogin">
+        <div class="userLogin" v-if="!store.loggedIn">
             <label for="email">Email</label>
             <input v-model="email"
                     type="text" 
@@ -150,7 +151,6 @@ async function logoutUser() {
             <div>Address: {{ store.loggedInUser.address || ""}}
                 <input v-if="editProfile" v-model="store.loggedInUser.address" type="text" name="address" id="address"></input>
             </div>
-            <!-- <p>Phone Number: {{ loggedInUser.phone_number || "—"}}</p> -->
             <div class="buttons">
                 <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit Info</button>
                 <button v-if="editProfile" @click="editUserInfo">Save</button>

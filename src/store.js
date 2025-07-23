@@ -6,6 +6,7 @@ export const store = reactive({
     userProfile: {},
     cartId: null,
     cart: {
+        isLoading: true,
         products: []
     },
 
