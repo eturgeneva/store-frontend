@@ -3,7 +3,7 @@ import { ref, computed } from 'vue';
 
 import Homepage from './components/Homepage.vue';
 import Profile from './components/Profile.vue';
-import UserLogin from './components/UserLogin.vue';
+import UserLogin from './components/Profile.vue';
 import UserRegister from './components/UserRegister.vue';
 import Products from './components/Products.vue';
 import Cart from './components/Cart.vue';
