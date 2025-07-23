@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
+import { store } from '../store.js';
 
 onBeforeMount(() => {
     getProfile();
@@ -8,8 +9,8 @@ onBeforeMount(() => {
 const email = ref('');
 const password = ref('');
 
-const loggedIn = ref(null);
-const loggedInUser = ref({});
+// const loggedIn = ref(null);
+// const loggedInUser = ref({});
 
 const editProfile = ref(false);
 
@@ -20,11 +21,12 @@ async function getProfile() {
                 credentials: 'include'
         })
         if (response.ok) {
-            loggedIn.value = true;
-            loggedInUser.value = await response.json();
+            store.setLoggedIn(true);
+            const userResponse = await response.json();
+            Object.assign(store.loggedInUser, { ...userResponse });
             return;
         }
-        loggedIn.value = false;
+        store.setLoggedIn(false);
     } catch (err) {
         console.error(err);
     }
@@ -46,16 +48,16 @@ async function loginUser() {
             throw new Error('Login failed');
         }
 
-        loggedIn.value = true;
-        console.log('loggedIn', loggedIn.value);
+        store.setLoggedIn(true);
+        console.log('loggedIn', store.loggedIn);
 
         await getProfile();
-        console.log('loggedInUser', loggedInUser.value);
+        console.log('loggedInUser', store.loggedInUser);
 
     } catch (err) {
         console.error(err);
-        loggedIn.value = false;
-        console.log('loggedIn', loggedIn.value);
+        store.setLoggedIn(false);
+        console.log('loggedIn', store.loggedIn);
     }
 }
 
@@ -76,15 +78,15 @@ async function editUserInfo() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                first_name: loggedInUser.value.first_name, 
-                last_name: loggedInUser.value.last_name, 
-                address: loggedInUser.value.address 
+                first_name: store.loggedInUser.first_name, 
+                last_name: store.loggedInUser.last_name, 
+                address: store.loggedInUser.address 
             }),
             credentials: 'include'
         });
 
         const result = await response.json();
-        Object.assign(loggedInUser.value, { ...result });
+        Object.assign(store.loggedInUser, { ...result });
     } catch (err) {
         console.error(err);
     }
@@ -100,7 +102,7 @@ async function logoutUser() {
         });
 
         if (response.ok) {
-            loggedIn.value = false;
+            store.setLoggedIn(false);
         }
 
         if (!response.ok) {
@@ -139,16 +141,16 @@ async function logoutUser() {
             </div>
         </div>
 
-        <div class="userProfile" v-if="loggedIn">
-            <h1>Welcome {{ loggedInUser.first_name }}</h1>
-            <div>First Name: {{ loggedInUser.first_name }}
-                <input v-if="editProfile" v-model="loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
+        <div class="userProfile" v-if="store.loggedIn">
+            <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
+            <div>First Name: {{ store.loggedInUser.first_name }}
+                <input v-if="editProfile" v-model="store.loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
             </div>
-            <div>Last Name: {{ loggedInUser.last_name }}
-                <input v-if="editProfile" v-model="loggedInUser.last_name" type="text" name="lastName" id="lastName"></input>
+            <div>Last Name: {{ store.loggedInUser.last_name }}
+                <input v-if="editProfile" v-model="store.loggedInUser.last_name" type="text" name="lastName" id="lastName"></input>
             </div>
-            <div>Address: {{ loggedInUser.address || ""}}
-                <input v-if="editProfile" v-model="loggedInUser.address" type="text" name="address" id="address"></input>
+            <div>Address: {{ store.loggedInUser.address || ""}}
+                <input v-if="editProfile" v-model="store.loggedInUser.address" type="text" name="address" id="address"></input>
             </div>
             <!-- <p>Phone Number: {{ loggedInUser.phone_number || "—"}}</p> -->
             <div class="buttons">
