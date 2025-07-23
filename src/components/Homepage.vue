@@ -1,11 +1,14 @@
 <script setup>
-import Header from './Header.vue';
+import Promo from './Promo.vue';
+import ProductsPreviews from './ProductsPreviews.vue';
 import Products from './Products.vue';
 
 </script>
 
 <template>
     <main>
-        <Products/>
+        <Promo />
+        <ProductsPreviews />
+        <Products />
     </main>
 </template>

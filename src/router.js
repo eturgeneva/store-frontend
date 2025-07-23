@@ -11,6 +11,7 @@ const routes = [
   { path: '/', component: Homepage },
   { path: '/products', component: Products },
   { path: '/profile', component: Profile },
+  { path: '/cart', component: Cart}
 ];
 
 const router = createRouter({
