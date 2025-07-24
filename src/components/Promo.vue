@@ -7,7 +7,11 @@ const promoBanner = productImgURL + "promo-banner-2.png"
 
 <template>
     <div class="promoSection">
-        <!-- Promo banner -->
-        <img class="promoBanner" :src="promoBanner">
+        <div class="promoBanner">
+            <div class="promoText">
+                <h2>Buy them all!</h2>
+            </div>
+        </div>
+        <!-- <img class="promoBanner" :src="promoBanner"> -->
     </div>
 </template>

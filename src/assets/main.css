@@ -33,14 +33,35 @@ a,
   background-color: hsla(160, 100%, 37%, 0.3);;
 }
 
+/* Promo */
+
 .promoSection {
   margin: 0 auto;
   width: 80%;
 }
 
+.promoText {
+  z-index: 1;
+  text-align: center;
+  width: 11rem;
+  padding: 0.2rem 0;
+  border: 2px white solid;
+  border-radius: 15px;
+  color: white;
+}
+
+.promoText h2 {
+  /* color: white; */
+  padding: 0.5rem;
+}
+
 .promoBanner {
   /* margin: 0 auto; */
-  max-width: 35rem;
+  max-width: 45rem;
+  height: 25rem;
+  background-image: url('https://eturgeneva.github.io/toy-store-assets/promo-banner-2.png');
+  background-size: cover;
+  background-position: center -25px;
 }
 
 /* @media (hover: hover) {
