@@ -3,7 +3,8 @@ import { reactive, ref } from 'vue';
 export const store = reactive({
     loggedIn: false,
     loggedInUser: {},
-    userProfile: {},
+    // userProfile: {},
+    selectedProduct: {},
     cartId: null,
     cartIsLoading: true,
     cart: {
@@ -14,9 +15,9 @@ export const store = reactive({
         this.loggedIn = boolean;
     },
 
-    setUserProfile(profileObject) {
-        this.userProfile = profileObject;
-    },
+    // setUserProfile(profileObject) {
+    //     this.userProfile = profileObject;
+    // },
 
     setCartId(cartId) {
         this.cartId = cartId;

@@ -77,7 +77,7 @@ function toggleEditProfile() {
 async function editUserInfo() {
     editProfile.value = false;
     try {
-        const response = await fetch(`http://localhost:3000/users/${loggedInUser.value.id}`, {
+        const response = await fetch(`http://localhost:3000/users/${store.loggedInUser.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
