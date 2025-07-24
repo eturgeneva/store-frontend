@@ -27,22 +27,21 @@ async function getAllProducts() {
     }
 }
 
-async function getProductById(productId) {
-    try {
-        const response = await fetch(`http://localhost:3000/products/${productId}`);
-        if (!response.ok) {
-            throw new Error('Failed to load the product');
-        }
+// async function getProductById(productId) {
+//     try {
+//         const response = await fetch(`http://localhost:3000/products/${productId}`);
+//         if (!response.ok) {
+//             throw new Error('Failed to load the product');
+//         }
 
-        // selectedProduct.value = await response.json();
-        const productResponse = await response.json();
-        setSelectedProduct(productResponse);
-        console.log('Selected product', store.selectedProduct);
-        return;
-    } catch (err) {
-        console.error(err);
-    }
-}
+//         const productResponse = await response.json();
+//         store.setSelectedProduct(productResponse);
+//         console.log('Selected product', store.selectedProduct);
+//         return;
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
 async function getCart() {
     try {
@@ -112,9 +111,11 @@ async function createUpdateCart(productId) {
     <div class="products">
         <div class="productsSection">
             <div v-for="product in products" :key="product.id" class="productPreview">
-                <img :src="productImgURL + product.name + '.png'" 
-                class="productImage"
-                @click="getProductById(product.id)">
+                <router-link :to="`/products/${product.id}`">
+                    <img :src="productImgURL + product.name + '.png'" 
+                    class="productImage">
+                    <!-- @click="getProductById(product.id)"> -->
+                </router-link>
                 <div>{{ product.name }}</div>
                 <div>{{ product.price_cents / 100 + ' €'}}</div>
                 <div>

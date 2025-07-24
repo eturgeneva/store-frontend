@@ -1,12 +1,36 @@
 <script setup>
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { store } from '../store.js';
 
-// const props = defineProps(['productId']);
+const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
+const route = useRoute();
+const productId = route.params.id;
+
+onMounted(() => {
+    getProductById(productId);
+})
+
+async function getProductById(productId) {
+    try {
+        const response = await fetch(`http://localhost:3000/products/${productId}`);
+        if (!response.ok) {
+            throw new Error('Failed to load the product');
+        }
+
+        const productResponse = await response.json();
+        store.setSelectedProduct(productResponse);
+        console.log('Selected product', store.selectedProduct);
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 </script>
 
 <template>
-    <div v-if="selectedProduct.name" class="productDetails">
+    <div v-if="store.selectedProduct" class="productDetails">
             <div class="product">
                 <h3>Product Details</h3>
                 <div>Name: {{ store.selectedProduct.name }}</div>
