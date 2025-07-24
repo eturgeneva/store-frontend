@@ -32,21 +32,28 @@ async function getProductById(productId) {
 <template>
     <div v-if="store.selectedProduct" class="productDetails">
             <div class="product">
-                <h3>Product Details</h3>
-                <div>Name: {{ store.selectedProduct.name }}</div>
-                <div>Price: {{ store.selectedProduct.price_cents / 100 + ' €'}}</div>
-                <img :src="productImgURL + store.selectedProduct.name + '.png'" class="productDetailsImage">
+                <div>
+                    <h3>Product Details</h3>
+                    <div>Name: {{ store.selectedProduct.name }}</div>
+                    <div>Price: {{ store.selectedProduct.price_cents / 100 + ' €'}}</div>
+                    <img :src="productImgURL + store.selectedProduct.name + '.png'" class="productDetailsImage">
+                </div>
+            <div class="productDescription">
+                <h4>Description:</h4>
+                <div>Meet {{ store.selectedProduct.name}}, the ultimate cuddle companion! With his velvety-soft fur, gentle smile, and droopy eyelids, Benny is always ready for nap time—whether it's a lazy afternoon snooze or a bedtime snuggle. Hand-stitched details and ultra-plush stuffing make him irresistibly huggable and safe for all ages. Whether you're gifting a little one or adding charm to your own cozy corner, Benny brings warmth, comfort, and a touch of woodland magic wherever he goes.</div>
+
+                <h4>Size:</h4>
+                <div>12 inches tall</div>
+                <h4>Material:</h4>
+                <div>Hypoallergenic, ultra-soft polyester</div>
+                <h4>Recommended Age:</h4>
+                <div>0+</div>
+                <h4>Care Instructions:</h4>
+                <div>Spot clean or gentle hand wash. Air dry only.</div>
+
+                <div>Bring Benny home and let the snuggles begin!</div>
+            </div>
+            
             </div>
         </div>
 </template>
-
-<!-- <template>
-    <div v-if="selectedProduct.name" class="productDetails">
-            <div class="product">
-                <h3>Product Details</h3>
-                <div>Name: {{ selectedProduct.name }}</div>
-                <div>Price: {{ selectedProduct.price_cents / 100 + ' €'}}</div>
-                <img :src="productImgURL + selectedProduct.name + '.png'" class="productDetailsImage">
-            </div>
-        </div>
-</template> -->
