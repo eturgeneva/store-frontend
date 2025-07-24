@@ -6,10 +6,6 @@ onBeforeMount(async () => {
     await getCart();
 });
 
-// onMounted(async () => {
-//     await getCart();
-// });
-
 async function getCart() {
     store.setCartIsLoading(true);
     try {
@@ -44,24 +40,6 @@ async function getCart() {
         store.setCartIsLoading(false);
     }
 }
-
-// const cart = ref({});
-
-// async function getCart() {
-//     try {
-//         console.log('Fetching cart');
-//         const response = await fetch('http://localhost:3000/carts/me', {
-//             credentials: 'include'
-//         })
-//         if (response.ok) {
-//             cart.value = await response.json();
-//             console.log('Cart', cart);
-//             return;
-//         }
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
 
 </script>
 
