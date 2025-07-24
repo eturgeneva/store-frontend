@@ -12,6 +12,5 @@ const promoBanner = productImgURL + "promo-banner-2.png"
                 <h2>Buy them all!</h2>
             </div>
         </div>
-        <!-- <img class="promoBanner" :src="promoBanner"> -->
     </div>
 </template>

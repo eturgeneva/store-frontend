@@ -35,40 +35,6 @@ async function getProfile() {
     }
 }
 
-// // Login User:
-// async function loginUser() {
-//     console.log('loggedIn', store.loggedIn);
-
-//     try {
-//         const response = await fetch('http://localhost:3000/login', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({ email: email.value, password: password.value }),
-//             credentials: 'include'
-//         });
-//         console.log('Response', response);
-//         if (!response.ok) {
-//             throw new Error('Login failed');
-//         }
-
-//         store.setLoggedIn(true);
-//         console.log('loggedIn', store.loggedIn);
-
-//         await getProfile();
-//         console.log('loggedInUser', store.loggedInUser);
-
-//     } catch (err) {
-//         console.error(err);
-//         store.setLoggedIn(false);
-//         console.log('loggedIn', store.loggedIn);
-//     }
-// }
-
-// // Login User with Google:
-// async function loginUserGoogle() {
-//     window.location.href = 'http://localhost:3000/login/google';
-// }
-
 // Update User Info:
 function toggleEditProfile() {
     editProfile.value = !editProfile.value;
@@ -121,14 +87,12 @@ async function logoutUser() {
 
 <template>
     <div class="userArea">
-        <!-- <div class="userLogin" v-if="!store.loggedIn || store.userProfile.first_name === 'guest'"> -->
         <div class="userLogin" v-if="!store.loggedIn">
             <h3>Welcome, guest</h3>
             <UserLogin :onLogin="getProfile"/>
             <UserRegister />
         </div>
 
-        <!-- <div class="userProfile" v-if="store.loggedIn && store.loggedInUser.first_name !== 'guest'"> -->
         <div class="userProfile" v-if="store.loggedIn">
             <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
             <div>First Name: {{ store.loggedInUser.first_name }}
