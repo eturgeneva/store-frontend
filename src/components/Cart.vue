@@ -2,13 +2,16 @@
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+// const { appContext } = getCurrentInstance();
+// const $api = appContext.config.globalProperties.$api;
+
+const props = defineProps(['api']);
 
 onBeforeMount(async () => {
     store.setCartIsLoading(true);
     console.log('Store cart property:', store.cart.products);
-    const cart = await $api.getCart();
+    // const cart = await $api.getCart();
+    const cart = await props.api.getCart();
     if (cart) {
         store.setCart(cart);
         console.log('Store cart property:', store.cart.products);
