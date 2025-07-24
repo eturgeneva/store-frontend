@@ -5,7 +5,7 @@ import { store } from '../store.js';
 
 <template>
     <header>
-        <h3>Logo</h3>
+        <h3 id="logo"><span>Toyz</span>Store</h3>
         <nav>
             <router-link to="/">Home</router-link> |
             <router-link to="/products">Products</router-link> |
