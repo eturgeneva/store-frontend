@@ -7,8 +7,13 @@
   font-weight: normal;
 }
 
+body {
+  width: 100%;
+}
+
 main {
   margin: 0 auto;
+  width: 80%;
 }
 
 header {
@@ -28,7 +33,13 @@ a,
   background-color: hsla(160, 100%, 37%, 0.3);;
 }
 
+.promoSection {
+  margin: 0 auto;
+  width: 80%;
+}
+
 .promoBanner {
+  /* margin: 0 auto; */
   max-width: 35rem;
 }
 
@@ -131,13 +142,14 @@ button:hover {
 
 /* Products*/
 .products {
-  display: flex;
+  /* display: flex;
+  width: 100%; */
 }
 
 .productsSection {
   display: flex;
   flex-flow: wrap;
-  width: 80%;
+  width: 100%;
 }
 
 .productImage {
