@@ -5,7 +5,7 @@ import { store } from '@/store';
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const products = ref([]);
-const selectedProduct = ref({});
+// const selectedProduct = ref({});
 onBeforeMount(() => {
     getAllProducts();
 })
@@ -34,8 +34,10 @@ async function getProductById(productId) {
             throw new Error('Failed to load the product');
         }
 
-        selectedProduct.value = await response.json();
-        console.log('Selected product', selectedProduct.value);
+        // selectedProduct.value = await response.json();
+        const productResponse = await response.json();
+        setSelectedProduct(productResponse);
+        console.log('Selected product', store.selectedProduct);
         return;
     } catch (err) {
         console.error(err);

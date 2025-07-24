@@ -19,6 +19,10 @@ export const store = reactive({
     //     this.userProfile = profileObject;
     // },
 
+    setSelectedProduct(productObject) {
+        this.selectedProduct = productObject;
+    },
+
     setCartId(cartId) {
         this.cartId = cartId;
     },
