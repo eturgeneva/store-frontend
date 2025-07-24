@@ -58,17 +58,19 @@ a,
   /* border: 2px white solid; */
   border-radius: 10px;
   /* color: rgb(255, 228, 212); */
-  color: rgb(230, 205, 191);
+  /* color: rgb(230, 205, 191); */
+  color: #dcb7a2;
   /* background-color: hsla(26, 72%, 76%, 0.2); */
   /* background-color: hsla(106, 72%, 76%, 0.9); */
   /* background-color: hsla(160, 100%, 37%, 0.7); */
   background-color: white;
+  filter: drop-shadow(0 0 5px #dcb7a2);
 }
 
 .promoText h2 {
   /* color: white; */
   padding: 0.3rem;
-  font-family: 'Michroma';
+  font-family: 'Helvetica', sans-serif;
   font-size: 1.5rem;
 }
 
