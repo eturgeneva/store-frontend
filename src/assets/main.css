@@ -7,6 +7,10 @@
   font-weight: normal;
 }
 
+main {
+  margin: 0 auto;
+}
+
 header {
   display: flex;
   justify-content: space-between;
@@ -22,6 +26,10 @@ a,
 
 .router-link-active {
   background-color: hsla(160, 100%, 37%, 0.3);;
+}
+
+.promoBanner {
+  max-width: 35rem;
 }
 
 /* @media (hover: hover) {
