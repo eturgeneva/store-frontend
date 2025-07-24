@@ -184,14 +184,9 @@ button:hover {
 /* Products*/
 
 .product {
-  margin: 0 auto;
   display: flex;
-  width: 75%;
-}
-
-.products {
-  /* display: flex;
-  width: 100%; */
+  margin: 0 auto;
+  /* width: 85%; */
 }
 
 .productsSection {
@@ -232,7 +227,7 @@ button:hover {
 }
 
 .productDescription {
-  /* width: 70%; */
+  width: 50%;
   margin-left: 2rem;
 }
 

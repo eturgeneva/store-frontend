@@ -102,7 +102,7 @@ async function createUpdateCart(productId) {
                 </router-link>
                 <div>{{ product.name }}</div>
                 <div>{{ product.price_cents / 100 + ' €'}}</div>
-                <div>
+                <div class="buttonContainer">
                     <button type="button" class="likeButton">❤</button>
                     <button @click="createUpdateCart(product.id)" type="button" class="buyButton">🛒</button>
                 </div>
