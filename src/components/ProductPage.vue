@@ -12,12 +12,16 @@ const route = useRoute();
 const productId = route.params.id;
 
 onMounted(async () => {
-    const selectedProduct = await $api.getProductById(productId);
-    if (selectedProduct) {
-        store.setSelectedProduct(selectedProduct);
-        console.log('Store selectedProduct property', store.selectedProduct);
-    } else {
-        console.log('Failed to fetch the product');
+    try {
+        const selectedProduct = await $api.getProductById(productId);
+        if (selectedProduct) {
+            store.setSelectedProduct(selectedProduct);
+            console.log('Store selectedProduct property', store.selectedProduct);
+        } else {
+            console.log('Failed to fetch the product');
+        }
+    } catch (err) {
+        console.error(err);
     }
 });
 
