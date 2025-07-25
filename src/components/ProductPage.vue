@@ -43,7 +43,7 @@ onMounted(async () => {
                     </div>
 
                     <h4>Description:</h4>
-                    <div>Meet {{ store.selectedProduct.name}}, the ultimate cuddle companion! With his velvety-soft fur, gentle smile, and droopy eyelids, Benny is always ready for nap time—whether it's a lazy afternoon snooze or a bedtime snuggle. Hand-stitched details and ultra-plush stuffing make him irresistibly huggable and safe for all ages. Whether you're gifting a little one or adding charm to your own cozy corner, Benny brings warmth, comfort, and a touch of woodland magic wherever he goes.</div>
+                    <div>Meet {{ store.selectedProduct.name}}, the ultimate cuddle companion! With his velvety-soft fur, gentle smile, and droopy eyelids, {{ store.selectedProduct.name }} is always ready for nap time—whether it's a lazy afternoon snooze or a bedtime snuggle. Hand-stitched details and ultra-plush stuffing make him irresistibly huggable and safe for all ages. Whether you're gifting a little one or adding charm to your own cozy corner, {{ store.selectedProduct.name }} brings warmth, comfort, and a touch of woodland magic wherever he goes.</div>
 
                     <h4>Size:</h4>
                     <div>12 inches tall</div>
@@ -54,7 +54,7 @@ onMounted(async () => {
                     <h4>Care Instructions:</h4>
                     <div>Spot clean or gentle hand wash. Air dry only.</div>
 
-                    <div>Bring Benny home and let the snuggles begin!</div>
+                    <div>Bring {{ store.selectedProduct.name }} home and let the snuggles begin!</div>
                 </div>
             </div>
         </div>
