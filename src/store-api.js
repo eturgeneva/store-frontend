@@ -40,6 +40,7 @@ export default class StoreApi {
     }
 
     // Cart
+    // Get cart by user
     async getCart() {
         console.log('Fetching cart');
         try {
@@ -66,6 +67,47 @@ export default class StoreApi {
         } catch (err) {
             console.error('Failed to fetch cart', err);
             return false;
+        }
+    }
+
+    // Create new cart
+    async createCart() {
+        try {
+            const response = await fetch(`${this.url}/carts`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({}),
+                credentials: 'include'
+            });
+    
+            if (response.ok) {
+                const responseData = await response.json();
+                return responseData;
+            }
+        } catch (err) {
+            console.error('Failed to create a new cart', err);
+        }
+    }
+
+    // Update existing cart (add product by ID)
+    async updateCart(productId) {
+        try {
+                const response = await fetch('http://localhost:3000/carts/me', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        productId: productId,
+                        cartId: store.cartId,
+                        quantity: 1
+                    }),
+                    credentials: 'include'
+                })
+                const cartUpdateReponse = await response.json();
+                console.log('cart update', cartUpdateReponse);
+                console.log('Store cart update', store.cart);
+                return store.setCart(cartUpdateReponse);
+        } catch (err) {
+            console.error(err);
         }
     }
 }

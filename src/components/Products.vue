@@ -23,21 +23,20 @@ onBeforeMount(async () => {
     }
 });
 
-async function getCart() {
+async function addToCart(productId) {
     try {
-        console.log('Store cart property:', store.cart);
-        console.log('Fetching cart');
-
+        // If a new cart needs to be created
         if (!store.cartId) {
-            const response = await fetch('http://localhost:3000/carts/me', {
-                credentials: 'include'
-            })
-            if (response.ok) {
-                const cart = await response.json();
-                console.log('Cart', cart);
-                store.setCart(cart);
-                console.log('Store cart property:', store.cart);
-                return store.cart;
+            // const newCartRequest = await $api.createCart(productId);
+            const newCartRequest = await $api.createCart();
+            if (newCartRequest) {
+                // store.setCartId(newCartRequest.cartId);
+                // console.log('Store cart ID', store.cartId);
+
+                const newCart = await $api.getCart();
+                store.setCart(newCart);
+                console.log('Newly created cart', store.cart.products);
+                console.log('New store cart ID', store.cartId);
             }
         }
     } catch (err) {
@@ -45,46 +44,46 @@ async function getCart() {
     }
 }
 
-async function createUpdateCart(productId) {
-    try {
-        if (!store.cartId) {
-            const response = await fetch('http://localhost:3000/carts', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({}),
-                credentials: 'include'
-            });
+// async function createUpdateCart(productId) {
+//     try {
+//         if (!store.cartId) {
+//             const response = await fetch('http://localhost:3000/carts', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({}),
+//                 credentials: 'include'
+//             });
     
-            if (response.ok) {
-                const responseData = await response.json();
-                store.setCartId(responseData.cartId);
-                console.log('Store cart ID', store.cartId);
+//             if (response.ok) {
+//                 const responseData = await response.json();
+//                 store.setCartId(responseData.cartId);
+//                 console.log('Store cart ID', store.cartId);
                 
-                // Now fetch the cart:
-                await getCart();
-                // Add the product to the newly created cart:
-                return await createUpdateCart(productId);
-            }
-        } else {
-            const response = await fetch('http://localhost:3000/carts/me', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    productId: productId,
-                    cartId: store.cartId,
-                    quantity: 1
-                }),
-                credentials: 'include'
-            })
-            const cartUpdateReponse = await response.json();
-            console.log('cart update', cartUpdateReponse);
-            console.log('Store cart update', store.cart);
-            return store.setCart(cartUpdateReponse);
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
+//                 // Now fetch the cart:
+//                 await getCart();
+//                 // Add the product to the newly created cart:
+//                 return await createUpdateCart(productId);
+//             }
+//         } else {
+//             const response = await fetch('http://localhost:3000/carts/me', {
+//                 method: 'PUT',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({ 
+//                     productId: productId,
+//                     cartId: store.cartId,
+//                     quantity: 1
+//                 }),
+//                 credentials: 'include'
+//             })
+//             const cartUpdateReponse = await response.json();
+//             console.log('cart update', cartUpdateReponse);
+//             console.log('Store cart update', store.cart);
+//             return store.setCart(cartUpdateReponse);
+//         }
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 </script>
 
 <template>
