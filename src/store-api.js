@@ -2,7 +2,6 @@ export default class StoreApi {
     constructor(url) {
         this.url = url;
     }
-
     // Cart
     async getCart() {
         console.log('Fetching cart');
