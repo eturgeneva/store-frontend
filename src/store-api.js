@@ -2,6 +2,25 @@ export default class StoreApi {
     constructor(url) {
         this.url = url;
     }
+    // Products
+    // Get product by ID
+    async getProductById(productId) {
+    try {
+        const response = await fetch(`${this.url}/products/${productId}`);
+        // if (!response.ok) {
+        //     throw new Error('Failed to load the product');
+        // }
+        if (response.ok) {
+            const product = await response.json();
+            console.log('Product', product);
+            return product;
+        }
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
     // Cart
     async getCart() {
         console.log('Fetching cart');
