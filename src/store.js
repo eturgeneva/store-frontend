@@ -1,9 +1,8 @@
-import { reactive, ref } from 'vue';
+import { reactive, ref, toRefs } from 'vue';
 
-export const store = reactive({
+const state = reactive({
     loggedIn: false,
     loggedInUser: {},
-    // userProfile: {},
     selectedProduct: {},
     cartId: null,
     cartIsLoading: true,
@@ -11,28 +10,50 @@ export const store = reactive({
         products: []
     },
 
-    setLoggedIn(boolean) {
+    // setLoggedIn(boolean) {
+    //     this.loggedIn = boolean;
+    // },
+
+    // setSelectedProduct(productObject) {
+    //     this.selectedProduct = productObject;
+    // },
+
+    // setCartId(cartId) {
+    //     this.cartId = cartId;
+    // },
+
+    // setCartIsLoading(boolean) {
+    //     this.cartIsLoading = boolean;
+    // },
+
+    // setCart(cartData) {
+    //     this.cart.products = cartData.products || [];
+    //     this.cartId = cartData.id || cartData.cartId || null;
+    // }
+});
+
+export const store = {
+    ...toRefs(state),
+        setLoggedIn(boolean) {
         this.loggedIn = boolean;
     },
-
-    // setUserProfile(profileObject) {
-    //     this.userProfile = profileObject;
-    // },
 
     setSelectedProduct(productObject) {
         this.selectedProduct = productObject;
     },
 
     setCartId(cartId) {
-        this.cartId = cartId;
+        console.log('Cart ID', cartId);
+        this.cartId.value = cartId;
+        console.log('Cart ID', this.cartId.value);
     },
 
     setCartIsLoading(boolean) {
-        this.cartIsLoading = boolean;
+        this.cartIsLoading.value = boolean;
     },
 
     setCart(cartData) {
-        this.cart.products = cartData.products || [];
-        this.cartId = cartData.id || cartData.cartId || null;
+        this.cart.value.products = cartData.products || [];
+        // this.cartId.value = cartData.id || cartData.cartId || null;
     }
-});
+}

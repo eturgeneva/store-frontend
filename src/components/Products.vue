@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, onBeforeMount, getCurrentInstance, nextTick } from 'vue';
 import { store } from '@/store';
 
 const { appContext } = getCurrentInstance();
@@ -9,10 +9,29 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const products = ref([]);
 
+console.log('Render', store.cartId.value);
+
+// nextTick(async () => {
+//     try {
+//         // await $api.getCart();
+//         console.log('onBeforeMount store cart ID', store.cartId.value);
+
+//         const fetchedProducts = await $api.getAllProducts();
+//         if (fetchedProducts) {
+//             products.value = fetchedProducts;
+//             console.log('Products', products.value);
+//         } else {
+//             console.log('Failed to fetch products');
+//         }
+//     } catch (err) {
+//         console.error(err);
+//     }
+// });
+
 onBeforeMount(async () => {
     try {
         // await $api.getCart();
-        console.log('store cart ID', store.cartId);
+        console.log('onBeforeMount store cart ID', store.cartId.value);
 
         const fetchedProducts = await $api.getAllProducts();
         if (fetchedProducts) {
@@ -27,32 +46,34 @@ onBeforeMount(async () => {
 });
 
 async function addToCart(productId) {
-    console.log('store cart ID', store.cartId);
+    console.log('Add to cart store cart ID', store.cartId.value);
     // await $api.getCart();
     // console.log('store cart ID', store.cartId);
     try {
         // If a new cart needs to be created
-        if (!store.cartId) {
+        if (!store.cartId.value) {
             const newCartId = await $api.createCart();
+            console.log('new cart ID', newCartId);
 
             if (newCartId) {
                 store.setCartId(newCartId);
                 const newCart = await $api.getCart(newCartId);
                 store.setCart(newCart);
-                console.log('Newly created cart', store.cart.products);
+                console.log('Newly created cart', store.cart.value.products);
                 console.log('New store cart ID', store.cartId);
+                return;
             }
         }
         // If a cart already exists, but needs to be updated
-        const cartUpdate = await $api.updateCart(store.cartId, productId);
+        const cartUpdate = await $api.updateCart(store.cartId.value, productId);
         if (cartUpdate) {
             store.setCart(cartUpdate);
-            console.log('Updated cart', store.cart.products);
-            console.log('Updated cart ID', store.cartId);
+            console.log('Updated cart', store.cart.value.products);
+            console.log('Updated cart ID', store.cartId.value);
 
-            const updatedCart = await $api.getCart();
+            const updatedCart = await $api.getCart(store.cartId.value);
             store.setCart(updatedCart);
-            console.log('Newly updated cart', store.cart.products);
+            console.log('Newly updated cart', store.cart.value.products);
 
         } else {
             console.log('Failed to update cart');
@@ -66,6 +87,7 @@ async function addToCart(productId) {
 
 <template>
     <!-- <div class="products"> -->
+        <h1>{{ store.cartId }}</h1>
         <div class="productsSection">
             <div v-for="product in products" :key="product.id" class="productPreview">
                 <router-link :to="`/products/${product.id}`">
