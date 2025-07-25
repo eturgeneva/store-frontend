@@ -8,6 +8,9 @@ const $api = appContext.config.globalProperties.$api;
 // const props = defineProps(['api']);
 
 onBeforeMount(async () => {
+    if (!store.cartId) {
+        return;
+    }
     store.setCartIsLoading(true);
     console.log('Store cart property:', store.cart.products);
     const cart = await $api.getCart();

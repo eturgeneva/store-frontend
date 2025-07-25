@@ -41,20 +41,20 @@ export default class StoreApi {
 
     // Cart
     // Get cart by user
-    async getCart() {
+    async getCart(cartId) {
         console.log('Fetching cart');
         try {
-            const userResponse = await fetch(`${this.url}/users/me`, {
-                credentials: 'include'
-            });
-            const user = await userResponse.json();
-            const cartId = user.cartId;
-            console.log('cartId', cartId);
+            // const userResponse = await fetch(`${this.url}/users/me`, {
+            //     credentials: 'include'
+            // });
+            // const user = await userResponse.json();
+            // const cartId = user.cartId;
+            // console.log('cartId', cartId);
 
-            if (!cartId) {
-                console.warn('No cart ID found for user');
-                return false;
-            }
+            // if (!cartId) {
+            //     console.warn('No cart ID found for user');
+            //     return false;
+            // }
             
             const cartResponse = await fetch(`${this.url}/carts/${cartId}`, {
                 credentials: 'include'
@@ -82,7 +82,7 @@ export default class StoreApi {
     
             if (response.ok) {
                 const responseData = await response.json();
-                return responseData;
+                return responseData.cartId;
             }
         } catch (err) {
             console.error('Failed to create a new cart', err);

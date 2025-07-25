@@ -11,6 +11,9 @@ const products = ref([]);
 
 onBeforeMount(async () => {
     try {
+        // await $api.getCart();
+        console.log('store cart ID', store.cartId);
+
         const fetchedProducts = await $api.getAllProducts();
         if (fetchedProducts) {
             products.value = fetchedProducts;
@@ -24,27 +27,33 @@ onBeforeMount(async () => {
 });
 
 async function addToCart(productId) {
+    console.log('store cart ID', store.cartId);
+    // await $api.getCart();
+    // console.log('store cart ID', store.cartId);
     try {
         // If a new cart needs to be created
         if (!store.cartId) {
-            // const newCartRequest = await $api.createCart(productId);
-            const newCartRequest = await $api.createCart();
-            if (newCartRequest) {
-                // store.setCartId(newCartRequest.cartId);
-                // console.log('Store cart ID', store.cartId);
+            const newCartId = await $api.createCart();
 
-                const newCart = await $api.getCart();
+            if (newCartId) {
+                store.setCartId(newCartId);
+                const newCart = await $api.getCart(newCartId);
                 store.setCart(newCart);
                 console.log('Newly created cart', store.cart.products);
                 console.log('New store cart ID', store.cartId);
             }
         }
         // If a cart already exists, but needs to be updated
-        const updatedCart = await $api.updateCart(store.cartId, productId);
-        if (updatedCart) {
-            store.setCart(updatedCart);
+        const cartUpdate = await $api.updateCart(store.cartId, productId);
+        if (cartUpdate) {
+            store.setCart(cartUpdate);
             console.log('Updated cart', store.cart.products);
             console.log('Updated cart ID', store.cartId);
+
+            const updatedCart = await $api.getCart();
+            store.setCart(updatedCart);
+            console.log('Newly updated cart', store.cart.products);
+
         } else {
             console.log('Failed to update cart');
         }
@@ -53,46 +62,6 @@ async function addToCart(productId) {
     }
 }
 
-// async function createUpdateCart(productId) {
-//     try {
-//         if (!store.cartId) {
-//             const response = await fetch('http://localhost:3000/carts', {
-//                 method: 'POST',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify({}),
-//                 credentials: 'include'
-//             });
-    
-//             if (response.ok) {
-//                 const responseData = await response.json();
-//                 store.setCartId(responseData.cartId);
-//                 console.log('Store cart ID', store.cartId);
-                
-//                 // Now fetch the cart:
-//                 await getCart();
-//                 // Add the product to the newly created cart:
-//                 return await createUpdateCart(productId);
-//             }
-//         } else {
-//             const response = await fetch('http://localhost:3000/carts/me', {
-//                 method: 'PUT',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify({ 
-//                     productId: productId,
-//                     cartId: store.cartId,
-//                     quantity: 1
-//                 }),
-//                 credentials: 'include'
-//             })
-//             const cartUpdateReponse = await response.json();
-//             console.log('cart update', cartUpdateReponse);
-//             console.log('Store cart update', store.cart);
-//             return store.setCart(cartUpdateReponse);
-//         }
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
 </script>
 
 <template>

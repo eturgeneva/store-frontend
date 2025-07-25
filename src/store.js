@@ -33,6 +33,6 @@ export const store = reactive({
 
     setCart(cartData) {
         this.cart.products = cartData.products || [];
-        this.cardId = cartData.id || cartData.cartId || null;
+        this.cartId = cartData.id || cartData.cartId || null;
     }
 });
