@@ -1,31 +1,27 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '@/store';
+
+const { appContext } = getCurrentInstance();
+const $api = appContext.config.globalProperties.$api;
 
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const products = ref([]);
-// const selectedProduct = ref({});
-onBeforeMount(() => {
-    getAllProducts();
-})
-// const products = ref(['item1', 'item2']);
 
-async function getAllProducts() {
+onBeforeMount(async () => {
     try {
-        console.log('Fetching products');
-        const response = await fetch('http://localhost:3000/products');
-        if (!response.ok) {
-            throw new Error('Failed to load products');
+        const fetchedProducts = await $api.getAllProducts();
+        if (fetchedProducts) {
+            products.value = fetchedProducts;
+            console.log('Products', products.value);
+        } else {
+            console.log('Failed to fetch products');
         }
-
-        products.value = await response.json();
-        console.log('Products', products.value);
-        return;
     } catch (err) {
         console.error(err);
     }
-}
+});
 
 async function getCart() {
     try {

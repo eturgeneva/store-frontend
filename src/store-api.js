@@ -3,8 +3,27 @@ export default class StoreApi {
         this.url = url;
     }
     // Products
+    // Get all products
+    async getAllProducts() {
+        console.log('Fetching products');
+        try {
+            const response = await fetch(`${this.url}/products`);
+            if (!response.ok) {
+                throw new Error('Failed to load products');
+            }
+            const products = await response.json();
+            console.log('Products', products);
+            return products;
+
+        } catch (err) {
+            console.error('Failed to fetched all products', err);
+            return false;
+        }
+    }
+
     // Get product by ID
     async getProductById(productId) {
+        console.log('Fetching a product by ID');
         try {
             const response = await fetch(`${this.url}/products/${productId}`);
             if (!response.ok) {
@@ -23,7 +42,6 @@ export default class StoreApi {
     // Cart
     async getCart() {
         console.log('Fetching cart');
-
         try {
             const userResponse = await fetch(`${this.url}/users/me`, {
                 credentials: 'include'
@@ -46,7 +64,7 @@ export default class StoreApi {
                 return cart;
             }
         } catch (err) {
-            console.error(err);
+            console.error('Failed to fetch cart', err);
             return false;
         }
     }
