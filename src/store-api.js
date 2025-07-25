@@ -86,28 +86,35 @@ export default class StoreApi {
             }
         } catch (err) {
             console.error('Failed to create a new cart', err);
+            return false;
         }
     }
 
     // Update existing cart (add product by ID)
-    async updateCart(productId) {
+    async updateCart(cartId, productId) {
         try {
-                const response = await fetch('http://localhost:3000/carts/me', {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        productId: productId,
-                        cartId: store.cartId,
-                        quantity: 1
-                    }),
-                    credentials: 'include'
-                })
+            const response = await fetch(`${this.url}/carts/me`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    productId: productId,
+                    cartId: cartId,
+                    quantity: 1
+                }),
+                credentials: 'include'
+            });
+
+            if (response.ok) {
                 const cartUpdateReponse = await response.json();
                 console.log('cart update', cartUpdateReponse);
-                console.log('Store cart update', store.cart);
-                return store.setCart(cartUpdateReponse);
+    
+                // console.log('Store cart update', store.cart);
+                // return store.setCart(cartUpdateReponse);
+                return cartUpdateReponse;
+            }
         } catch (err) {
-            console.error(err);
+            console.error('Failed to update cart', err);
+            return false;
         }
     }
 }

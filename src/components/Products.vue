@@ -39,6 +39,15 @@ async function addToCart(productId) {
                 console.log('New store cart ID', store.cartId);
             }
         }
+        // If a cart already exists, but needs to be updated
+        const updatedCart = await $api.updateCart(store.cartId, productId);
+        if (updatedCart) {
+            store.setCart(updatedCart);
+            console.log('Updated cart', store.cart.products);
+            console.log('Updated cart ID', store.cartId);
+        } else {
+            console.log('Failed to update cart');
+        }
     } catch (err) {
         console.error(err);
     }
@@ -99,7 +108,7 @@ async function addToCart(productId) {
                 <div>{{ product.price_cents / 100 + ' €'}}</div>
                 <div class="buttonContainer">
                     <button type="button" class="likeButton">❤</button>
-                    <button @click="createUpdateCart(product.id)" type="button" class="buyButton">🛒</button>
+                    <button @click="addToCart(product.id)" type="button" class="buyButton">🛒</button>
                 </div>
             </div>
         </div>
