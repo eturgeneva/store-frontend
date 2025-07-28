@@ -13,29 +13,22 @@ onBeforeMount(async () => {
     console.log('Store cart ID', store.cartId);
     console.log('Logged in user', store.loggedInUser);
 
-    if (!store.cartId) {
+    let cartId = store.cartId;
+
+    if (!cartId) {
         const user = await $api.getUser();
 
-        if (user && user.cartId) {
-            const cartId = user.cartId;
-            console.log('cartId', cartId);
-            const cart = await $api.getCart(cartId);
-            if (cart) {
-                store.setCartIsLoading(false);
-                store.setCart(cart);
-                console.log('Store cart property:', store.cart.products);
-                return;
-            }
-        }
-
-        if (!user.cartId) {
+        if (!user || !user.cartId) {
             console.log('No cart ID found for user or the cart is empty');
             return;
         }
+        cartId = user.cartId;
+        console.log('cartId', cartId);
+        store.setCartId(cartId);
     }
     store.setCartIsLoading(true);
     console.log('Store cart property:', store.cart.products);
-    const cart = await $api.getCart(store.cartId);
+    const cart = await $api.getCart(cartId);
 
     if (cart) {
         store.setCart(cart);
