@@ -13,7 +13,7 @@ console.log('Render', store.cartId);
 
 onBeforeMount(async () => {
     try {
-        // await $api.getCart();
+        // await $api.getCart(store.cartId);
         console.log('onBeforeMount store cart ID', store.cartId);
 
         const fetchedProducts = await $api.getAllProducts();
@@ -30,8 +30,7 @@ onBeforeMount(async () => {
 
 async function addToCart(productId) {
     console.log('Add to cart store cart ID', store.cartId);
-    // await $api.getCart();
-    // console.log('store cart ID', store.cartId);
+
     try {
         // If a new cart needs to be created
         if (!store.cartId) {
@@ -44,7 +43,6 @@ async function addToCart(productId) {
                 store.setCart(newCart);
                 console.log('Newly created cart', store.cart.products);
                 console.log('New store cart ID', store.cartId);
-                // return;
             } else {
                 console.log('Failed to create cart');
             }

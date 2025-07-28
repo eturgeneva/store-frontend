@@ -32,8 +32,13 @@ onBeforeMount(async () => {
             <div v-if="store.cart.products.length === 0">Your cart is empty</div>
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
             <div v-else>
-                <div v-for="product in store.cart.products" :key="product.product_id">
+                <div v-for="product in store.cart.products" 
+                :key="product.product_id"
+                class="product">
                     <div>{{ product.name }}</div>
+                    <div class="buttonContainer">
+                        <button type="button"></button>
+                    </div>
                 </div>
             </div>
         </div>
