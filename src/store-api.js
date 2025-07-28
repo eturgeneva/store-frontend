@@ -46,6 +46,25 @@ export default class StoreApi {
     }
 
     // User login
+    async loginUser(loginData) {
+        try {
+            const response = await fetch(`${this.url}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(loginData),
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+            return true;
+
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
 
     // Logout User
     async logoutUser() {
@@ -60,7 +79,7 @@ export default class StoreApi {
                 throw new Error('Logout failed');
             }
             return true;
-            
+
         } catch (err) {
             console.error(err);
             return false;

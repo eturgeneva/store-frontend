@@ -1,6 +1,9 @@
 <script setup>
 import { store } from '../store.js';
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
+
+const { appContext } = getCurrentInstance();
+const $api = appContext.config.globalProperties.$api;
 
 const props = defineProps(['onLogin']);
 
@@ -10,25 +13,18 @@ const password = ref('');
 // Login User:
 async function loginUser() {
     console.log('loggedIn', store.loggedIn);
+    const userLoginData = { email: email.value, password: password.value };
 
     try {
-        const response = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email.value, password: password.value }),
-            credentials: 'include'
-        });
+        const response = await $api.loginUser(userLoginData);
         console.log('Response', response);
-        if (!response.ok) {
-            throw new Error('Login failed');
+        if (response) {
+            // store.setLoggedIn(true);
+            await props.onLogin();
         }
-
-        store.setLoggedIn(true);
-        console.log('loggedIn', store.loggedIn);
-
-        // await getProfile();
-        await props.onLogin();
+        // await props.onLogin();
         console.log('loggedInUser', store.loggedInUser);
+        console.log('loggedIn', store.loggedIn);
 
     } catch (err) {
         console.error(err);
