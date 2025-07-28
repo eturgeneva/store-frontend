@@ -7,7 +7,7 @@ export default class StoreApi {
     // Get user profile (/me)
     async getUser() {
         try {
-            const response = await fetch('http://localhost:3000/users/me', {
+            const response = await fetch(`${this.url}/users/me`, {
                     credentials: 'include'
             })
             if (!response.ok) {
@@ -25,25 +25,20 @@ export default class StoreApi {
     // Update user by ID
     async updateUser(userId, userData) {
         try {
-            const response = await fetch(`http://localhost:3000/users/${userId}`, {
+            const response = await fetch(`${this.url}/users/${userId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData),
-                // body: JSON.stringify({ 
-                //     first_name: store.loggedInUser.first_name, 
-                //     last_name: store.loggedInUser.last_name, 
-                //     address: store.loggedInUser.address 
-                // }),
                 credentials: 'include'
             });
-            
+
             if (!response.ok) {
                 throw new Error('Failed to update user data');
             }
 
             const updatedUser = await response.json();
             return updatedUser;
-            // Object.assign(store.loggedInUser, { ...result });
+
         } catch (err) {
             console.error(err);
             return false;

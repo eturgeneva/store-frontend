@@ -32,50 +32,16 @@ async function getProfile() {
 
             store.setLoggedIn(user.id !== null);
             if (user.id !== null) {
-                // store.setLoggedInUser(user);
-                store.setLoggedIn(true);
+                // store.setLoggedIn(true);
                 Object.assign(store.loggedInUser, user);
             }
             console.log('Store loggedIn', store.loggedIn);
-
-        //     if (user.first_name === 'guest') {
-        //         store.setLoggedIn(false);
-
-        //     } else {
-        //         store.setLoggedIn(true);
-        //         store.setLoggedInUser(user);
-
-        //         console.log('store loggedIn', store.loggedIn);
-        //         console.log('store loggedInUser', store.loggedInUser);
-        //     }
-        // } else {
-        //     console.log('Failed to get profile');
-        //     store.setLoggedIn(false);
+            // console.log('store loggedInUser', store.loggedInUser);
         }
     } catch (err) {
         console.error(err);
     }
 }
-
-// Get Profile
-// async function getProfile() {
-//     console.log('user profile onBeforeMount', store.loggedInUser);
-//     try {
-//         const response = await fetch('http://localhost:3000/users/me', {
-//                 credentials: 'include'
-//         })
-//         if (response.ok) {
-//             const userResponse = await response.json();
-//             store.setLoggedIn(userResponse.id !== null);
-            
-//             Object.assign(store.loggedInUser, { ...userResponse });
-//             return;
-//         }
-//         store.setLoggedIn(false);
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
 
 // Update User Info:
 function toggleEditProfile() {
@@ -93,21 +59,11 @@ async function editUserInfo() {
     console.log('User data to edit', userData);
 
     try {
-        // const response = await fetch(`http://localhost:3000/users/${store.loggedInUser.id}`, {
-        //     method: 'PUT',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ 
-        //         first_name: store.loggedInUser.first_name, 
-        //         last_name: store.loggedInUser.last_name, 
-        //         address: store.loggedInUser.address 
-        //     }),
-        //     credentials: 'include'
-        // });
         const updatedUser = await $api.updateUser(store.loggedInUser.id, userData);
+
         if (updatedUser) {
             console.log('Updated user', updatedUser);
             Object.assign(store.loggedInUser, { ...updatedUser });
-            // store.setLoggedInUser(updatedUser);
         } else {
             console.log('Failed to update user info');
         }
