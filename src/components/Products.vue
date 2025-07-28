@@ -71,21 +71,23 @@ async function addToCart(productId) {
 </script>
 
 <template>
-    <!-- <div class="products"> -->
-        <h1>{{ store.cartId }}</h1>
-        <div class="productsSection">
-            <div v-for="product in products" :key="product.id" class="productPreview">
-                <router-link :to="`/products/${product.id}`">
-                    <img :src="productImgURL + product.name + '.png'" 
-                    class="productImage">
-                </router-link>
-                <div>{{ product.name }}</div>
-                <div>{{ product.price_cents / 100 + ' €'}}</div>
-                <div class="buttonContainer">
-                    <button type="button" class="likeButton">❤</button>
-                    <button @click="addToCart(product.id)" type="button" class="buyButton">🛒</button>
+    <main>
+        <!-- <div class="products"> -->
+            <!-- <h1>{{ store.cartId }}</h1> -->
+            <div class="productsSection">
+                <div v-for="product in products" :key="product.id" class="productPreview">
+                    <router-link :to="`/products/${product.id}`">
+                        <img :src="productImgURL + product.name + '.png'" 
+                        class="productImage">
+                    </router-link>
+                    <div>{{ product.name }}</div>
+                    <div>{{ product.price_cents / 100 + ' €'}}</div>
+                    <div class="buttonContainer">
+                        <button type="button" class="likeButton">❤</button>
+                        <button @click="addToCart(product.id)" type="button" class="buyButton">🛒</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    <!-- </div> -->
+        <!-- </div> -->
+    </main>
 </template>
