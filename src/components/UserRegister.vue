@@ -20,6 +20,7 @@ function comparePasswords(password1, password2) {
 
 async function registerUser({ email, password, passwordConfirm, firstName, lastName, username }) {
     console.log('Register button clicked');
+    // console.log('Registration data', email, password, passwordConfirm, firstName, lastName, username);
 
     const userData = { 
                         email: email, 
