@@ -32,8 +32,11 @@ async function getProfile() {
 
             store.setLoggedIn(user.id !== null);
             if (user.id !== null) {
-                store.setLoggedInUser(user);
+                // store.setLoggedInUser(user);
+                store.setLoggedIn(true);
+                Object.assign(store.loggedInUser, user);
             }
+            console.log('Store loggedIn', store.loggedIn);
 
         //     if (user.first_name === 'guest') {
         //         store.setLoggedIn(false);
@@ -103,11 +106,12 @@ async function editUserInfo() {
         const updatedUser = await $api.updateUser(store.loggedInUser.id, userData);
         if (updatedUser) {
             console.log('Updated user', updatedUser);
-            store.setLoggedInUser(updatedUser);
+            Object.assign(store.loggedInUser, { ...updatedUser });
+            // store.setLoggedInUser(updatedUser);
         } else {
             console.log('Failed to update user info');
         }
-        // Object.assign(store.loggedInUser, { ...result });
+
     } catch (err) {
         console.error(err);
     }
