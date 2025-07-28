@@ -4,9 +4,8 @@ export default class StoreApi {
     }
 
     // Users
-    // Get user profile
+    // Get user profile (/me)
     async getUser() {
-        // console.log('user profile onBeforeMount', store.loggedInUser);
         try {
             const response = await fetch('http://localhost:3000/users/me', {
                     credentials: 'include'
@@ -15,11 +14,36 @@ export default class StoreApi {
                 throw new Error('Failed to fetch user profile');
             }
             const userResponse = await response.json();
-            // store.setLoggedIn(userResponse.id !== null);
-
-            // Object.assign(store.loggedInUser, { ...userResponse });
             return userResponse;
-            // store.setLoggedIn(false);
+
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
+
+    // Update user by ID
+    async updateUser(userId, userData) {
+        try {
+            const response = await fetch(`http://localhost:3000/users/${userId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData),
+                // body: JSON.stringify({ 
+                //     first_name: store.loggedInUser.first_name, 
+                //     last_name: store.loggedInUser.last_name, 
+                //     address: store.loggedInUser.address 
+                // }),
+                credentials: 'include'
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to update user data');
+            }
+
+            const updatedUser = await response.json();
+            return updatedUser;
+            // Object.assign(store.loggedInUser, { ...result });
         } catch (err) {
             console.error(err);
             return false;
@@ -66,7 +90,7 @@ export default class StoreApi {
     }
 
     // Cart
-    // Get cart by cartId
+    // Get cart by cart ID
     async getCart(cartId) {
         console.log('Fetching cart');
         try {
@@ -116,7 +140,7 @@ export default class StoreApi {
         }
     }
 
-    // Update existing cart (add product by ID)
+    // Update existing cart by ID (add product by ID)
     async updateCart(cartId, productId) {
         try {
             const response = await fetch(`${this.url}/carts/me`, {
