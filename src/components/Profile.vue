@@ -31,6 +31,9 @@ async function getProfile() {
             console.log('User cart ID:', user.cartId);
 
             store.setLoggedIn(user.id !== null);
+            if (user.id !== null) {
+                store.setLoggedInUser(user);
+            }
 
         //     if (user.first_name === 'guest') {
         //         store.setLoggedIn(false);
@@ -146,7 +149,8 @@ async function logoutUser() {
             <!-- </main> -->
     
             <div class="userProfile" v-if="store.loggedIn">
-                <h1>Welcome {{ store.loggedInUser.first_name || 'Guest' }}</h1>
+                <!-- <h1>Welcome {{ store.loggedInUser.first_name || 'Guest' }}</h1> -->
+                <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
                 <div>First Name: {{ store.loggedInUser.first_name }}
                     <input v-if="editProfile" v-model="store.loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
                 </div>
