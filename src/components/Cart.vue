@@ -10,14 +10,40 @@ const $api = appContext.config.globalProperties.$api;
 const productQuantity = ref(null);
 
 onBeforeMount(async () => {
-    console.log('231123123', store.cartId);
+    console.log('Store cart ID', store.cartId);
+    console.log('Logged in user', store.loggedInUser);
     if (!store.cartId) {
+        // const cart = await $api.getCart(store.cartId);
+        // if (cart) {
+        //     store.setCart(cart);
+        //     console.log('Store cart property:', store.cart.products);
+        //     return;
+        // }
+
+        const user = await $api.getUser();
+        if (user) {
+            const cartId = user.cartId;
+            console.log('cartId', cartId);
+            const cart = await $api.getCart(cartId);
+            if (cart) {
+                store.setCartIsLoading(false);
+                store.setCart(cart);
+                console.log('Store cart property:', store.cart.products);
+                return;
+            }
+        }
+
+        if (!user.cartId) {
+            console.warn('No cart ID found for user');
+            return;
+        }
+
         return;
     }
     store.setCartIsLoading(true);
     console.log('Store cart property:', store.cart.products);
     const cart = await $api.getCart(store.cartId);
-    // const cart = await props.api.getCart();
+
     if (cart) {
         store.setCart(cart);
         console.log('Store cart property:', store.cart.products);
@@ -94,7 +120,7 @@ async function removeProductFromCart(productId) {
 <template>
     <main>
         <div class="userCart">
-            <h3>Cart</h3>
+            <!-- <h3>Cart</h3> -->
             <div v-if="store.cart.products.length === 0">Your cart is empty</div>
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
             <div v-else>
@@ -105,14 +131,15 @@ async function removeProductFromCart(productId) {
                     <div>{{ product.quantity }}</div>
                     <div class="buttonContainer">
                         <button type="button" 
-                                @click="incrementProductCount(product.product_id, product.quantity + 1)">+
-                        </button>
-
-                        <input v-model="product.quantity"
-                                @keyup.enter="updateQuantity(product.product_id, product.quantity)"></input>
-
-                        <button type="button" 
                                 @click="decrementProductCount(product.product_id, product.quantity - 1)">-
+                        </button>
+                        
+                        <input v-model="product.quantity"
+                                @keyup.enter="updateQuantity(product.product_id, product.quantity)">
+                        </input>
+                        
+                        <button type="button" 
+                                @click="incrementProductCount(product.product_id, product.quantity + 1)">+
                         </button>
                         <button type="button"
                                 class="removeButton"

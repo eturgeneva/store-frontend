@@ -4,7 +4,7 @@ export default class StoreApi {
     }
 
     // Users
-    // Creates a new user
+    // Create a new user
     async registerUser(userData) {
         try {
             const response = await fetch(`${this.url}/users`, {
