@@ -44,7 +44,9 @@ async function addToCart(productId) {
                 store.setCart(newCart);
                 console.log('Newly created cart', store.cart.products);
                 console.log('New store cart ID', store.cartId);
-                return;
+                // return;
+            } else {
+                console.log('Failed to create cart');
             }
         }
         // If a cart already exists, but needs to be updated
