@@ -12,16 +12,11 @@ const productQuantity = ref(null);
 onBeforeMount(async () => {
     console.log('Store cart ID', store.cartId);
     console.log('Logged in user', store.loggedInUser);
-    if (!store.cartId) {
-        // const cart = await $api.getCart(store.cartId);
-        // if (cart) {
-        //     store.setCart(cart);
-        //     console.log('Store cart property:', store.cart.products);
-        //     return;
-        // }
 
+    if (!store.cartId) {
         const user = await $api.getUser();
-        if (user) {
+
+        if (user && user.cartId) {
             const cartId = user.cartId;
             console.log('cartId', cartId);
             const cart = await $api.getCart(cartId);
@@ -34,11 +29,9 @@ onBeforeMount(async () => {
         }
 
         if (!user.cartId) {
-            console.warn('No cart ID found for user');
+            console.log('No cart ID found for user or the cart is empty');
             return;
         }
-
-        return;
     }
     store.setCartIsLoading(true);
     console.log('Store cart property:', store.cart.products);
