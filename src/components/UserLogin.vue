@@ -35,7 +35,8 @@ async function loginUser() {
 
 // Login User with Google:
 async function loginUserGoogle() {
-    window.location.href = 'http://localhost:3000/login/google';
+    // window.location.href = 'http://localhost:3000/login/google';
+    $api.loginUserGoogle();
 }
 
 </script>

@@ -66,6 +66,11 @@ export default class StoreApi {
         }
     }
 
+    // User login Google
+    async loginUserGoogle() {
+        window.location.href = `${this.url}/login/google`;
+    }
+
     // Logout User
     async logoutUser() {
         try {
