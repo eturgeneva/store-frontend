@@ -5,7 +5,7 @@ export default class StoreApi {
 
     // Users
     // Get user profile
-    async getProfile() {
+    async getUser() {
         // console.log('user profile onBeforeMount', store.loggedInUser);
         try {
             const response = await fetch('http://localhost:3000/users/me', {
@@ -25,6 +25,8 @@ export default class StoreApi {
             return false;
         }
     }
+
+    // User login
 
     // Products
     // Get all products

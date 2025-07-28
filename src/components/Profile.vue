@@ -8,36 +8,77 @@ const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
 onBeforeMount(async () => {
-    console.log('store loggedIn', store.loggedIn);
-    console.log('store loggedInUser', store.loggedInUser);
+    // console.log('store loggedIn', store.loggedIn);
+    // console.log('store loggedInUser', store.loggedInUser);
 
-    try {
-        const user = $api.getProfile();
-        if (user) {
-            console.log('User object', user);
-            console.log('User', user.first_name);
-            if (user.first_name === 'guest') {
-                store.setLoggedIn(false);
-            } else {
-
-                store.setLoggedIn(true);
-                store.setLoggedInUser(user);
-                console.log('store loggedIn', store.loggedIn);
-                console.log('store loggedInUser', store.loggedInUser);
-            }
-        } else {
-            console.log('Failed to get profile');
-            store.setLoggedIn(false);
-        }
-    } catch (err) {
-        console.error(err);
-    }
+    await getProfile();
 });
 
 const email = ref('');
 const password = ref('');
 
 const editProfile = ref(false);
+
+// Get Profile
+// async function getProfile() {
+//     console.log('store loggedIn', store.loggedIn);
+//     console.log('store loggedInUser', store.loggedInUser);
+//     try {
+//         const user = await $api.getUser();
+//         if (user) {
+//             console.log('User object', user);
+//             console.log('User first name:', user.first_name);
+//             console.log('User cart ID:', user.cartId);
+
+//             if (user.first_name === 'guest') {
+//                 store.setLoggedIn(false);
+
+//             } else {
+//                 store.setLoggedIn(true);
+//                 store.setLoggedInUser(user);
+
+//                 console.log('store loggedIn', store.loggedIn);
+//                 console.log('store loggedInUser', store.loggedInUser);
+//             }
+//         } else {
+//             console.log('Failed to get profile');
+//             store.setLoggedIn(false);
+//         }
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
+
+async function getProfile() {
+    console.log('store loggedIn', store.loggedIn);
+    console.log('store loggedInUser', store.loggedInUser);
+    try {
+        const user = await $api.getUser();
+        if (user) {
+            console.log('User object', user);
+            console.log('User first name:', user.first_name);
+            console.log('User cart ID:', user.cartId);
+
+            store.setLoggedIn(user.id !== null);
+
+        //     if (user.first_name === 'guest') {
+        //         store.setLoggedIn(false);
+
+        //     } else {
+        //         store.setLoggedIn(true);
+        //         store.setLoggedInUser(user);
+
+        //         console.log('store loggedIn', store.loggedIn);
+        //         console.log('store loggedInUser', store.loggedInUser);
+        //     }
+        // } else {
+        //     console.log('Failed to get profile');
+        //     store.setLoggedIn(false);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 // Get Profile
 // async function getProfile() {
