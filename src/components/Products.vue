@@ -54,9 +54,9 @@ async function addToCart(productId) {
             console.log('Updated cart', store.cart.products);
             console.log('Updated cart ID', store.cartId);
 
-            const updatedCart = await $api.getCart(store.cartId);
-            store.setCart(updatedCart);
-            console.log('Newly updated cart', store.cart.products);
+            // const updatedCart = await $api.getCart(store.cartId);
+            // store.setCart(updatedCart);
+            // console.log('Newly updated cart', store.cart.products);
 
         } else {
             console.log('Failed to update cart');
