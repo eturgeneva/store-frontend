@@ -4,9 +4,9 @@ import { ref, getCurrentInstance } from 'vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-// const username = ref('');
-// const firstName = ref('');
-// const lastName = ref('');
+const username = ref('');
+const firstName = ref('');
+const lastName = ref('');
 const email = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
@@ -18,9 +18,17 @@ function comparePasswords(password1, password2) {
     return false;
 }
 
-async function registerUser(userData) {
+// async function registerUser(userData) {
+async function registerUser({ email, password, passwordConfirm, firstName, lastName, username }) {
     console.log('Register button clicked');
-    const userData = { email: email.value, password: password.value };
+
+    const userData = { 
+                        email: email, 
+                        password: password, 
+                        first_name: firstName,
+                        last_name: lastName,
+                        username: username,
+                    };
 
     if (comparePasswords(password.value, passwordConfirm.value)) {
         console.log('Password confirmed');
@@ -35,24 +43,15 @@ async function registerUser(userData) {
         } catch (err) {
             console.error(err);
         }
+    } else {
+        return 'Please type your password again';
     }
-    return 'Please type your password again';
 }
 
 </script>
 
 <template>
     <div class="userRegister framed">
-        <!-- <form class="framed"> -->
-            <!-- <label for="username">Username</label>
-            <input v-model="username" type="text" name="username" id="username">
-
-            <label for="first_name">First Name</label>
-            <input v-model="firstName" type="text" name="first_name" id="first_name">
-
-            <label for="last_name">Last Name</label>
-            <input v-model="lastName" type="text" name="last_name" id="last_name"> -->
-
             <label for="email">Email</label>
             <input v-model="email" type="text" name="email" id="email">
 
@@ -62,10 +61,19 @@ async function registerUser(userData) {
             <label for="password">Confirm Password</label>
             <input v-model="passwordConfirm" type="password" name="passwordConfirm" id="passwordConfirm">
             
+            <label for="first_name">First Name</label>
+            <input v-model="firstName" type="text" name="first_name" id="first_name"></input>
+
+            <label for="last_name">Last Name</label>
+            <input v-model="lastName" type="text" name="last_name" id="last_name"></input>
+
+            <label for="username">Username</label>
+            <input v-model="username" type="text" name="username" id="username"></input>
+
             <div class="buttons">
-                <button @click="registerUser" class="registerButton">Register</button>
+                <button @click="registerUser({ email, password, passwordConfirm, firstName, lastName, username })" 
+                class="registerButton">Register</button>
             </div>
-        <!-- </form> -->
     </div>
 </template>
 
