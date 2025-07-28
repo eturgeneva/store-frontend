@@ -1,6 +1,6 @@
 import { reactive, ref, toRefs } from 'vue';
 
-const state = reactive({
+export const store = reactive({
     loggedIn: false,
     loggedInUser: {},
     selectedProduct: {},
@@ -10,31 +10,7 @@ const state = reactive({
         products: []
     },
 
-    // setLoggedIn(boolean) {
-    //     this.loggedIn = boolean;
-    // },
-
-    // setSelectedProduct(productObject) {
-    //     this.selectedProduct = productObject;
-    // },
-
-    // setCartId(cartId) {
-    //     this.cartId = cartId;
-    // },
-
-    // setCartIsLoading(boolean) {
-    //     this.cartIsLoading = boolean;
-    // },
-
-    // setCart(cartData) {
-    //     this.cart.products = cartData.products || [];
-    //     this.cartId = cartData.id || cartData.cartId || null;
-    // }
-});
-
-export const store = {
-    ...toRefs(state),
-        setLoggedIn(boolean) {
+    setLoggedIn(boolean) {
         this.loggedIn = boolean;
     },
 
@@ -43,17 +19,15 @@ export const store = {
     },
 
     setCartId(cartId) {
-        console.log('Cart ID', cartId);
-        this.cartId.value = cartId;
-        console.log('Cart ID', this.cartId.value);
+        this.cartId = cartId;
     },
 
     setCartIsLoading(boolean) {
-        this.cartIsLoading.value = boolean;
+        this.cartIsLoading = boolean;
     },
 
     setCart(cartData) {
-        this.cart.value.products = cartData.products || [];
-        // this.cartId.value = cartData.id || cartData.cartId || null;
+        this.cart.products = cartData.products || [];
+        // this.cartId = cartData.id || cartData.cartId || null;
     }
-}
+});
