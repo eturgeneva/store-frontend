@@ -75,6 +75,20 @@ async function updateQuantity(productId, quantity) {
     }
 }
 
+async function removeProductFromCart(productId) {
+    try {
+        const updatedCart = await $api.updateCart(store.cartId, productId, 0);
+        if (updatedCart) {
+            store.setCart(updatedCart);
+            console.log('Cart after removing a product', store.cart.products);
+        } else {
+            console.log('Unable to remove the product from cart');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -99,6 +113,11 @@ async function updateQuantity(productId, quantity) {
 
                         <button type="button" 
                                 @click="decrementProductCount(product.product_id, product.quantity - 1)">-
+                        </button>
+                        <button type="button"
+                                class="removeButton"
+                                @click="removeProductFromCart(product.product_id)"
+                                >🗑
                         </button>
                     </div>
                 </div>
