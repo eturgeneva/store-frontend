@@ -1,14 +1,38 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
 import UserLogin from './UserLogin.vue';
 import UserRegister from './UserRegister.vue';
 
-onBeforeMount(() => {
-    getProfile();
+const { appContext } = getCurrentInstance();
+const $api = appContext.config.globalProperties.$api;
+
+onBeforeMount(async () => {
     console.log('store loggedIn', store.loggedIn);
     console.log('store loggedInUser', store.loggedInUser);
-})
+
+    try {
+        const user = $api.getProfile();
+        if (user) {
+            console.log('User object', user);
+            console.log('User', user.first_name);
+            if (user.first_name === 'guest') {
+                store.setLoggedIn(false);
+            } else {
+
+                store.setLoggedIn(true);
+                store.setLoggedInUser(user);
+                console.log('store loggedIn', store.loggedIn);
+                console.log('store loggedInUser', store.loggedInUser);
+            }
+        } else {
+            console.log('Failed to get profile');
+            store.setLoggedIn(false);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+});
 
 const email = ref('');
 const password = ref('');
@@ -16,24 +40,24 @@ const password = ref('');
 const editProfile = ref(false);
 
 // Get Profile
-async function getProfile() {
-    console.log('user profile onBeforeMount', store.loggedInUser);
-    try {
-        const response = await fetch('http://localhost:3000/users/me', {
-                credentials: 'include'
-        })
-        if (response.ok) {
-            const userResponse = await response.json();
-            store.setLoggedIn(userResponse.id !== null);
+// async function getProfile() {
+//     console.log('user profile onBeforeMount', store.loggedInUser);
+//     try {
+//         const response = await fetch('http://localhost:3000/users/me', {
+//                 credentials: 'include'
+//         })
+//         if (response.ok) {
+//             const userResponse = await response.json();
+//             store.setLoggedIn(userResponse.id !== null);
             
-            Object.assign(store.loggedInUser, { ...userResponse });
-            return;
-        }
-        store.setLoggedIn(false);
-    } catch (err) {
-        console.error(err);
-    }
-}
+//             Object.assign(store.loggedInUser, { ...userResponse });
+//             return;
+//         }
+//         store.setLoggedIn(false);
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
 // Update User Info:
 function toggleEditProfile() {
@@ -97,7 +121,7 @@ async function logoutUser() {
             <!-- </main> -->
     
             <div class="userProfile" v-if="store.loggedIn">
-                <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
+                <h1>Welcome {{ store.loggedInUser.first_name || 'Guest' }}</h1>
                 <div>First Name: {{ store.loggedInUser.first_name }}
                     <input v-if="editProfile" v-model="store.loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
                 </div>

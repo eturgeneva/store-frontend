@@ -14,6 +14,10 @@ export const store = reactive({
         this.loggedIn = boolean;
     },
 
+    setLoggedInUser(userObject) {
+        this.loggedInUser = userObject;
+    },
+
     setSelectedProduct(productObject) {
         this.selectedProduct = productObject;
     },

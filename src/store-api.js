@@ -2,6 +2,30 @@ export default class StoreApi {
     constructor(url) {
         this.url = url;
     }
+
+    // Users
+    // Get user profile
+    async getProfile() {
+        // console.log('user profile onBeforeMount', store.loggedInUser);
+        try {
+            const response = await fetch('http://localhost:3000/users/me', {
+                    credentials: 'include'
+            })
+            if (!response.ok) {
+                throw new Error('Failed to fetch user profile');
+            }
+            const userResponse = await response.json();
+            // store.setLoggedIn(userResponse.id !== null);
+
+            // Object.assign(store.loggedInUser, { ...userResponse });
+            return userResponse;
+            // store.setLoggedIn(false);
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
+
     // Products
     // Get all products
     async getAllProducts() {
@@ -40,7 +64,7 @@ export default class StoreApi {
     }
 
     // Cart
-    // Get cart by user
+    // Get cart by cartId
     async getCart(cartId) {
         console.log('Fetching cart');
         try {
@@ -107,9 +131,6 @@ export default class StoreApi {
             if (response.ok) {
                 const cartUpdateReponse = await response.json();
                 console.log('cart update', cartUpdateReponse);
-    
-                // console.log('Store cart update', store.cart);
-                // return store.setCart(cartUpdateReponse);
                 return cartUpdateReponse;
             }
         } catch (err) {
