@@ -86,32 +86,36 @@ async function logoutUser() {
 </script>
 
 <template>
-    <div class="userArea">
-        <div class="userLogin" v-if="!store.loggedIn">
-            <h3>Welcome, guest</h3>
-            <UserLogin :onLogin="getProfile"/>
-            <UserRegister />
+    <main>
+        <div class="userArea">
+            <!-- <main> -->
+                <div class="userLogin" v-if="!store.loggedIn">
+                    <h3>Welcome, guest</h3>
+                    <UserLogin :onLogin="getProfile"/>
+                    <UserRegister />
+                </div>
+            <!-- </main> -->
+    
+            <div class="userProfile" v-if="store.loggedIn">
+                <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
+                <div>First Name: {{ store.loggedInUser.first_name }}
+                    <input v-if="editProfile" v-model="store.loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
+                </div>
+                <div>Last Name: {{ store.loggedInUser.last_name }}
+                    <input v-if="editProfile" v-model="store.loggedInUser.last_name" type="text" name="lastName" id="lastName"></input>
+                </div>
+                <div>Address: {{ store.loggedInUser.address || ""}}
+                    <input v-if="editProfile" v-model="store.loggedInUser.address" type="text" name="address" id="address"></input>
+                </div>
+                <div class="buttons">
+                    <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit Info</button>
+                    <button v-if="editProfile" @click="editUserInfo">Save</button>
+    
+                    <button class="logoutButton" @click="logoutUser">Log Out</button>
+                </div>
+            </div>
         </div>
-
-        <div class="userProfile" v-if="store.loggedIn">
-            <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
-            <div>First Name: {{ store.loggedInUser.first_name }}
-                <input v-if="editProfile" v-model="store.loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
-            </div>
-            <div>Last Name: {{ store.loggedInUser.last_name }}
-                <input v-if="editProfile" v-model="store.loggedInUser.last_name" type="text" name="lastName" id="lastName"></input>
-            </div>
-            <div>Address: {{ store.loggedInUser.address || ""}}
-                <input v-if="editProfile" v-model="store.loggedInUser.address" type="text" name="address" id="address"></input>
-            </div>
-            <div class="buttons">
-                <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit Info</button>
-                <button v-if="editProfile" @click="editUserInfo">Save</button>
-
-                <button class="logoutButton" @click="logoutUser">Log Out</button>
-            </div>
-        </div>
-    </div>
+    </main>
 </template>
 
 <!-- <style scoped>
