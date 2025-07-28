@@ -18,7 +18,6 @@ function comparePasswords(password1, password2) {
     return false;
 }
 
-// async function registerUser(userData) {
 async function registerUser({ email, password, passwordConfirm, firstName, lastName, username }) {
     console.log('Register button clicked');
 
@@ -30,7 +29,7 @@ async function registerUser({ email, password, passwordConfirm, firstName, lastN
                         username: username,
                     };
 
-    if (comparePasswords(password.value, passwordConfirm.value)) {
+    if (comparePasswords(password, passwordConfirm)) {
         console.log('Password confirmed');
         try {
             const response = await $api.registerUser(userData);
@@ -44,6 +43,7 @@ async function registerUser({ email, password, passwordConfirm, firstName, lastN
             console.error(err);
         }
     } else {
+        console.log('Please type your password again');
         return 'Please type your password again';
     }
 }
