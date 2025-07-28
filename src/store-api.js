@@ -47,6 +47,26 @@ export default class StoreApi {
 
     // User login
 
+    // Logout User
+    async logoutUser() {
+        try {
+            const response = await fetch(`${this.url}/logout`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error('Logout failed');
+            }
+            return true;
+            
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
+
     // Products
     // Get all products
     async getAllProducts() {

@@ -76,20 +76,14 @@ async function editUserInfo() {
 // Logout User:
 async function logoutUser() {
     try {
-        const response = await fetch('http://localhost:3000/logout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        });
-
-        if (response.ok) {
+        const response = await $api.logoutUser();
+        if (response) {
             store.setLoggedIn(false);
             console.log('loggedIn global state after logout', store.loggedIn);
+        } else {
+            console.log('Failed to log out');
         }
-
-        if (!response.ok) {
-            throw new Error('Logout failed');
-        }
+        
     } catch (err) {
         console.error(err);
     }
