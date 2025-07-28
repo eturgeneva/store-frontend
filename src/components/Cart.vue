@@ -39,6 +39,42 @@ async function incrementProductCount(productId, quantity) {
     }
 }
 
+async function decrementProductCount(productId, quantity) {
+    if (quantity < 0) {
+        console.log('Quantity can\'t be less than 0');
+        return;
+    }
+    try {
+        const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
+        if (updatedCart) {
+            store.setCart(updatedCart);
+            console.log('Cart after decrement', store.cart.products);
+        } else {
+            console.log('Unable to decrement product count');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function updateQuantity(productId, quantity) {
+    if (quantity < 0) {
+        console.log('Quantity can\'t be less than 0');
+        return;
+    }
+    try {
+        const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
+        if (updatedCart) {
+            store.setCart(updatedCart);
+            console.log('Cart after enter input', store.cart.products);
+        } else {
+            console.log('Unable to update product count on input');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -54,9 +90,16 @@ async function incrementProductCount(productId, quantity) {
                     <div>{{ product.name }}</div>
                     <div>{{ product.quantity }}</div>
                     <div class="buttonContainer">
-                        <button type="button" @click="incrementProductCount(product.product_id, product.quantity + 1)">+</button>
-                        <input v-model="product.quantity"></input>
-                        <button type="button">-</button>
+                        <button type="button" 
+                                @click="incrementProductCount(product.product_id, product.quantity + 1)">+
+                        </button>
+
+                        <input v-model="product.quantity"
+                                @keyup.enter="updateQuantity(product.product_id, product.quantity)"></input>
+
+                        <button type="button" 
+                                @click="decrementProductCount(product.product_id, product.quantity - 1)">-
+                        </button>
                     </div>
                 </div>
             </div>
