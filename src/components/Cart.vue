@@ -7,6 +7,8 @@ const $api = appContext.config.globalProperties.$api;
 
 // const props = defineProps(['api']);
 
+const productQuantity = ref(null);
+
 onBeforeMount(async () => {
     console.log('231123123', store.cartId);
     if (!store.cartId) {
@@ -36,8 +38,11 @@ onBeforeMount(async () => {
                 :key="product.product_id"
                 class="product">
                     <div>{{ product.name }}</div>
+                    <div>{{ product.quantity }}</div>
                     <div class="buttonContainer">
-                        <button type="button"></button>
+                        <button type="button">+</button>
+                        <input v-model="product.quantity"></input>
+                        <button type="button">-</button>
                     </div>
                 </div>
             </div>
