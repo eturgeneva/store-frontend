@@ -1,5 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
+
+const { appContext } = getCurrentInstance();
+const $api = appContext.config.globalProperties.$api;
 
 // const username = ref('');
 // const firstName = ref('');
@@ -15,20 +18,19 @@ function comparePasswords(password1, password2) {
     return false;
 }
 
-async function registerUser() {
+async function registerUser(userData) {
     console.log('Register button clicked');
+    const userData = { email: email.value, password: password.value };
+
     if (comparePasswords(password.value, passwordConfirm.value)) {
         console.log('Password confirmed');
         try {
-            const response = await fetch('http://localhost:3000/users', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email.value, password: password.value }),
-                credentials: 'include'
-            })
+            const response = await $api.registerUser(userData);
             console.log('Response', response);
-            if (!response.ok) {
-                throw new Error('Registration failed');
+            if (response) {
+                console.log('Registration successful, you can now login');
+            } else {
+                console.log('Registration failed');
             }
         } catch (err) {
             console.error(err);

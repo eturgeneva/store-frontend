@@ -4,6 +4,26 @@ export default class StoreApi {
     }
 
     // Users
+    // Creates a new user
+    async registerUser(userData) {
+        try {
+            const response = await fetch(`${this.url}/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(userData),
+                credentials: 'include'
+            })
+
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
+            return true;
+        } catch (err) {
+            console.error(err);
+            return false;
+        }
+    }
+
     // Get user profile (/me)
     async getUser() {
         try {
