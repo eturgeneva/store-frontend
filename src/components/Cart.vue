@@ -25,6 +25,20 @@ onBeforeMount(async () => {
     store.setCartIsLoading(false);
 });
 
+async function incrementProductCount(productId, quantity) {
+    try {
+        const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
+        if (updatedCart) {
+            store.setCart(updatedCart);
+            console.log('Cart after increment', store.cart.products);
+        } else {
+            console.log('Unable to increment product count');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -40,7 +54,7 @@ onBeforeMount(async () => {
                     <div>{{ product.name }}</div>
                     <div>{{ product.quantity }}</div>
                     <div class="buttonContainer">
-                        <button type="button">+</button>
+                        <button type="button" @click="incrementProductCount(product.product_id, product.quantity + 1)">+</button>
                         <input v-model="product.quantity"></input>
                         <button type="button">-</button>
                     </div>

@@ -200,7 +200,7 @@ export default class StoreApi {
     }
 
     // Update existing cart by ID (add product by ID)
-    async updateCart(cartId, productId) {
+    async updateCart(cartId, productId, quantity = 1) {
         try {
             const response = await fetch(`${this.url}/carts/me`, {
                 method: 'PUT',
@@ -208,7 +208,7 @@ export default class StoreApi {
                 body: JSON.stringify({ 
                     productId: productId,
                     cartId: cartId,
-                    quantity: 1
+                    quantity: quantity
                 }),
                 credentials: 'include'
             });
