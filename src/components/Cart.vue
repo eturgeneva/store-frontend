@@ -7,8 +7,6 @@ const $api = appContext.config.globalProperties.$api;
 
 // const props = defineProps(['api']);
 
-const productQuantity = ref(null);
-
 onBeforeMount(async () => {
     console.log('Store cart ID', store.cartId);
     console.log('Logged in user', store.loggedInUser);
@@ -101,43 +99,45 @@ async function removeProductFromCart(productId) {
     }
 }
 
+// For '-' and '+' buttons
 async function updateQuantity(productId, quantityUpdate) {
-    // let product = store.cart.products.filter(product => {
-    //     return product.product_id = productId;
-    // });
-    // console.log('Filtered product to update', product);
-    // if ((product.quantity + quantityUpdate) < 0 ) {
-    //     console.log('The amount is too low');
-    //     return;
-    // }
-
     try {
-        const updatedCart = await $api.updateCart(store.cartId, productId, quantityUpdate);
+        const updatedCart = await $api.updateQuantityInCart(store.cartId, productId, quantityUpdate);
         if (updatedCart) {
             store.setCart(updatedCart);
-            console.log('Cart after enter input', store.cart.products);
+            console.log('Cart after quantity update', store.cart.products);
         } else {
-            console.log('Unable to update product count on input');
+            console.log('Unable to update product quantity in cart');
         }
     } catch (err) {
         console.error(err);
     }
 };
 
+// For input field and delete button
 async function setQuantity(productId, quantity) {
-    // let quantityNumber = parseInt(quantity);
-
-    let product = store.cart.products.filter(elem => {
-        // console.log(elem);
-        return elem.product_id === productId;
-    });
-    console.log('Filtered product to update', product);
-    if ((product.quantity + quantity) < 0 ) {
+    if (quantity < 0 ) {
         console.log('The amount is too low');
         return;
     }
-}
 
+    let product = store.cart.products.filter(elem => {
+        return elem.product_id === productId;
+    });
+    console.log('Filtered product to update', product);
+
+    try {
+        const updatedCart = await $api.setQuantityInCart(store.cartId, productId, quantity);
+        if (updatedCart) {
+            store.setCart(updatedCart);
+            console.log('Cart after set quantity on input', store.cart.products);
+        } else {
+            console.log('Unable to set quantity on input');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 </script>
 
@@ -167,7 +167,7 @@ async function setQuantity(productId, quantity) {
                         </button>
                         <button type="button"
                                 class="removeButton"
-                                @click="removeProductFromCart(product.product_id)"
+                                @click="setQuantity(product.product_id, 0)"
                                 >🗑
                         </button>
                     </div>

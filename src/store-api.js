@@ -199,8 +199,9 @@ export default class StoreApi {
         }
     }
 
-    // Update existing cart by ID (add product by ID)
-    async updateCart(cartId, productId, quantityUpdate) {
+    // Update existing cart by ID 
+    // Update product quantity in cart by product ID (increment or decrement by 1)
+    async updateQuantityInCart(cartId, productId, quantityUpdate) {
         try {
             const response = await fetch(`${this.url}/carts/me`, {
                 method: 'PUT',
@@ -208,7 +209,7 @@ export default class StoreApi {
                 body: JSON.stringify({ 
                     productId: productId,
                     cartId: cartId,
-                    quantity: quantityUpdate
+                    quantityUpdate: quantityUpdate
                 }),
                 credentials: 'include'
             });
@@ -219,7 +220,32 @@ export default class StoreApi {
                 return cartUpdateReponse;
             }
         } catch (err) {
-            console.error('Failed to update cart', err);
+            console.error('Failed to update product quantity cart', err);
+            return false;
+        }
+    }
+
+    //Set specific product quantity in cart by product ID
+    async setQuantityInCart(cartId, productId, setQuantity) {
+        try {
+            const response = await fetch(`${this.url}/carts/me`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    productId: productId,
+                    cartId: cartId,
+                    setQuantity: setQuantity
+                }),
+                credentials: 'include'
+            });
+
+            if (response.ok) {
+                const cartUpdateReponse = await response.json();
+                console.log('cart update', cartUpdateReponse);
+                return cartUpdateReponse;
+            }
+        } catch (err) {
+            console.error('Failed to set product quantity cart', err);
             return false;
         }
     }
