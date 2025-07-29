@@ -69,23 +69,23 @@ async function decrementProductCount(productId, quantity) {
     }
 }
 
-async function updateQuantity(productId, quantity) {
-    if (quantity < 0) {
-        console.log('Quantity can\'t be less than 0');
-        return;
-    }
-    try {
-        const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
-        if (updatedCart) {
-            store.setCart(updatedCart);
-            console.log('Cart after enter input', store.cart.products);
-        } else {
-            console.log('Unable to update product count on input');
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
+// async function updateQuantity(productId, quantity) {
+//     if (quantity < 0) {
+//         console.log('Quantity can\'t be less than 0');
+//         return;
+//     }
+//     try {
+//         const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
+//         if (updatedCart) {
+//             store.setCart(updatedCart);
+//             console.log('Cart after enter input', store.cart.products);
+//         } else {
+//             console.log('Unable to update product count on input');
+//         }
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
 async function removeProductFromCart(productId) {
     try {
@@ -100,6 +100,44 @@ async function removeProductFromCart(productId) {
         console.error(err);
     }
 }
+
+async function updateQuantity(productId, quantityUpdate) {
+    // let product = store.cart.products.filter(product => {
+    //     return product.product_id = productId;
+    // });
+    // console.log('Filtered product to update', product);
+    // if ((product.quantity + quantityUpdate) < 0 ) {
+    //     console.log('The amount is too low');
+    //     return;
+    // }
+
+    try {
+        const updatedCart = await $api.updateCart(store.cartId, productId, quantityUpdate);
+        if (updatedCart) {
+            store.setCart(updatedCart);
+            console.log('Cart after enter input', store.cart.products);
+        } else {
+            console.log('Unable to update product count on input');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+async function setQuantity(productId, quantity) {
+    // let quantityNumber = parseInt(quantity);
+
+    let product = store.cart.products.filter(elem => {
+        // console.log(elem);
+        return elem.product_id === productId;
+    });
+    console.log('Filtered product to update', product);
+    if ((product.quantity + quantity) < 0 ) {
+        console.log('The amount is too low');
+        return;
+    }
+}
+
 
 </script>
 
@@ -117,15 +155,15 @@ async function removeProductFromCart(productId) {
                     <div>{{ product.quantity }}</div>
                     <div class="buttonContainer">
                         <button type="button" 
-                                @click="decrementProductCount(product.product_id, product.quantity - 1)">-
+                                @click="updateQuantity(product.product_id, -1)">-
                         </button>
                         
-                        <input v-model="product.quantity"
-                                @keyup.enter="updateQuantity(product.product_id, product.quantity)">
+                        <input v-model.number="product.quantity"
+                                @keyup.enter="setQuantity(product.product_id, product.quantity)">
                         </input>
                         
                         <button type="button" 
-                                @click="incrementProductCount(product.product_id, product.quantity + 1)">+
+                                @click="updateQuantity(product.product_id, 1)">+
                         </button>
                         <button type="button"
                                 class="removeButton"
