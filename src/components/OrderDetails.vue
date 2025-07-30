@@ -9,7 +9,7 @@ const $api = appContext.config.globalProperties.$api;
 const route = useRoute();
 const orderId = route.params.id;
 
-const selectedOrderDetails = ref(null);
+const orderDetails = ref(null);
 
 onBeforeMount(async () => {
     await showOrderDetails(orderId);
@@ -20,8 +20,8 @@ async function showOrderDetails(orderId) {
     try {
         const response = await $api.getOrderById(orderId);
         if (response) {
-            selectedOrderDetails.value = response.orderDetails;
-            console.log('selected Order Details', selectedOrderDetails.value);
+            orderDetails.value = response;
+            console.log('selected Order Details', orderDetails.value);
         }
     } catch (err) {
         console.error(err);
@@ -30,12 +30,16 @@ async function showOrderDetails(orderId) {
 </script>
 
 <template>
-    <div>
-        <div v-for="detail in selectedOrderDetails" :key="detail.product_id" class="orderItem">
-            <div>Order ID: {{ detail.order_id }}</div>
-            <div>Product ID: {{ detail.product_id }}</div>
-            <div>Price: {{ detail.price_cents }}</div>
+    <div v-if="orderDetails">
+        <h2>Order ID: {{ orderDetails.orderId }}</h2>
+        <div v-for="item in orderDetails.items" :key="item.product_id" class="orderItem">
+            <div>Product ID: {{ item.product_id }}</div>
+            <div>Product: {{ item.name }}</div>
+            <div>Brand: {{  item.brand }}</div>
+            <div>Quantity: {{ item.quantity }}</div>
+            <div>Price per item: {{ item.price_cents }}</div>
         </div>
+        <div>Total price: {{ orderDetails.priceTotal }}</div>
     </div>
 
 </template>
