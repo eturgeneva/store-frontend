@@ -128,7 +128,7 @@ async function checkout() {
                     </div>
                 </div>
             </div>
-            <button v-if="store.cart.products"
+            <button v-if="store.cart.products.length > 0"
                     type="button"
                     class="checkoutButton"
                     @click="checkout"
