@@ -291,4 +291,22 @@ export default class StoreApi {
             return false;
         }
     }
+
+    // Get an oder by ID
+    async getOrderById(orderId) {
+        try {
+            const response = await fetch(`${this.url}/orders/${orderId}`, {
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error('Failed to get order by ID');
+            }
+            const order = await response.json();
+            return order;
+            
+        } catch (err) {
+            console.error('Failed to get order by ID', err);
+            return false;
+        }
+    }
 }

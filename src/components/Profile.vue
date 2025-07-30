@@ -7,6 +7,8 @@ import UserRegister from './UserRegister.vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
+const selectedOrderDetails = ref(null);
+
 onBeforeMount(async () => {
     // console.log('store loggedIn', store.loggedIn);
     // console.log('store loggedInUser', store.loggedInUser);
@@ -102,6 +104,8 @@ async function loadOrders() {
             store.loggedInUser.orders = ordersResponse.orders;
 
             console.log('Store logged in user', store.loggedInUser);
+        } else {
+            console.log('Failed to fetch oder details');
         }
     } catch (err) {
         console.error(err);
@@ -109,7 +113,15 @@ async function loadOrders() {
 }
 // Show oder details (get oder by order ID)
 async function showOrderDetails(orderId) {
-
+    try {
+        const orderDetails = await $api.getOrderById(orderId);
+        if (orderDetails) {
+            selectedOrderDetails.value = orderDetails;
+            console.log('selected Order Details', selectedOrderDetails.value);
+        }
+    } catch (err) {
+        console.error(err);
+    }
 }
 
 </script>
@@ -160,6 +172,9 @@ async function showOrderDetails(orderId) {
                                 @click="showOrderDetails(order.id)"
                                 >Order Details
                         </button>
+                    </div>
+                    <div v-if="selectedOrderDetails">
+                        <div>{{  selectedOrderDetails.value }}</div>
                     </div>
                 </div>
             </div>
