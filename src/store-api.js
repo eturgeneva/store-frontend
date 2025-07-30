@@ -252,12 +252,15 @@ export default class StoreApi {
 
     // Orders
     // Place a new order
-    async placeOrder() {
+    async placeOrder(orderData) {
+        console.log('Order data', orderData);
         try {
             const response = await fetch(`${this.url}/orders`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({}),
+                body: JSON.stringify({ 
+                    products: orderData 
+                }),
                 credentials: 'include'
             });
     

@@ -78,12 +78,14 @@ async function checkout() {
     }
 
     try {
-        const checkout = await $api.placeOrder();
+        const checkout = await $api.placeOrder(store.cart.products);
         if (checkout) {
             console.log('The following order was placed', checkout);
 
             store.setCartId(null);
             store.setCart({ products: []});
+
+            console.log('Store cart after checkout', store.cartId, store.cart);
         } else {
             console.log('Failed to place an order');
         }
