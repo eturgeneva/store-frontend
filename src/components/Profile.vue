@@ -7,7 +7,7 @@ import UserRegister from './UserRegister.vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-const selectedOrderDetails = ref(null);
+// const selectedOrderDetails = ref(null);
 
 onBeforeMount(async () => {
     // console.log('store loggedIn', store.loggedIn);
@@ -112,17 +112,17 @@ async function logoutUser() {
 //     }
 // }
 // Show oder details (get oder by order ID)
-async function showOrderDetails(orderId) {
-    try {
-        const orderDetails = await $api.getOrderById(orderId);
-        if (orderDetails) {
-            selectedOrderDetails.value = orderDetails;
-            console.log('selected Order Details', selectedOrderDetails.value);
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
+// async function showOrderDetails(orderId) {
+//     try {
+//         const orderDetails = await $api.getOrderById(orderId);
+//         if (orderDetails) {
+//             selectedOrderDetails.value = orderDetails;
+//             console.log('selected Order Details', selectedOrderDetails.value);
+//         }
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 
 </script>
 
