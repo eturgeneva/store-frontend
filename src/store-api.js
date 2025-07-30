@@ -249,4 +249,25 @@ export default class StoreApi {
             return false;
         }
     }
+
+    // Orders
+    // Place a new order
+    async placeOrder() {
+        try {
+            const response = await fetch(`${this.url}/orders`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({}),
+                credentials: 'include'
+            });
+    
+            if (response.ok) {
+                const newOrder = await response.json();
+                return newOrder;
+            }
+        } catch (err) {
+            console.error('Failed to place an order', err);
+            return false;
+        }
+    }
 }

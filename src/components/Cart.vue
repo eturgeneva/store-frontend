@@ -70,6 +70,28 @@ async function setQuantity(productId, quantity) {
     }
 }
 
+// Checkout
+async function checkout() {
+    if (!store.cartId || !store.cart.products) {
+        console.log('Unable to place order, your cart is empty');
+        return;
+    }
+
+    try {
+        const checkout = await $api.placeOrder();
+        if (checkout) {
+            console.log('The following order was placed', checkout);
+
+            store.setCartId(null);
+            store.setCart({ products: []});
+        } else {
+            console.log('Failed to place an order');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -102,9 +124,16 @@ async function setQuantity(productId, quantity) {
                                 @click="setQuantity(product.product_id, 0)"
                                 >🗑
                         </button>
+
                     </div>
                 </div>
             </div>
+            <button v-if="store.cart.products"
+                    type="button"
+                    class="checkoutButton"
+                    @click="checkout"
+                    >Checkout
+            </button>
         </div>
     </main>
 </template>
