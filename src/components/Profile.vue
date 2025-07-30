@@ -89,6 +89,25 @@ async function logoutUser() {
     }
 }
 
+// Get orders by user:
+async function loadOrders() {
+    if (!store.loggedIn || !store.loggedInUser) {
+        console.log('Unable to load orders');
+        return;
+    }
+
+    try {
+        const ordersResponse = await $api.getOrdersByUserId(store.loggedInUser.id);
+        if (ordersResponse) {
+            store.loggedInUser.orders = ordersResponse.orders;
+
+            console.log('Store logged in user', store.loggedInUser);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -119,6 +138,16 @@ async function logoutUser() {
                     <button v-if="editProfile" @click="editUserInfo">Save</button>
     
                     <button class="logoutButton" @click="logoutUser">Log Out</button>
+                </div>
+
+                <button
+                        type="button"
+                        @click="loadOrders"
+                        >Show orders
+                </button>
+
+                <div class="orders">
+
                 </div>
             </div>
         </div>

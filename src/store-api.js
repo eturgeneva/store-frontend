@@ -273,4 +273,22 @@ export default class StoreApi {
             return false;
         }
     }
+
+    // Get all orders placed by a user by user ID
+    async getOrdersByUserId(userId) {
+        try {
+            const response = await fetch(`${this.url}/orders/users/${userId}`, {
+                credentials: 'include'
+            });
+
+            if (response.ok) {
+                const ordersByUser = await response.json();
+                return ordersByUser;
+            }
+
+        } catch (err) {
+            console.error('Failed to find user\'s orders', err);
+            return false;
+        }
+    }
 }
