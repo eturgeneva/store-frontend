@@ -35,70 +35,6 @@ onBeforeMount(async () => {
     store.setCartIsLoading(false);
 });
 
-async function incrementProductCount(productId, quantity) {
-    try {
-        const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
-        if (updatedCart) {
-            store.setCart(updatedCart);
-            console.log('Cart after increment', store.cart.products);
-        } else {
-            console.log('Unable to increment product count');
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-async function decrementProductCount(productId, quantity) {
-    if (quantity < 0) {
-        console.log('Quantity can\'t be less than 0');
-        return;
-    }
-    try {
-        const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
-        if (updatedCart) {
-            store.setCart(updatedCart);
-            console.log('Cart after decrement', store.cart.products);
-        } else {
-            console.log('Unable to decrement product count');
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-// async function updateQuantity(productId, quantity) {
-//     if (quantity < 0) {
-//         console.log('Quantity can\'t be less than 0');
-//         return;
-//     }
-//     try {
-//         const updatedCart = await $api.updateCart(store.cartId, productId, quantity);
-//         if (updatedCart) {
-//             store.setCart(updatedCart);
-//             console.log('Cart after enter input', store.cart.products);
-//         } else {
-//             console.log('Unable to update product count on input');
-//         }
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
-
-async function removeProductFromCart(productId) {
-    try {
-        const updatedCart = await $api.updateCart(store.cartId, productId, 0);
-        if (updatedCart) {
-            store.setCart(updatedCart);
-            console.log('Cart after removing a product', store.cart.products);
-        } else {
-            console.log('Unable to remove the product from cart');
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
-
 // For '-' and '+' buttons
 async function updateQuantity(productId, quantityUpdate) {
     try {
@@ -120,11 +56,6 @@ async function setQuantity(productId, quantity) {
         console.log('The amount is too low');
         return;
     }
-
-    let product = store.cart.products.filter(elem => {
-        return elem.product_id === productId;
-    });
-    console.log('Filtered product to update', product);
 
     try {
         const updatedCart = await $api.setQuantityInCart(store.cartId, productId, quantity);
@@ -152,7 +83,8 @@ async function setQuantity(productId, quantity) {
                 :key="product.product_id"
                 class="product">
                     <div>{{ product.name }}</div>
-                    <div>{{ product.quantity }}</div>
+                    <div>Quantity: {{ product.quantity }}</div>
+                    <div>Product ID: {{ product.product_id }}</div>
                     <div class="buttonContainer">
                         <button type="button" 
                                 @click="updateQuantity(product.product_id, -1)">-
