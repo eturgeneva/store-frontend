@@ -37,7 +37,7 @@ async function showOrderDetails(orderId) {
             <div>Product: {{ item.name }}</div>
             <div>Brand: {{  item.brand }}</div>
             <div>Quantity: {{ item.quantity }}</div>
-            <div>Price per item: {{ item.price_cents }}</div>
+            <div>Price: {{ item.price_cents }}</div>
         </div>
         <div>Total price: {{ orderDetails.priceTotal }}</div>
     </div>

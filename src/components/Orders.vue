@@ -5,8 +5,6 @@ import { store } from '../store.js';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-// const selectedOrderDetails = ref(null);
-
 onBeforeMount(async () => {
     await loadOrders();
 });
@@ -31,18 +29,6 @@ async function loadOrders() {
         console.error(err);
     }
 }
-// Show oder details (get oder by order ID)
-// async function showOrderDetails(orderId) {
-//     try {
-//         const orderDetails = await $api.getOrderById(orderId);
-//         if (orderDetails) {
-//             selectedOrderDetails.value = orderDetails;
-//             console.log('selected Order Details', selectedOrderDetails.value);
-//         }
-//     } catch (err) {
-//         console.error(err);
-//     }
-// }
 
 </script>
 
@@ -53,14 +39,8 @@ async function loadOrders() {
             <div>Items: {{  order.product_count }}</div>
             <div>Status: {{ order.status }}</div>
             <div>Total price: {{ order.total_price }}</div>
-            <!-- <button type="button"
-                    @click="showOrderDetails(order.id)"
-                    >Order Details
-            </button> -->
+
             <router-link :to="`/orders/${order.id}`">Show details</router-link>
         </div>
-        <!-- <div v-if="selectedOrderDetails">
-            <div>{{  selectedOrderDetails.value }}</div>
-        </div> -->
     </div>
 </template>
