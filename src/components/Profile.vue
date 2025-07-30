@@ -107,6 +107,10 @@ async function loadOrders() {
         console.error(err);
     }
 }
+// Show oder details (get oder by order ID)
+async function showOrderDetails(orderId) {
+
+}
 
 </script>
 
@@ -143,7 +147,7 @@ async function loadOrders() {
                 <button
                         type="button"
                         @click="loadOrders"
-                        >Show orders
+                        >My orders
                 </button>
 
                 <div class="orders" v-if="store.loggedInUser.orders">
@@ -152,6 +156,10 @@ async function loadOrders() {
                         <div>Items: {{  order.product_count }}</div>
                         <div>Status: {{ order.status }}</div>
                         <div>Total price: {{ order.total_price }}</div>
+                        <button type="button"
+                                @click="showOrderDetails(order.id)"
+                                >Order Details
+                        </button>
                     </div>
                 </div>
             </div>
