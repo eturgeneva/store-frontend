@@ -92,25 +92,25 @@ async function logoutUser() {
 }
 
 // Get orders by user:
-async function loadOrders() {
-    if (!store.loggedIn || !store.loggedInUser) {
-        console.log('Unable to load orders');
-        return;
-    }
+// async function loadOrders() {
+//     if (!store.loggedIn || !store.loggedInUser) {
+//         console.log('Unable to load orders');
+//         return;
+//     }
 
-    try {
-        const ordersResponse = await $api.getOrdersByUserId(store.loggedInUser.id);
-        if (ordersResponse) {
-            store.loggedInUser.orders = ordersResponse.orders;
+//     try {
+//         const ordersResponse = await $api.getOrdersByUserId(store.loggedInUser.id);
+//         if (ordersResponse) {
+//             store.loggedInUser.orders = ordersResponse.orders;
 
-            console.log('Store logged in user', store.loggedInUser);
-        } else {
-            console.log('Failed to fetch oder details');
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
+//             console.log('Store logged in user', store.loggedInUser);
+//         } else {
+//             console.log('Failed to fetch oder details');
+//         }
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
 // Show oder details (get oder by order ID)
 async function showOrderDetails(orderId) {
     try {
@@ -156,13 +156,14 @@ async function showOrderDetails(orderId) {
                     <button class="logoutButton" @click="logoutUser">Log Out</button>
                 </div>
 
-                <button
+                <!-- <button
                         type="button"
                         @click="loadOrders"
                         >My orders
-                </button>
+                </button> -->
+                <router-link to="/orders">My orders</router-link>
 
-                <div class="orders" v-if="store.loggedInUser.orders">
+                <!-- <div class="orders" v-if="store.loggedInUser.orders">
                     <div v-for="order in store.loggedInUser.orders" :key="order.id" class="orderPreview">
                         <div>Order #{{  order.id  }}</div>
                         <div>Items: {{  order.product_count }}</div>
@@ -176,7 +177,7 @@ async function showOrderDetails(orderId) {
                     <div v-if="selectedOrderDetails">
                         <div>{{  selectedOrderDetails.value }}</div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </main>

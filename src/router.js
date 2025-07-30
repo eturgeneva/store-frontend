@@ -6,6 +6,7 @@ import Profile from './components/Profile.vue';
 import Products from './components/Products.vue';
 import Cart from './components/Cart.vue';
 import ProductPage from './components/ProductPage.vue';
+import Orders from './components/Orders.vue';
 
 // const URL = 'http://localhost:3000';
 // const api = new StoreApi(URL);
@@ -17,6 +18,7 @@ const routes = [
   { path: '/products/:id', component: ProductPage},
   { path: '/profile', component: Profile },
   { path: '/cart', component: Cart},
+  { path: '/orders', component: Orders},
   // { path: '/cart', component: Cart, props: { api }},
 ];
 
