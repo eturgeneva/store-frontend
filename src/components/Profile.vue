@@ -146,8 +146,13 @@ async function loadOrders() {
                         >Show orders
                 </button>
 
-                <div class="orders">
-
+                <div class="orders" v-if="store.loggedInUser.orders">
+                    <div v-for="order in store.loggedInUser.orders" :key="order.id" class="orderPreview">
+                        <div>Order #{{  order.id  }}</div>
+                        <div>Items: {{  order.product_count }}</div>
+                        <div>Status: {{ order.status }}</div>
+                        <div>Total price: {{ order.total_price }}</div>
+                    </div>
                 </div>
             </div>
         </div>
