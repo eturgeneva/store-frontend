@@ -40,6 +40,7 @@ async function showOrderDetails(orderId) {
             <div>Price: {{ item.price_cents }}</div>
         </div>
         <div>Total price: {{ orderDetails.priceTotal }}</div>
+        <div>Status: {{ orderDetails.status }}</div>
     </div>
 
 </template>
