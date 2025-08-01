@@ -309,4 +309,27 @@ export default class StoreApi {
             return false;
         }
     }
+
+    // Cancel an order by ID
+    async cancelOrderById(orderId) {
+        try {
+            const response = await fetch(`${this.url}/orders/${orderId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    orderId: orderId 
+                }),
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to cancel order by ID');
+            }
+            return true;
+            
+        } catch (err) {
+            console.error('Failed to cancel order by ID', err);
+            return false;
+        }
+    }
 }

@@ -27,6 +27,19 @@ async function showOrderDetails(orderId) {
         console.error(err);
     }
 }
+
+async function cancelOrder(orderId) {
+    try {
+        const response = await $api.cancelOrderById(orderId);
+        if (response) {
+            orderDetails.value.status = 'cancelled';
+            console.log('selected order status', orderDetails.value.status);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -41,6 +54,12 @@ async function showOrderDetails(orderId) {
         </div>
         <div>Total price: {{ orderDetails.priceTotal }}</div>
         <div>Status: {{ orderDetails.status }}</div>
+
+        <button v-if="orderDetails.status !== 'cancelled'"
+                type="button"
+                @click="cancelOrder(orderDetails.orderId)">
+            Cancel order
+        </button>
     </div>
 
 </template>
