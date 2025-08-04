@@ -104,3 +104,56 @@ async function addToCart(productId, quantity) {
 
     </div>
 </template>
+
+<style scoped>
+
+.productsPreviews {
+    padding: 3rem 0;
+    margin: 2rem 0;
+    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+}
+
+.galleryContainer {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.featuredProductPreview {
+    flex: 0 0 240px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.featuredProductPreview:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.featuredProductImage {
+    position: relative;
+    overflow: hidden;
+    /* height: 200px; */
+    height: 13rem;
+    background: #f9fafb;
+}
+
+.productImage {
+    width: 100%;
+    height: 100%;
+    /* object-fit: contain; */
+    object-fit: cover;
+    /* object-position: center top; */
+    object-position: center 30%;
+    transition: transform 0.3s ease;
+}
+
+.featuredProductImage:hover .productImage {
+    transform: scale(1.05);
+}
+
+
+</style>
