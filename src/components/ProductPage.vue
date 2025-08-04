@@ -38,7 +38,15 @@ onMounted(async () => {
                     <div>Name: {{ store.selectedProduct.name }}</div>
                     <div>Price: {{ store.selectedProduct.price_cents / 100 + ' €'}}</div>
                     <div class="buttonContainer">
-                        <button @click="createUpdateCart(product.id)" type="button" class="buyButton">🛒Add to bag</button>
+                        <button @click="createUpdateCart(product.id)" 
+                                type="button" 
+                                class="buyButton">
+                                <!-- 🛒Add to bag -->
+                                Add to cart 
+                                <!-- <span class="material-symbols-outlined">
+                                    shopping_cart
+                                </span> -->
+                        </button>
                         <button type="button" class="likeButton">❤</button>
                     </div>
 
