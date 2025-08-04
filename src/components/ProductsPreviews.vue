@@ -63,6 +63,44 @@ async function addToCart(productId, quantity) {
 
 <template>
     <div class="productsPreviews">
-        Products Previews
+        <div class="productsPreviewsHeader">
+            <h2>Featured Products</h2>
+            <p>Discover our most popular toys</p>
+        </div>
+
+        <div class="galleryWrapper">
+            <div class="galleryContainer">
+                <div v-for="product in products"
+                    :key="product.id"
+                    class="featuredProductPreview">
+
+                    <div class="featuredProductImage">
+                        <router-link :to="`/products/${product.id}`">
+                            <img :src="productImgURL + product.name + '.png'"
+                                :alt="product.name" 
+                                class="productImage">
+                        </router-link>
+    
+                        <div class="buttonContainer">
+                            <button @click="addToCart(product.id, 1)"
+                                    type="button"
+                                    class="buyButton">
+                                <span class="material-symbols-outlined">
+                                    shopping_cart
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="featuredProductDetails">
+                        <router-link :to="`/products/${product.id}`">
+                            <h3>{{ product.name }}</h3>
+                        </router-link>
+                        <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
