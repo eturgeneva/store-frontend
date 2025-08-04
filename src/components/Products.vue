@@ -78,7 +78,13 @@ async function addToCart(productId, quantity) {
                     <div>{{ product.price_cents / 100 + ' €'}}</div>
                     <div class="buttonContainer">
                         <button type="button" class="likeButton">❤</button>
-                        <button @click="addToCart(product.id, 1)" type="button" class="buyButton">🛒</button>
+                        <button @click="addToCart(product.id, 1)" 
+                                type="button" 
+                                class="buyButton">
+                            <span class="material-symbols-outlined">
+                                shopping_cart
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
