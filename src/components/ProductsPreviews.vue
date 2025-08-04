@@ -72,7 +72,7 @@ async function addToCart(productId, quantity) {
 
             <!-- Left Arrow -->
             <button class="scrollArrow scrollArrowLeft">
-                <span class="arrowIcon"><</span>
+                <span class="arrowIcon">〈</span>
             </button>
 
             <!-- Gallery -->
