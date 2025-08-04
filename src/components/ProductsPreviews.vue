@@ -113,6 +113,26 @@ async function addToCart(productId, quantity) {
     background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
 }
 
+.productsPreviewsHeader {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    /* padding: 0 2rem; */
+}
+
+.productsPreviewsHeader h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.productsPreviewsHeader p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+/* Gallery */
 .galleryContainer {
     display: flex;
     gap: 1.5rem;
@@ -137,8 +157,12 @@ async function addToCart(productId, quantity) {
     position: relative;
     overflow: hidden;
     /* height: 200px; */
-    height: 13rem;
+    height: 15rem;
     background: #f9fafb;
+}
+
+.featuredProductImage a {
+    padding: 0;
 }
 
 .productImage {
@@ -148,7 +172,10 @@ async function addToCart(productId, quantity) {
     object-fit: cover;
     /* object-position: center top; */
     object-position: center 30%;
+    /* object-position: center center; */
     transition: transform 0.3s ease;
+    border-radius: 10px;
+    display: block;
 }
 
 .featuredProductImage:hover .productImage {
