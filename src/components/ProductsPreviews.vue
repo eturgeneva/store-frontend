@@ -133,9 +133,25 @@ async function addToCart(productId, quantity) {
 }
 
 /* Gallery */
+.galleryWrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
 .galleryContainer {
     display: flex;
     gap: 1.5rem;
+
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0 2rem 0;
+    /* Firefox */
+    scrollbar-width: none;
+    
+    /* IE and Edge */
+    -ms-overflow-style: none;
 }
 
 .featuredProductPreview {
