@@ -69,6 +69,13 @@ async function addToCart(productId, quantity) {
         </div>
 
         <div class="galleryWrapper">
+
+            <!-- Left Arrow -->
+            <button class="scrollArrow scrollArrowLeft">
+                <span class="arrowIcon"><</span>
+            </button>
+
+            <!-- Gallery -->
             <div class="galleryContainer">
                 <div v-for="product in products"
                     :key="product.id"
@@ -154,6 +161,10 @@ async function addToCart(productId, quantity) {
     -ms-overflow-style: none;
 }
 
+.galleryContainer::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
 .featuredProductPreview {
     flex: 0 0 240px;
     background: white;
@@ -198,5 +209,38 @@ async function addToCart(productId, quantity) {
     transform: scale(1.05);
 }
 
+/* Scroll Arrows */
+.scrollArrow {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    margin: 0;
+}
+
+.scrollArrow:hover {
+    background: #ffffff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.scrollArrowLeft {
+    left: 0.5rem;
+}
+
+.arrowIcon {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #374151;
+}
 
 </style>
