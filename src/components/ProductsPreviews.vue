@@ -10,6 +10,9 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 const products = ref([]);
 const galleryContainer = ref(null);
 
+const showLeftArrow = ref(false);
+const showRightArrow = ref(true);
+
 onBeforeMount(async () => {
     try {
         const fetchedProducts = await $api.getAllProducts();
@@ -36,6 +39,12 @@ function scrollRight() {
     if (galleryContainer.value) {
         galleryContainer.value.scrollBy({ left: 300, behavior: 'smooth' });
     }
+}
+
+function handleScroll() {
+    const { scrollLeft, scrollWidth, clientWidth } = galleryContainer.value;
+    showLeftArrow.value = scrollLeft > 10;
+    showRightArrow.value = scrollLeft < scrollWidth - clientWidth - 10;
 }
 
 async function addToCart(productId, quantity) {
@@ -84,14 +93,16 @@ async function addToCart(productId, quantity) {
         <div class="galleryWrapper">
 
             <!-- Left Arrow -->
-            <button class="scrollArrow scrollArrowLeft"
+            <button v-show="showLeftArrow"
+                    class="scrollArrow scrollArrowLeft"
                     @click="scrollLeft">
                 <span class="arrowIcon">〈</span>
             </button>
 
             <!-- Gallery -->
             <div ref="galleryContainer"
-                class="galleryContainer">
+                class="galleryContainer"
+                @scroll="handleScroll">
                 <div v-for="product in products"
                     :key="product.id"
                     class="featuredProductPreview">
@@ -124,7 +135,8 @@ async function addToCart(productId, quantity) {
             </div>
 
             <!-- Right Arrow -->
-            <button class="scrollArrow scrollArrowRight"
+            <button v-show="showRightArrow"
+                    class="scrollArrow scrollArrowRight"
                     @click="scrollRight">
                 <span class="arrowIcon">〉</span>
             </button>
