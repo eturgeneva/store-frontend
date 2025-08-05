@@ -125,6 +125,7 @@ async function addToCart(productId, quantity) {
                             <button 
                                     type="button"
                                     class="favoriteButton">
+                                <!-- <span class="material-symbols"> -->
                                 <span class="material-symbols-outlined">
                                     favorite
                                 </span>
@@ -315,14 +316,100 @@ async function addToCart(productId, quantity) {
 /* Buttons */
 .buttonContainer {
     position: absolute;
-    top: 1rem;
+    top: 0.5rem;
+    right: 0.5rem;
 }
 
 .buyButton {
-    height: 2.8rem;
-    width: 3.5rem;
+    height: 2.5rem;
+    width: 3rem;
     margin: 0;
     padding: 0;
+    border-radius: 8px;
 }
+
+.favoriteButton {
+    height: 2.5rem;
+    width: 3rem;
+    background: transparent;
+    border: 2px #ffffff solid;
+    color: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* opacity: 1; */
+    font-family: 'Material Symbols Outlined';
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.favoriteButton:hover span {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+    color: white;
+}
+
+.material-symbols-outlined:hover {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+    color: white;
+}
+
+
+/* 
+.favoriteButton span {
+    font-family: 'Material Symbols Outlined';
+    font-size: 24px;
+    transition: all 0.3s ease;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 200,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.favoriteButton:hover span {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 200,
+    'GRAD' 0,
+    'opsz' 24;
+} */
+
+/* .material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  transition: font-variation-settings 0.3s ease;
+} */
+
+.favoriteButton:hover .material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+    color: white;
+}
+
+/* .favoriteButton:hover .material-symbols {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+} */
 
 </style>

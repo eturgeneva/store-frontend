@@ -277,7 +277,7 @@ button:hover {
   'opsz' 24
 }
 
-/* .material-symbols-outlined {
+.material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
   font-style: normal;
@@ -289,4 +289,4 @@ button:hover {
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-} */
+}
