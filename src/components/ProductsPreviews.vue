@@ -122,6 +122,13 @@ async function addToCart(productId, quantity) {
                                     shopping_cart
                                 </span>
                             </button>
+                            <button 
+                                    type="button"
+                                    class="favoriteButton">
+                                <span class="material-symbols-outlined">
+                                    favorite
+                                </span>
+                            </button>
                         </div>
                     </div>
 
@@ -280,6 +287,12 @@ async function addToCart(productId, quantity) {
     font-size: 1.5rem;
     font-weight: 600;
     color: #374151;
+}
+
+/* Buttons */
+.buttonContainer {
+    position: absolute;
+    top: 1rem;
 }
 
 </style>
