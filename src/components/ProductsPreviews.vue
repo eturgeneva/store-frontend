@@ -316,7 +316,7 @@ async function addToCart(productId, quantity) {
 .buttonContainer {
     position: absolute;
     top: 0.5rem;
-    right: 0.5rem;
+    right: 0.2rem;
 }
 
 .buyButton {
@@ -331,13 +331,16 @@ async function addToCart(productId, quantity) {
     height: 2.5rem;
     width: 3rem;
     background: transparent;
-    border: 2px #ffffff solid;
+    /* border: 2px #ffffff solid; */
     color: #ffffff;
-    border-radius: 8px;
+    /* border-radius: 8px; */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* opacity: 1; */
+}
+
+.favoriteButton span {
+    font-size: 2.3rem;
 }
 
 /* .material-symbols-outlined:hover {
