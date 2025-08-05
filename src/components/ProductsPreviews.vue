@@ -173,7 +173,6 @@ async function addToCart(productId, quantity) {
 .productsPreviewsHeader {
     text-align: center;
     margin-bottom: 2.5rem;
-    /* padding: 0 2rem; */
 }
 
 .productsPreviewsHeader h2 {
@@ -233,8 +232,8 @@ async function addToCart(productId, quantity) {
 .featuredProductImage {
     position: relative;
     overflow: hidden;
-    /* height: 200px; */
-    height: 15rem;
+    /* height: 15rem; */
+    height: 18rem;
     background: #f9fafb;
 }
 
@@ -266,10 +265,6 @@ async function addToCart(productId, quantity) {
     /* margin-left: 1rem; */
     /* margin-bottom: 1rem; */
     margin: 0 1rem 1rem 1rem;
-}
-
-.productLink {
-    /* padding: 0.2rem; */
 }
 
 /* Scroll Arrows */
@@ -315,8 +310,8 @@ async function addToCart(productId, quantity) {
 /* Buttons */
 .buttonContainer {
     position: absolute;
-    top: 0.5rem;
-    right: 0.2rem;
+    top: 0.3rem;
+    right: 0.4rem;
 }
 
 .buyButton {
@@ -330,6 +325,7 @@ async function addToCart(productId, quantity) {
 .favoriteButton {
     height: 2.5rem;
     width: 3rem;
+    margin-right: 0.1rem;
     background: transparent;
     /* border: 2px #ffffff solid; */
     color: #ffffff;
@@ -342,14 +338,5 @@ async function addToCart(productId, quantity) {
 .favoriteButton span {
     font-size: 2.3rem;
 }
-
-/* .material-symbols-outlined:hover {
-    font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-    color: white;
-} */
 
 </style>
