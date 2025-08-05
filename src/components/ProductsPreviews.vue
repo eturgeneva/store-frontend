@@ -8,6 +8,7 @@ const $api = appContext.config.globalProperties.$api;
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const products = ref([]);
+const galleryContainer = ref(null);
 
 onBeforeMount(async () => {
     try {
@@ -24,6 +25,18 @@ onBeforeMount(async () => {
         console.error(err);
     }
 });
+
+function scrollLeft() {
+    if (galleryContainer.value) {
+        galleryContainer.value.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+}
+
+function scrollRight() {
+    if (galleryContainer.value) {
+        galleryContainer.value.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+}
 
 async function addToCart(productId, quantity) {
     console.log('Add to cart store cart ID', store.cartId);
@@ -71,12 +84,14 @@ async function addToCart(productId, quantity) {
         <div class="galleryWrapper">
 
             <!-- Left Arrow -->
-            <button class="scrollArrow scrollArrowLeft">
+            <button class="scrollArrow scrollArrowLeft"
+                    @click="scrollLeft">
                 <span class="arrowIcon">〈</span>
             </button>
 
             <!-- Gallery -->
-            <div class="galleryContainer">
+            <div ref="galleryContainer"
+                class="galleryContainer">
                 <div v-for="product in products"
                     :key="product.id"
                     class="featuredProductPreview">
@@ -107,6 +122,12 @@ async function addToCart(productId, quantity) {
                     </div>
                 </div>
             </div>
+
+            <!-- Right Arrow -->
+            <button class="scrollArrow scrollArrowRight"
+                    @click="scrollRight">
+                <span class="arrowIcon">〉</span>
+            </button>
         </div>
 
     </div>
@@ -237,6 +258,10 @@ async function addToCart(productId, quantity) {
 
 .scrollArrowLeft {
     left: 0.5rem;
+}
+
+.scrollArrowRight {
+    right: 0.5rem;
 }
 
 .arrowIcon {
