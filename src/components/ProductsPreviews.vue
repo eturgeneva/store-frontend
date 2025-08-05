@@ -115,13 +115,13 @@ async function addToCart(productId, quantity) {
                         </router-link>
     
                         <div class="buttonContainer">
-                            <button @click="addToCart(product.id, 1)"
+                            <!-- <button @click="addToCart(product.id, 1)"
                                     type="button"
                                     class="buyButton">
                                 <span class="material-symbols-outlined">
                                     shopping_cart
                                 </span>
-                            </button>
+                            </button> -->
                             <button 
                                     type="button"
                                     class="favoriteButton">
@@ -133,10 +133,20 @@ async function addToCart(productId, quantity) {
                     </div>
 
                     <div class="featuredProductDetails">
-                        <router-link :to="`/products/${product.id}`">
-                            <h3>{{ product.name }}</h3>
-                        </router-link>
-                        <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) }}</div>
+                        <div>
+                            <router-link :to="`/products/${product.id}`" class="productLink">
+                                <h3 class="productName">{{ product.name }}</h3>
+                            </router-link>
+                            <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) }}</div>
+                        </div>
+
+                        <button @click="addToCart(product.id, 1)"
+                                type="button"
+                                class="buyButton">
+                            <span class="material-symbols-outlined">
+                                shopping_cart
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -249,6 +259,19 @@ async function addToCart(productId, quantity) {
     transform: scale(1.05);
 }
 
+.featuredProductDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    /* margin-left: 1rem; */
+    /* margin-bottom: 1rem; */
+    margin: 0 1rem 1rem 1rem;
+}
+
+.productLink {
+    /* padding: 0.2rem; */
+}
+
 /* Scroll Arrows */
 .scrollArrow {
     position: absolute;
@@ -293,6 +316,13 @@ async function addToCart(productId, quantity) {
 .buttonContainer {
     position: absolute;
     top: 1rem;
+}
+
+.buyButton {
+    height: 2.8rem;
+    width: 3.5rem;
+    margin: 0;
+    padding: 0;
 }
 
 </style>
