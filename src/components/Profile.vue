@@ -90,7 +90,7 @@ async function logoutUser() {
     <main>
         <div class="userArea">
                 <div class="userLogin" v-if="!store.loggedIn">
-                    <h3>Welcome, guest</h3>
+                    <!-- <h3>Welcome, guest</h3> -->
                     <UserLogin :onLogin="getProfile"/>
                     <UserRegister />
                 </div>
