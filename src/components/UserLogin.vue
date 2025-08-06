@@ -273,12 +273,14 @@ async function loginUserGoogle() {
 }
 
 .oauthButton {
-    background: white;
-    border: 2px solid #e5e7eb;
+    /* background: white; */
+    background: #e5e1f9;
+    border: 3px solid #e5e7eb;
     border-radius: 8px;
     margin: 0;
     padding: 0.5rem;
     height: auto;
+    width: auto;
     font-size: 1rem;
     font-weight: 500;
     color: #374151;
