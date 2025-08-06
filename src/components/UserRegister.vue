@@ -177,7 +177,11 @@ async function registerUser() {
 
             <!-- Content -->
             <div class="successContent">
-                <h2> Welcome Abroad! 🎉</h2>
+                <div class="successIcon">
+                    <div class="celebrationEmoji">🎉</div>
+                </div>
+
+                <h2>Welcome Abroad!</h2>
                 <p>Your account has been successfully created!</p>
                 <p>You can now login and start shopping</p>
                 <div class="celebrationGraphics">
@@ -286,6 +290,92 @@ async function registerUser() {
 .successMessage {
     color: #16a34a;
     font-size: 0.9rem;
+}
+
+.successContent {
+    position: relative;
+    z-index: 2;
+    animation: success-bounce 0.8s ease-out;
+}
+
+@keyframes success-bounce {
+    0% {
+        transform: scale(0.3) translateY(30px);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05) translateY(-10px);
+        opacity: 0.9;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.successIcon {
+    position: relative;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.celebrationEmoji {
+    font-size: 4rem;
+    animation: emoji-bounce 1s ease-in-out infinite alternate;
+}
+
+@keyframes emoji-bounce {
+    0% {
+        transform: translateY(0) rotate(-5deg);
+    }
+    100% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+}
+
+.celebrationGraphics {
+    margin-top: 2rem;
+    position: relative;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.floatingEmoji {
+    /* position: absolute; */
+    font-size: 2rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.floatingEmoji:nth-child(1) {
+    /* left: 20%; */
+    animation-delay: 0s;
+}
+
+.floatingEmoji:nth-child(2) {
+    /* left: 50%; */
+    animation-delay: 1s;
+    animation-duration: 2.5s;
+}
+
+.floatingEmoji:nth-child(3) {
+    /* left: 80%; */
+    animation-delay: 2s;
+    animation-duration: 3.5s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+        opacity: 1;
+    }
 }
 
 /* Buttons */
@@ -423,37 +513,3 @@ async function registerUser() {
 }
 
 </style>
-
-<!-- <style scoped>
-form {
-    display: flex;
-    flex-direction: column;
-    width: 15rem;
-    border: 1px grey solid;
-    border-radius: 5px;
-    padding: 2rem;
-}
-
-input {
-    padding: 0.2rem;
-}
-
-.buttons {
-    display: flex;
-    justify-content: center;
-}
-
-button {
-    background-color: hsla(160, 100%, 37%, 1);
-    width: 5rem;
-    height: 1.8rem;
-    border: none;
-    border-radius: 2px;
-    margin: 0.8rem 0.6rem;
-    padding: 0.3rem;
-}
-
-.loginButton {
-    background-color: rgb(163, 168, 170);
-}
-</style> -->
