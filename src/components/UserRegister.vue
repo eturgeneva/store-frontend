@@ -13,7 +13,8 @@ const passwordConfirm = ref('');
 
 const isLoading = ref(false);
 const errorMessage = ref('');
-const successMessage = ref('');
+// const successMessage = ref('');
+const successMessage = ref('1');
 
 function comparePasswords(password1, password2) {
     // if (password1 === password2) {
@@ -107,12 +108,12 @@ async function registerUser() {
 <template>
     <!-- <div class="userRegister framed"> -->
     <div class="registerCard">
-        <div class="cardHeader">
+        <div class="cardHeader" v-if="!successMessage">
             <h2>Create an Account</h2>
             <p>Join our community today</p>
         </div>
 
-        <form @submit.prevent="registerUser" class="registerForm">
+        <form @submit.prevent="registerUser" class="registerForm" v-if="!successMessage">
             <div>
                 <label for="first_name" class="formLabel">First Name</label>
                 <input v-model="firstName" type="text" name="first_name" id="first_name"
@@ -153,9 +154,9 @@ async function registerUser() {
                 {{ errorMessage }}
             </div>
 
-            <div v-if="successMessage" class="successMessage">
+            <!-- <div v-if="successMessage" class="successMessage">
                 {{ successMessage }}
-            </div>
+            </div> -->
 
             <div class="formActions">
                 <button @click="registerUser"
@@ -167,6 +168,11 @@ async function registerUser() {
                 </button>
             </div>
         </form>
+        <div v-if="successMessage" class="successCard">
+            <h2> Welcome Abroad! 🎉</h2>
+            <p>Your account has been successfully created!</p>
+            <p>You can now login and start shopping</p>
+        </div>
     </div>
 </template>
 
@@ -195,19 +201,19 @@ async function registerUser() {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.cardHeader {
+.cardHeader, .successCard {
     text-align: center;
     margin-bottom: 0.5rem;
 }
 
-.cardHeader h2 {
+.cardHeader h2, .successCard h2 {
     font-size: 1.8rem;
     font-weight: 700;
     color: #374151;
     margin-bottom: 0.5rem;
 }
 
-.cardHeader p {
+.cardHeader p, .successCard p {
     color: #6b7280;
     font-size: 1rem;
 }
