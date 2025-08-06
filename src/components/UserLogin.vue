@@ -189,6 +189,8 @@ async function loginUserGoogle() {
     background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
     border-radius: 8px;
     margin: 1rem 0;
+    padding: 0.5rem;
+    height: auto;
     color: white;
     font-size: 1rem;
     font-weight: 500;
@@ -197,13 +199,34 @@ async function loginUserGoogle() {
 
 .loginButton:hover:not(:disabled) {
     transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(139, 92, 246, 0.4);
+    /* box-shadow: 0 3px 10px rgba(139, 92, 246, 0.4); */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 .loginButton:disabled {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
+}
+
+.oauthButton {
+    background: white;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    margin: 0;
+    padding: 0.5rem;
+    height: auto;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+    transition: all 0.3s ease;
+}
+
+.oauthButton:hover {
+    border-color: #d1d5db;
+    background: #f9fafb;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 </style>
