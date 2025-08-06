@@ -124,7 +124,7 @@ a,
 form, .userLogin {
     display: flex;
     /* flex-direction: column; */
-    width: 15rem;
+    /* width: 15rem; */
     padding: 1rem;
 }
 
@@ -136,7 +136,12 @@ form, .userLogin {
 }
 
 .userArea {
-  display: flex;
+  /* display: flex; */
+  /* justify-content: center; */
+}
+
+.loginCard, .registerCard {
+  /* margin: 1rem; */
 }
 
 .userProfile {

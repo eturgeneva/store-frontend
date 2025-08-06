@@ -289,7 +289,8 @@ async function loginUserGoogle() {
 
 .oauthButton:hover {
     border-color: #d1d5db;
-    background: #f9fafb;
+    /* background: #f9fafb; */
+    background: #e5e1f9;
     transform: translateY(-1px);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }

@@ -171,7 +171,8 @@ async function registerUser() {
     /* display: flex; */
     /* gap: 1.5rem; */
     /* width: 100%; */
-    max-width: 25rem;
+    /* max-width: 25rem; */
+    width: 25rem;
     padding: 2rem;
     margin: 2rem auto;
     /* flex-wrap: wrap; */
@@ -180,6 +181,7 @@ async function registerUser() {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     position: relative;
+    background: #f9f6ff;
     /* background: white; */
 }
 
