@@ -11,16 +11,24 @@ const email = ref('');
 const password = ref('');
 const passwordConfirm = ref('');
 
+const isLoading = ref(false);
+const errorMessage = ref('');
+const successMessage = ref('');
+
 function comparePasswords(password1, password2) {
-    if (password1 === password2) {
-        return true;
-    }
-    return false;
+    // if (password1 === password2) {
+    //     return true;
+    // }
+    // return false;
+    return password1 === password2;
 }
 
 async function registerUser({ email, password, passwordConfirm, firstName, lastName, username }) {
     console.log('Register button clicked');
-    // console.log('Registration data', email, password, passwordConfirm, firstName, lastName, username);
+
+    isLoading.value = true;
+    errorMessage.value = '';
+    successMessage.value = '';
 
     const userData = { 
                         email: email, 
@@ -30,23 +38,55 @@ async function registerUser({ email, password, passwordConfirm, firstName, lastN
                         username: username,
                     };
 
-    if (comparePasswords(password, passwordConfirm)) {
-        console.log('Password confirmed');
-        try {
-            const response = await $api.registerUser(userData);
-            console.log('Response', response);
-            if (response) {
-                console.log('Registration successful, you can now login');
-            } else {
-                console.log('Registration failed');
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    } else {
-        console.log('Please type your password again');
-        return 'Please type your password again';
+    if (!comparePasswords(password, passwordConfirm)) {
+        console.log('Passwords don\'t match');
+        errorMessage.value = 'Please type your password again';
+        return;
     }
+
+    try {
+        const response = await $api.registerUser(userData);
+        console.log('Response', response);
+        if (response) {
+            console.log('Registration successful, you can now login');
+            successMessage.value = 'Registration successful, you can now login';
+            isLoading.value = false;
+
+            email.value = '';
+            password.value = '';
+            passwordConfirm.value = '';
+            firstName.value = '';
+            lastName.value = '';
+            username.value = '';
+        } else {
+            console.log('Registration failed');
+            errorMessage.value = 'Registration failed. Please try again';
+            isLoading.value = false;
+        }
+    } catch (err) {
+        console.error(err);
+        errorMessage.value = 'Registration failed. Please try again';
+        isLoading.value = false;
+    }
+
+
+    // if (comparePasswords(password, passwordConfirm)) {
+    //     console.log('Password confirmed');
+    //     try {
+    //         const response = await $api.registerUser(userData);
+    //         console.log('Response', response);
+    //         if (response) {
+    //             console.log('Registration successful, you can now login');
+    //         } else {
+    //             console.log('Registration failed');
+    //         }
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // } else {
+    //     console.log('Please type your password again');
+    //     return 'Please type your password again';
+    // }
 }
 
 </script>

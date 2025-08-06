@@ -123,7 +123,7 @@ a,
 
 form, .userLogin {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     width: 15rem;
     padding: 1rem;
 }
