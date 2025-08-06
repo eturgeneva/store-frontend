@@ -70,7 +70,8 @@ async function loginUserGoogle() {
                         type="email" 
                         name="email" 
                         id="email"
-                        class="formInput"
+                        :class="['formInput', { 'inputError': errorMessage === 'Please fill in all fields'}]"
+                        @input="errorMessage = ''"
                         placeholder="Enter your email"
                         required>
             </div>
@@ -81,7 +82,8 @@ async function loginUserGoogle() {
                         type="password" 
                         name="password" 
                         id="password"
-                        class="formInput"
+                        :class="['formInput', { 'inputError': errorMessage === 'Please fill in all fields'}]"
+                        @input="errorMessage = ''"
                         placeholder="Enter your password"
                         required>
             </div>
@@ -202,6 +204,19 @@ async function loginUserGoogle() {
 
 .formInput::placeholder {
     color: #9ca3af;
+}
+
+.errorMessage {
+    /* background: #fef2f2; */
+    color: #dc2626;
+    /* padding: 0.75rem; */
+    /* border-radius: 6px; */
+    font-size: 0.9rem;
+    /* border: 1px solid #fecaca; */
+}
+
+.inputError {
+    border: 1px red solid;
 }
 
 /* Buttons */
