@@ -73,7 +73,7 @@ async function loginUserGoogle() {
         
             <div class="formActions">
                 <button @click="loginUser" type="button" class="loginButton">Log in</button>
-                <button @click="loginUserGoogle" type="button" class="loginButton oauthButton">Login with Google</button>
+                <button @click="loginUserGoogle" type="button" class="googleButton oauthButton">Login with Google</button>
             </div>
         </form>
 
@@ -119,10 +119,91 @@ async function loginUserGoogle() {
     /* background: white; */
 }
 
+.loginCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.cardHeader {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.cardHeader h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.cardHeader p {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
 .loginForm {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    /* gap: 1.5rem; */
+}
+
+.loginForm div {
+    display: flex;
+    flex-direction: column;
+}
+
+.formLabel {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #374151;
+    margin: 0.5rem 0;
+}
+
+.formInput {
+    padding: 0.7rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.formInput::placeholder {
+    color: #9ca3af;
+}
+
+/* Buttons */
+.formActions {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginButton {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    border-radius: 8px;
+    margin: 1rem 0;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.loginButton:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(139, 92, 246, 0.4);
+}
+
+.loginButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
 }
 
 </style>
