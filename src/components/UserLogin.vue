@@ -10,9 +10,19 @@ const props = defineProps(['onLogin']);
 const email = ref('');
 const password = ref('');
 
+const isLoading = ref(false);
+const errorMessage = ref('');
+
 // Login User:
 async function loginUser() {
     console.log('loggedIn', store.loggedIn);
+    if (!email.value || !password.value) {
+        errorMessage.value = 'Please fill in all fields';
+        return;
+    }
+    isLoading.value = true;
+    errorMessage.value = '';
+
     const userLoginData = { email: email.value, password: password.value };
 
     try {
@@ -21,13 +31,18 @@ async function loginUser() {
         if (response) {
             // store.setLoggedIn(true);
             await props.onLogin();
+        } else {
+            errorMessage.value = 'Invalid email or password';
         }
         // await props.onLogin();
         console.log('loggedInUser', store.loggedInUser);
         console.log('loggedIn', store.loggedIn);
+        isLoading.value = false;
 
     } catch (err) {
         console.error(err);
+        errorMessage.value = 'Login failed. Please try again.'
+        isLoading.value = false;
         store.setLoggedIn(false);
         console.log('loggedIn', store.loggedIn);
     }
@@ -70,9 +85,19 @@ async function loginUserGoogle() {
                         placeholder="Enter your password"
                         required>
             </div>
+
+            <div v-if="errorMessage" class="errorMessage">
+                {{ errorMessage }}
+            </div>
         
             <div class="formActions">
-                <button @click="loginUser" type="button" class="loginButton">Log in</button>
+                <button @click="loginUser" 
+                        type="button" 
+                        class="loginButton"
+                        :disabled="isLoading">
+                        <span v-if="!isLoading">Log in</span>
+                        <span v-else class="loadingSpinner">Logging in...</span>
+                </button>
                 <button @click="loginUserGoogle" type="button" class="googleButton oauthButton">Login with Google</button>
             </div>
         </form>
@@ -191,6 +216,7 @@ async function loginUserGoogle() {
     margin: 1rem 0;
     padding: 0.5rem;
     height: auto;
+    width: auto;
     color: white;
     font-size: 1rem;
     font-weight: 500;
@@ -207,6 +233,28 @@ async function loginUserGoogle() {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
+}
+
+.loadingSpinner {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.loadingSpinner::after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .oauthButton {
