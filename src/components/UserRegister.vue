@@ -168,10 +168,24 @@ async function registerUser() {
                 </button>
             </div>
         </form>
+        
         <div v-if="successMessage" class="successCard">
-            <h2> Welcome Abroad! 🎉</h2>
-            <p>Your account has been successfully created!</p>
-            <p>You can now login and start shopping</p>
+            <!-- Confetti Animation -->
+            <div class="confettiContainer">
+                <div class="confetti" v-for="i in 30" :key="i"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="successContent">
+                <h2> Welcome Abroad! 🎉</h2>
+                <p>Your account has been successfully created!</p>
+                <p>You can now login and start shopping</p>
+                <div class="celebrationGraphics">
+                    <span class="floatingEmoji">🛍️</span>
+                    <span class="floatingEmoji">✨</span>
+                    <span class="floatingEmoji">🎊</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -324,6 +338,87 @@ async function registerUser() {
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+/* Confetti */
+.confettiContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(45deg, #8b5cf6, #a855f7, #ec4899, #f59e0b, #10b981);
+    animation: confetti-fall 3s ease-out infinite;
+}
+
+.confetti:nth-child(odd) {
+    background: linear-gradient(45deg, #ec4899, #f59e0b);
+    width: 6px;
+    height: 12px;
+    border-radius: 2px;
+ }
+
+.confetti:nth-child(even) {
+    background: linear-gradient(45deg, #8b5cf6, #a855f7);
+    border-radius: 50%;
+}
+
+.confetti:nth-child(3n) {
+    background: linear-gradient(45deg, #10b981, #06b6d4);
+    width: 10px;
+    height: 4px;
+    border-radius: 4px;
+}
+
+/* Generate random positions and delays for confetti */
+.confetti:nth-child(1) { left: 10%; animation-delay: 0s; }
+.confetti:nth-child(2) { left: 20%; animation-delay: 0.2s; }
+.confetti:nth-child(3) { left: 30%; animation-delay: 0.4s; }
+.confetti:nth-child(4) { left: 40%; animation-delay: 0.6s; }
+.confetti:nth-child(5) { left: 50%; animation-delay: 0.8s; }
+.confetti:nth-child(6) { left: 60%; animation-delay: 0.3s; }
+.confetti:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+.confetti:nth-child(8) { left: 80%; animation-delay: 0.7s; }
+.confetti:nth-child(9) { left: 90%; animation-delay: 0.9s; }
+.confetti:nth-child(10) { left: 15%; animation-delay: 1s; }
+.confetti:nth-child(11) { left: 25%; animation-delay: 0.1s; }
+.confetti:nth-child(12) { left: 35%; animation-delay: 0.3s; }
+.confetti:nth-child(13) { left: 45%; animation-delay: 0.5s; }
+.confetti:nth-child(14) { left: 55%; animation-delay: 0.7s; }
+.confetti:nth-child(15) { left: 65%; animation-delay: 0.9s; }
+.confetti:nth-child(16) { left: 75%; animation-delay: 0.2s; }
+.confetti:nth-child(17) { left: 85%; animation-delay: 0.4s; }
+.confetti:nth-child(18) { left: 95%; animation-delay: 0.6s; }
+.confetti:nth-child(19) { left: 5%; animation-delay: 0.8s; }
+.confetti:nth-child(20) { left: 12%; animation-delay: 1.2s; }
+.confetti:nth-child(21) { left: 22%; animation-delay: 0.1s; }
+.confetti:nth-child(22) { left: 32%; animation-delay: 0.3s; }
+.confetti:nth-child(23) { left: 42%; animation-delay: 0.5s; }
+.confetti:nth-child(24) { left: 52%; animation-delay: 0.7s; }
+.confetti:nth-child(25) { left: 62%; animation-delay: 0.9s; }
+.confetti:nth-child(26) { left: 72%; animation-delay: 1.1s; }
+.confetti:nth-child(27) { left: 82%; animation-delay: 0.2s; }
+.confetti:nth-child(28) { left: 92%; animation-delay: 0.4s; }
+.confetti:nth-child(29) { left: 8%; animation-delay: 0.6s; }
+.confetti:nth-child(30) { left: 18%; animation-delay: 0.8s; }
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
     }
 }
 
