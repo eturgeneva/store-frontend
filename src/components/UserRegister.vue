@@ -13,32 +13,22 @@ const passwordConfirm = ref('');
 
 const isLoading = ref(false);
 const errorMessage = ref('');
+// Normal state:
 // const successMessage = ref('');
+
+// For css tweaking:
 const successMessage = ref('1');
 
 function comparePasswords(password1, password2) {
-    // if (password1 === password2) {
-    //     return true;
-    // }
-    // return false;
     return password1 === password2;
 }
 
-// async function registerUser({ email, password, passwordConfirm, firstName, lastName, username }) {
 async function registerUser() {
     console.log('Register button clicked');
 
-    // isLoading.value = true;
     errorMessage.value = '';
     successMessage.value = '';
 
-    // const userData = { 
-    //                     email: email, 
-    //                     password: password, 
-    //                     first_name: firstName,
-    //                     last_name: lastName,
-    //                     username: username,
-    //                 };
     const userData = { 
                         email: email.value, 
                         password: password.value, 
@@ -46,6 +36,7 @@ async function registerUser() {
                         last_name: lastName.value,
                         username: username.value,
                     };
+                    
     if (!email.value || !password.value || !passwordConfirm.value || !firstName.value || !lastName.value || !username.value ) {
         errorMessage.value = 'Please fill in all fields';
         return;
@@ -82,31 +73,11 @@ async function registerUser() {
         errorMessage.value = 'Registration failed. Please try again';
         isLoading.value = false;
     }
-
-
-    // if (comparePasswords(password, passwordConfirm)) {
-    //     console.log('Password confirmed');
-    //     try {
-    //         const response = await $api.registerUser(userData);
-    //         console.log('Response', response);
-    //         if (response) {
-    //             console.log('Registration successful, you can now login');
-    //         } else {
-    //             console.log('Registration failed');
-    //         }
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // } else {
-    //     console.log('Please type your password again');
-    //     return 'Please type your password again';
-    // }
 }
 
 </script>
 
 <template>
-    <!-- <div class="userRegister framed"> -->
     <div class="registerCard">
         <div class="cardHeader" v-if="!successMessage">
             <h2>Create an Account</h2>
@@ -336,7 +307,7 @@ async function registerUser() {
 }
 
 .celebrationGraphics {
-    margin-top: 2rem;
+    margin-top: 3.5rem;
     position: relative;
     height: 3rem;
     display: flex;
