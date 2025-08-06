@@ -27,7 +27,7 @@ function comparePasswords(password1, password2) {
 async function registerUser() {
     console.log('Register button clicked');
 
-    isLoading.value = true;
+    // isLoading.value = true;
     errorMessage.value = '';
     successMessage.value = '';
 
@@ -45,12 +45,17 @@ async function registerUser() {
                         last_name: lastName.value,
                         username: username.value,
                     };
+    if (!email.value || !password.value || !passwordConfirm.value || !firstName.value || !lastName.value || !username.value ) {
+        errorMessage.value = 'Please fill in all fields';
+        return;
+    }
 
-    if (!comparePasswords(password, passwordConfirm)) {
+    if (!comparePasswords(password.value, passwordConfirm.value)) {
         console.log('Passwords don\'t match');
         errorMessage.value = 'Please type your password again';
         return;
     }
+    isLoading.value = true;
 
     try {
         const response = await $api.registerUser(userData);
@@ -256,6 +261,11 @@ async function registerUser() {
 
 .inputError {
     border: 1px red solid;
+}
+
+.successMessage {
+    color: #16a34a;
+    font-size: 0.9rem;
 }
 
 /* Buttons */
