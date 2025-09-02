@@ -332,4 +332,45 @@ export default class StoreApi {
             return false;
         }
     }
+
+    // Create a wishlist
+    async createWishlist(userId) {
+        try {
+            const response = await fetch(`${this.url}/wishlists`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    userId: userId
+                }),
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create a wishlist');
+            }
+            return true;
+        } catch (err) {
+            console.error('Failed to create a wishlist', err);
+            return false;
+        }
+    }
+
+    // Get wishlist
+    async getWishlist() {
+        try {
+            const response = await fetch(`${this.url}/wishlists`, {
+                credentials: 'include'
+            });
+
+            if(!response.ok) {
+                throw new Error('Failed to fetch wishlist');
+            }
+            // return true;
+            const wishlist = response.json();
+            return wishlist;
+        } catch (err) {
+            console.error('Failed to fetch wishlist', err);
+            return false;
+        }
+    }
 }

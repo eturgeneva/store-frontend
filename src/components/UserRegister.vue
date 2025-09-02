@@ -14,10 +14,10 @@ const passwordConfirm = ref('');
 const isLoading = ref(false);
 const errorMessage = ref('');
 // Normal state:
-// const successMessage = ref('');
+const successMessage = ref('');
 
 // For css tweaking:
-const successMessage = ref('1');
+// const successMessage = ref('1');
 
 function comparePasswords(password1, password2) {
     return password1 === password2;

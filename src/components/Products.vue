@@ -62,6 +62,27 @@ async function addToCart(productId, quantity) {
     }
 }
 
+async function addToWishlist() {
+    if (!store.loggedIn || !store.loggedInUser) {
+        console.log('Please log in to create a wishlist');
+        return;
+    }
+
+    try {
+        const userId = store.loggedInUser.id;
+        const wishlistId = await $api.createWishlist(userId);
+        if (wishlistId) {
+            store.loggedInUser.wishlistId = wishlistId;
+            console.log('wishlist id', store.loggedInUser.wishlistId);
+        } else {
+            console.log('Failed to create a wishlist');
+        }
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -80,7 +101,7 @@ async function addToCart(productId, quantity) {
                         </router-link>
     
                         <div class="buttonContainer">
-                            <button 
+                            <button @click="addToWishlist"
                                     type="button"
                                     class="favoriteButton">
                                 <span class="material-symbols-outlined">
