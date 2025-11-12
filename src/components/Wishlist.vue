@@ -49,7 +49,8 @@ onBeforeMount(async () => {
             class="wishlistItem">
             <p>{{ item.name }}</p>
             <p>{{ item.product_id }}</p>
-            <p>{{ (item.price_cents/100).toFixed(2) }}</p>
+            <p>Price {{ (item.price_cents/100).toFixed(2) }}</p>
+            <p>Brand {{ item.brand }}</p>
         </div>
     </div>
     <div v-else>
