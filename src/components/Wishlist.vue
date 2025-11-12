@@ -6,6 +6,8 @@ const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
 const wishlist = ref([]);
+console.log('wishlist', wishlist)
+console.log('wishlist.value', wishlist.value)
 
 onBeforeMount(async () => {
     try {
@@ -24,14 +26,27 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-
+<!-- <div v-if="wishlist.length > 0" class="wishlistContainer"> -->
 <div class="wishlistContainer">
-    <div v-for="item in wishlist"
-        :key="item.id"
-        class="wishlistItem">
-        {{ item.product_id }}
+    <div v-if="wishlist.length > 0">
+        <div v-for="item in wishlist"
+            :key="item.id"
+            class="wishlistItem">
+            {{ item.product_id }}
+        </div>
     </div>
-
+    <div v-else>
+        <p>Your wishlist is empty</p>
+        <button>Create a wishlist</button>
+    </div>
 </div>
 
 </template>
+
+<style scoped>
+
+.wishlistContainer {
+    margin: 5rem 0;
+}
+
+</style>
