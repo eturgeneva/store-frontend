@@ -348,7 +348,8 @@ export default class StoreApi {
             if (!response.ok) {
                 throw new Error('Failed to create a wishlist');
             }
-            return true;
+            // return true;
+            return response;
         } catch (err) {
             console.error('Failed to create a wishlist', err);
             return false;

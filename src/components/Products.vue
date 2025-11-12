@@ -72,12 +72,13 @@ async function addToWishlist() {
         const userId = store.loggedInUser.id;
         const wishlistId = await $api.createWishlist(userId);
         if (wishlistId) {
+            console.log('wishlistId response', wishlistId)
             store.loggedInUser.wishlistId = wishlistId;
-            console.log('wishlist id', store.loggedInUser.wishlistId);
+            console.log('wishlist id from Products', store.loggedInUser.wishlistId);
         } else {
             console.log('Failed to create a wishlist');
         }
-
+        
     } catch (err) {
         console.error(err);
     }
