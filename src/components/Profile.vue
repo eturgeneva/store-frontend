@@ -114,7 +114,7 @@ async function logoutUser() {
                 </div>
 
                 <router-link to="/orders">My orders</router-link>
-                <router-link to="/wishlists">Wishlist</router-link>
+                <router-link to="/wishlist">Wishlist</router-link>
             </div>
         </div>
     </main>

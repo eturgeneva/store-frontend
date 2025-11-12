@@ -22,7 +22,7 @@ const routes = [
   { path: '/cart', component: Cart },
   { path: '/orders', component: Orders },
   { path: '/orders/:id', component: OrderDetails },
-  { path: '/wishlists', component: Wishlist },
+  { path: '/wishlist', component: Wishlist },
   // { path: '/cart', component: Cart, props: { api }},
 ];
 

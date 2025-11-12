@@ -62,7 +62,7 @@ async function addToCart(productId, quantity) {
     }
 }
 
-async function addToWishlist() {
+async function addToWishlist(productId) {
     if (!store.loggedIn || !store.loggedInUser) {
         console.log('Please log in to create a wishlist');
         return;
@@ -70,18 +70,44 @@ async function addToWishlist() {
 
     try {
         const userId = store.loggedInUser.id;
-        const wishlistId = await $api.createWishlist(userId);
-        if (wishlistId) {
-            console.log('wishlistId response', wishlistId)
-            store.loggedInUser.wishlistId = wishlistId;
-            console.log('wishlist id from Products', store.loggedInUser.wishlistId);
-        } else {
-            console.log('Failed to create a wishlist');
+        console.log('store.loggedInUser.wishlistId', store.loggedInUser.wishlistId)
+
+        if (!store.loggedInUser.wishlistId) {
+            const wishlistId = await $api.createWishlist(userId);
+            if (wishlistId) {
+                console.log('wishlistId response', wishlistId)
+                store.loggedInUser.wishlistId = wishlistId;
+                console.log('wishlist id from Products', store.loggedInUser.wishlistId);
+            } else {
+                console.log('Failed to create a wishlist');
+            }
         }
-        
+
+        const wishlistUpdate = await $api.updateWishList(userId, productId);
+        if (wishlistUpdate) {
+            console.log('updated wishlist', wishlistUpdate)
+            store.loggedInUser.wishlist = wishlistUpdate;
+        }
+
+
     } catch (err) {
         console.error(err);
     }
+
+    // try {
+    //     const userId = store.loggedInUser.id;
+    //     const wishlistId = await $api.createWishlist(userId);
+    //     if (wishlistId) {
+    //         console.log('wishlistId response', wishlistId)
+    //         store.loggedInUser.wishlistId = wishlistId;
+    //         console.log('wishlist id from Products', store.loggedInUser.wishlistId);
+    //     } else {
+    //         console.log('Failed to create a wishlist');
+    //     }
+        
+    // } catch (err) {
+    //     console.error(err);
+    // }
 }
 
 </script>
@@ -102,7 +128,7 @@ async function addToWishlist() {
                         </router-link>
     
                         <div class="buttonContainer">
-                            <button @click="addToWishlist"
+                            <button @click="addToWishlist(product.id)"
                                     type="button"
                                     class="favoriteButton">
                                 <span class="material-symbols-outlined">

@@ -336,7 +336,7 @@ export default class StoreApi {
     // Create a wishlist
     async createWishlist(userId) {
         try {
-            const response = await fetch(`${this.url}/wishlists`, {
+            const response = await fetch(`${this.url}/wishlist`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify({
@@ -356,10 +356,32 @@ export default class StoreApi {
         }
     }
 
+    // Update wishlist
+    async updateWishList(userId, productId) {
+        try {
+            const response = await fetch(`${this.url}/wishlist`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    userId: userId,
+                    productId: productId
+                }),
+                credentials: 'include'
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update wishlist');
+            }
+            return response;
+        } catch (err) {
+            console.error('Failed to update wishlist', err);
+            return false;
+        }
+    }
+
     // Get wishlist
     async getWishlist() {
         try {
-            const response = await fetch(`${this.url}/wishlists`, {
+            const response = await fetch(`${this.url}/wishlist`, {
                 credentials: 'include'
             });
 

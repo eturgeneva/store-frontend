@@ -27,9 +27,10 @@ onBeforeMount(async () => {
 
 <template>
 <!-- <div v-if="wishlist.length > 0" class="wishlistContainer"> -->
-<div class="wishlistContainer">
-    <div v-if="wishlist.length > 0">
-        <div v-for="item in wishlist"
+<div v-if="store.loggedIn" class="wishlistContainer">
+    <!-- <div v-if="wishlist.length > 0"> -->
+    <div v-if="store.loggedInUser.wishlist">
+        <div v-for="item in store.loggedInUser.wishlist"
             :key="item.id"
             class="wishlistItem">
             {{ item.product_id }}
