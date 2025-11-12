@@ -47,7 +47,9 @@ onBeforeMount(async () => {
         <div v-for="item in store.loggedInUser.wishlist"
             :key="item.id"
             class="wishlistItem">
-            {{ item.product_id }}
+            <p>{{ item.name }}</p>
+            <p>{{ item.product_id }}</p>
+            <p>{{ (item.price_cents/100).toFixed(2) }}</p>
         </div>
     </div>
     <div v-else>
