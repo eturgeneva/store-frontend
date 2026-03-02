@@ -5,7 +5,7 @@ import { store } from '@/store';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+// const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const products = ref([]);
 
@@ -124,7 +124,8 @@ async function addToWishlist(productId) {
                         <router-link :to="`/products/${product.id}`">
                             <img :src="productImgURL + product.name + '.png'"
                                 :alt="product.name" 
-                                class="productImage">
+                                class="productImage"
+                                @error="e => e.target.style.display = 'none'">
                         </router-link>
     
                         <div class="buttonContainer">
@@ -216,9 +217,11 @@ async function addToWishlist(productId) {
 .featuredProductImage {
     position: relative;
     overflow: hidden;
-    /* height: 15rem; */
     height: 18rem;
-    background: #f9fafb;
+    /* background: #f9fafb; */
+    
+    /* Gradient fallback */
+    background: linear-gradient(135deg, #c7d2fe 0%, #fbcfe8 50%, #bbf7d0 100%);
 }
 
 /* .featuredProductImage::before {
