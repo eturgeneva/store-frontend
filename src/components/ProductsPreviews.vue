@@ -264,7 +264,8 @@ async function addToCart(productId, quantity) {
     align-items: flex-end;
     /* margin-left: 1rem; */
     /* margin-bottom: 1rem; */
-    margin: 0 1rem 1rem 1rem;
+    /* margin: 0 1rem 1rem 1rem; */
+    margin: 0.5rem 1rem 1rem 1rem;
 }
 
 /* Scroll Arrows */

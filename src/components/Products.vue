@@ -199,13 +199,13 @@ async function addToWishlist(productId) {
 }
 
 .featuredProductPreview {
+    position: relative;
     flex: 0 0 240px;
     background: white;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    position: relative;
 }
 
 .featuredProductPreview:hover {
@@ -220,6 +220,16 @@ async function addToWishlist(productId) {
     height: 18rem;
     background: #f9fafb;
 }
+
+/* .featuredProductImage::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+} */
 
 .featuredProductImage a {
     padding: 0;
@@ -248,7 +258,7 @@ async function addToWishlist(productId) {
     align-items: flex-end;
     /* margin-left: 1rem; */
     /* margin-bottom: 1rem; */
-    margin: 0 1rem 1rem 1rem;
+    margin: 0.5rem 1rem 1rem 1rem;
 }
 
 /* Buttons */

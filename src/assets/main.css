@@ -59,7 +59,8 @@ a,
   text-decoration: none;
   /* color: hsla(160, 100%, 37%, 1); */
   color: #8b5cf6;
-  padding: 3px;
+  /* padding: 2px; */
+  /* margin-top: 0.2rem; */
 }
 
 .router-link-active {
