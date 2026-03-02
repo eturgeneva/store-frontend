@@ -11,7 +11,7 @@ const promoBanner = productImgURL + "promo-banner-2.png"
             <div class="bannerOverlay"></div>
 
             <div class="promoText">
-                <h2>Buy them all!</h2>
+                <!-- <h2>Buy them all!</h2> -->
             </div>
         </div>
     </div>
