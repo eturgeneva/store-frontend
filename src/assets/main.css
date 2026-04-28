@@ -169,6 +169,8 @@ input {
   display: flex;
 }
 
+/* Buttons */
+
 .buttons {
     display: flex;
     justify-content: center;
@@ -188,6 +190,11 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+.likeButton {
+    width: 2.5rem;
+    margin-left: 0.5rem;
 }
 
 .loginButton, .logoutButton, .editButton, .likeButton {

@@ -88,14 +88,14 @@ button {
     width: 12rem;
 }
 
-.likeButton {
+/* .likeButton {
     width: 2.5rem;
     margin-left: 0.5rem;
-}
+} */
 
-.likeButton:hover, .buyButton:hover {
+/* .likeButton:hover, .buyButton:hover {
   scale: 1.05;
   transition: 4ms;
-}
+} */
 
 </style>
