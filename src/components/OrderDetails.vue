@@ -65,10 +65,5 @@ async function cancelOrder(orderId) {
 </template>
 
 <style scoped>
-.orderItem {
-    margin: 1rem;
-    background-color: rgb(57, 57, 57);
-    width: 40%;
-}
 
 </style>

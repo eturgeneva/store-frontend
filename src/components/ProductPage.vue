@@ -70,32 +70,4 @@ onMounted(async () => {
 
 <style scoped>
 
-.productDetailsImage {
-    width: 26rem;
-}
-
-.buttonContainer {
-    display: flex;
-}
-
-button {
-    margin: 0;
-    height: 2rem;
-    font-size: 1rem;
-}
-
-.buyButton {
-    width: 12rem;
-}
-
-/* .likeButton {
-    width: 2.5rem;
-    margin-left: 0.5rem;
-} */
-
-/* .likeButton:hover, .buyButton:hover {
-  scale: 1.05;
-  transition: 4ms;
-} */
-
 </style>

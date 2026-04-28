@@ -5,7 +5,7 @@ import { store } from '@/store';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-// const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const products = ref([]);
 
@@ -93,21 +93,6 @@ async function addToWishlist(productId) {
     } catch (err) {
         console.error(err);
     }
-
-    // try {
-    //     const userId = store.loggedInUser.id;
-    //     const wishlistId = await $api.createWishlist(userId);
-    //     if (wishlistId) {
-    //         console.log('wishlistId response', wishlistId)
-    //         store.loggedInUser.wishlistId = wishlistId;
-    //         console.log('wishlist id from Products', store.loggedInUser.wishlistId);
-    //     } else {
-    //         console.log('Failed to create a wishlist');
-    //     }
-        
-    // } catch (err) {
-    //     console.error(err);
-    // }
 }
 
 </script>
@@ -158,142 +143,9 @@ async function addToWishlist(productId) {
                 </div>
             </div>
         </div>
-
-            <!-- <div class="productsSection">
-                <div v-for="product in products" :key="product.id" class="productPreview">
-                    <router-link :to="`/products/${product.id}`">
-                        <img :src="productImgURL + product.name + '.png'" 
-                        class="productImage">
-                    </router-link>
-                    <div>{{ product.name }}</div>
-                    <div>{{ product.price_cents / 100 + ' €'}}</div>
-                    <div class="buttonContainer">
-                        <button type="button" class="likeButton">❤</button>
-                        <button @click="addToCart(product.id, 1)" 
-                                type="button" 
-                                class="buyButton">
-                            <span class="material-symbols-outlined">
-                                shopping_cart
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div> -->
     </main>
 </template>
 
 <style scoped>
-
-.productsContainer {
-    display: flex;
-    gap: 1.5rem;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-/* Same as products previews, but without gallery and arrows */
-.productsPreviews {
-    padding: 3rem 0;
-    margin: 2rem 0;
-    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
-}
-
-.featuredProductPreview {
-    position: relative;
-    flex: 0 0 240px;
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.featuredProductPreview:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.featuredProductImage {
-    position: relative;
-    overflow: hidden;
-    height: 18rem;
-    /* background: #f9fafb; */
-    
-    /* Gradient fallback */
-    background: linear-gradient(135deg, #c7d2fe 0%, #fbcfe8 50%, #bbf7d0 100%);
-}
-
-/* .featuredProductImage::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-} */
-
-.featuredProductImage a {
-    padding: 0;
-}
-
-.productImage {
-    width: 100%;
-    height: 100%;
-    /* object-fit: contain; */
-    object-fit: cover;
-    /* object-position: center top; */
-    object-position: center 30%;
-    /* object-position: center center; */
-    transition: transform 0.3s ease;
-    border-radius: 10px;
-    display: block;
-}
-
-.featuredProductImage:hover .productImage {
-    transform: scale(1.05);
-}
-
-.featuredProductDetails {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    /* margin-left: 1rem; */
-    /* margin-bottom: 1rem; */
-    margin: 0.5rem 1rem 1rem 1rem;
-}
-
-/* Buttons */
-.buttonContainer {
-    position: absolute;
-    top: 0.3rem;
-    right: 0.4rem;
-}
-
-.buyButton {
-    height: 2.5rem;
-    width: 3rem;
-    margin: 0;
-    padding: 0;
-    border-radius: 8px;
-}
-
-.favoriteButton {
-    height: 2.5rem;
-    width: 3rem;
-    margin-right: 0.1rem;
-    background: transparent;
-    /* border: 2px #ffffff solid; */
-    color: #ffffff;
-    /* border-radius: 8px; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.favoriteButton span {
-    font-size: 2.3rem;
-}
 
 </style>
