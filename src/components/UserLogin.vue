@@ -103,28 +103,6 @@ async function loginUserGoogle() {
                 <button @click="loginUserGoogle" type="button" class="googleButton oauthButton">Login with Google</button>
             </div>
         </form>
-
-        <!-- <label for="email">Email</label>
-        <input v-model="email"
-                type="text" 
-                name="email" 
-                id="email">
-    
-        <label for="password">Password</label>
-        <input v-model="password"
-                type="password" 
-                name="password" 
-                id="password">
-    
-        <div class="buttons">
-            <div>
-                <button @click="loginUser" type="button" class="loginButton">Log in</button>
-                <button type="button" class="registerButton">Register</button>
-            </div>
-            <div class="oauthButtons">
-                <button @click="loginUserGoogle" type="button" class="loginButton oauthButton">Login with Google</button>
-            </div>
-        </div> -->
     </div>
 </template>
 

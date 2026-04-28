@@ -114,6 +114,7 @@ a,
 }
 
 .promoBanner {
+  position: relative;
   margin: 0 auto;
   padding: 2rem;
   /* max-width: 45rem; */
@@ -122,6 +123,18 @@ a,
   background-image: url('https://eturgeneva.github.io/toy-store-assets/promo-banner-2.png');
   background-size: cover;
   background-position: center -85px;
+}
+
+.bannerOverlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(248, 249, 255, 0.7) 20%,
+        rgba(139, 92, 246, 0.1) 100%);
 }
 
 form, .userLogin {
@@ -196,10 +209,25 @@ button:hover {
   cursor: pointer;
 }
 
-.likeButton {
+.favoriteButton {
+    height: 2.5rem;
+    width: 3rem;
+    margin-right: 0.1rem;
+    background: transparent;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.favoriteButton span {
+    font-size: 2.3rem;
+}
+
+/* .likeButton {
     width: 2.5rem;
     margin-left: 0.5rem;
-}
+} */
 
 .loginButton, .logoutButton, .editButton {
     /* background-color: rgb(163, 168, 170); */
@@ -253,26 +281,81 @@ button:hover {
   margin: 0.2rem;
 }
 
-
-/* Products*/
-
-.productsContainer {
-    display: flex;
-    gap: 1.5rem;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
+/* Gallery for featured products */
+.galleryWrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
+.galleryContainer {
+    display: flex;
+    gap: 1.5rem;
 
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0 2rem 0;
+    /* Firefox */
+    scrollbar-width: none;
+    
+    /* IE and Edge */
+    -ms-overflow-style: none;
+}
+
+.galleryContainer::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* Scroll Arrows */
+.scrollArrow {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3rem;
+    height: 4rem;
+    /* border-radius: 50%; */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    margin: 0;
+    background: white;
+}
+
+.scrollArrow:hover {
+    background: #ffffff;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.scrollArrowLeft {
+    left: 0.5rem;
+}
+
+.scrollArrowRight {
+    right: 0.5rem;
+}
+
+.arrowIcon {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Featured products rendering */
 .featuredProductPreview {
-    position: relative;
     flex: 0 0 240px;
     background: white;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    position: relative;
 }
 
 .featuredProductPreview:hover {
@@ -284,11 +367,11 @@ button:hover {
     position: relative;
     overflow: hidden;
     height: 18rem;
+    background: #f9fafb;
     
     /* Gradient fallback */
     background: linear-gradient(135deg, #c7d2fe 0%, #fbcfe8 50%, #bbf7d0 100%);
 }
-
 
 .featuredProductImage a {
     padding: 0;
@@ -306,11 +389,38 @@ button:hover {
     margin: 0.5rem 1rem 1rem 1rem;
 }
 
+/* Products */
+.productsContainer {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 /* Same as products previews, but without gallery and arrows */
 .productsPreviews {
     padding: 3rem 0;
     margin: 2rem 0;
     background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+}
+
+.productsPreviewsHeader {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.productsPreviewsHeader h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.productsPreviewsHeader p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    font-weight: 400;
 }
 
 .product {

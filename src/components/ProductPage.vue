@@ -47,7 +47,8 @@ onMounted(async () => {
                                     shopping_cart
                                 </span> -->
                         </button>
-                        <button type="button" class="likeButton">❤</button>
+                        <!-- <button type="button" class="likeButton">❤</button> -->
+                         <button type="button" class="favoriteButton">❤</button>
                     </div>
 
                     <h4>Description:</h4>
