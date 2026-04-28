@@ -167,98 +167,86 @@ async function registerUser() {
 
 <style scoped>
 
-.registerCard {
-    /* display: flex; */
-    /* gap: 1.5rem; */
-    /* width: 100%; */
-    /* max-width: 25rem; */
+/* .registerCard {
     width: 25rem;
     padding: 2rem;
     margin: 2rem auto;
-    /* flex-wrap: wrap; */
-    /* justify-content: center; */
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     position: relative;
     background: #f9f6ff;
-    /* background: white; */
-}
+} */
 
-.registerCard:hover {
+/* .registerCard:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
+} */
 
-.cardHeader, .successCard {
+/* .cardHeader, .successCard {
     text-align: center;
     margin-bottom: 0.5rem;
-}
+} */
 
-.cardHeader h2, .successCard h2 {
+/* .cardHeader h2, .successCard h2 {
     font-size: 1.8rem;
     font-weight: 700;
     color: #374151;
     margin-bottom: 0.5rem;
-}
+} */
 
-.cardHeader p, .successCard p {
+/* .cardHeader p, .successCard p {
     color: #6b7280;
     font-size: 1rem;
-}
+} */
 
-.registerForm {
+/* .registerForm {
     display: flex;
     flex-direction: column;
-    /* gap: 1.5rem; */
-}
+} */
 
-.registerForm div {
+/* .registerForm div {
     display: flex;
     flex-direction: column;
-}
-
+} */
+/* 
 .formLabel {
     font-size: 0.95rem;
     font-weight: 600;
     color: #374151;
     margin: 0.5rem 0;
-}
+} */
 
-.formInput {
+/* .formInput {
     padding: 0.7rem 1rem;
     border: 2px solid #e5e7eb;
     border-radius: 8px;
     font-size: 1rem;
     transition: all 0.3s ease;
     background: #fafafa;
-}
+} */
 
-.formInput:focus {
+/* .formInput:focus {
     outline: none;
     border-color: #8b5cf6;
     background: white;
     box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-}
+} */
 
-.formInput::placeholder {
+/* .formInput::placeholder {
     color: #9ca3af;
-}
+} */
 
-.errorMessage {
-    /* background: #fef2f2; */
+/* .errorMessage {
     color: #dc2626;
-    /* padding: 0.75rem; */
-    /* border-radius: 6px; */
     font-size: 0.9rem;
-    /* border: 1px solid #fecaca; */
 }
 
 .inputError {
     border: 1px red solid;
-}
+} */
 
-.successMessage {
+/* .successMessage {
     color: #16a34a;
     font-size: 0.9rem;
 }
@@ -267,9 +255,9 @@ async function registerUser() {
     position: relative;
     z-index: 2;
     animation: success-bounce 0.8s ease-out;
-}
+} */
 
-@keyframes success-bounce {
+/* @keyframes success-bounce {
     0% {
         transform: scale(0.3) translateY(30px);
         opacity: 0;
@@ -313,27 +301,23 @@ async function registerUser() {
     display: flex;
     justify-content: center;
     gap: 3rem;
-}
+} */
 
-.floatingEmoji {
-    /* position: absolute; */
+/* .floatingEmoji {
     font-size: 2rem;
     animation: float 3s ease-in-out infinite;
 }
 
 .floatingEmoji:nth-child(1) {
-    /* left: 20%; */
     animation-delay: 0s;
 }
 
 .floatingEmoji:nth-child(2) {
-    /* left: 50%; */
     animation-delay: 1s;
     animation-duration: 2.5s;
 }
 
 .floatingEmoji:nth-child(3) {
-    /* left: 80%; */
     animation-delay: 2s;
     animation-duration: 3.5s;
 }
@@ -347,15 +331,15 @@ async function registerUser() {
         transform: translateY(-20px) rotate(10deg);
         opacity: 1;
     }
-}
+} */
 
 /* Buttons */
-.formActions {
+/* .formActions {
     display: flex;
     flex-direction: column;
-}
+} */
 
-.registerButton {
+/* .registerButton {
     background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
     border-radius: 8px;
     margin: 1rem 0;
@@ -370,7 +354,6 @@ async function registerUser() {
 
 .registerButton:hover:not(:disabled) {
     transform: translateY(-1px);
-    /* box-shadow: 0 3px 10px rgba(139, 92, 246, 0.4); */
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -378,14 +361,14 @@ async function registerUser() {
     opacity: 0.7;
     cursor: not-allowed;
     transform: none;
-}
+} */
 
-.loadingSpinner {
+/* .loadingSpinner {
     display: inline-flex;
     align-items: center;
     gap: 1rem;
-}
-
+} */
+/* 
 .loadingSpinner::after {
     content: '';
     width: 16px;
@@ -394,16 +377,16 @@ async function registerUser() {
     border-top: 2px solid currentColor;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-}
+} */
 
-@keyframes spin {
+/* @keyframes spin {
     to {
         transform: rotate(360deg);
     }
-}
+} */
 
 /* Confetti */
-.confettiContainer {
+/* .confettiContainer {
     position: absolute;
     top: 0;
     left: 0;
@@ -438,10 +421,10 @@ async function registerUser() {
     width: 10px;
     height: 4px;
     border-radius: 4px;
-}
+} */
 
 /* Generate random positions and delays for confetti */
-.confetti:nth-child(1) { left: 10%; animation-delay: 0s; }
+/* .confetti:nth-child(1) { left: 10%; animation-delay: 0s; }
 .confetti:nth-child(2) { left: 20%; animation-delay: 0.2s; }
 .confetti:nth-child(3) { left: 30%; animation-delay: 0.4s; }
 .confetti:nth-child(4) { left: 40%; animation-delay: 0.6s; }
@@ -481,6 +464,6 @@ async function registerUser() {
         transform: translateY(100vh) rotate(360deg);
         opacity: 0;
     }
-}
+} */
 
 </style>
