@@ -30,6 +30,7 @@ async function showOrderDetails(orderId) {
     }
 }
 
+// Maybe enable only for admin
 async function cancelOrder(orderId) {
     try {
         const response = await $api.cancelOrderById(orderId);
@@ -65,6 +66,7 @@ async function cancelOrder(orderId) {
             <div>Total price: {{ orderDetails.priceTotal }}</div>
             <div>Status: {{ orderDetails.status }}</div>
             <div>Order ID: {{ orderDetails.orderId }}</div>
+            <div>Placed: {{ new Date(orderDetails.placedAt).toLocaleString() }}</div>
         </div>
 
         <button v-if="orderDetails.status !== 'cancelled'"
