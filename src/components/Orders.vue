@@ -73,7 +73,7 @@ async function loadOrders() {
             <div>Items: {{  order.product_count }}</div>
             <div>Status: {{ order.status }}</div>
             <div>Total price: {{ order.total_price }}</div>
-            <div>Placed: {{ order.placed_at }}</div>
+            <div>Placed: {{ new Date(order.placed_at).toLocaleString() }}</div>
 
             <router-link :to="`/orders/${order.id}`">Show details</router-link>
         </div>
