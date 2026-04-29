@@ -10,19 +10,6 @@ console.log('wishlist', wishlist)
 console.log('wishlist.value', wishlist.value)
 console.log('store logged in user wishlist', store.loggedInUser.wishlist)
 
-// onBeforeMount(async () => {
-//     try {
-//         const wishlist = await $api.getWishlist();
-//         if (wishlist) {
-//             wishlist.value = wishlist;
-//             console.log('wishlist', wishlist.value);
-//         } else {
-//             console.log('Failed to fetch wishlist');
-//         }
-//     } catch (err) {
-//         console.error(err);
-//     }
-// })
 onBeforeMount(async () => {
     try {
         const wishlist = await $api.getWishlist();
@@ -36,6 +23,10 @@ onBeforeMount(async () => {
         console.error(err);
     }
 })
+
+console.log('wishlist', wishlist)
+console.log('wishlist.value', wishlist.value)
+console.log('store logged in user wishlist', store.loggedInUser.wishlist)
 
 </script>
 

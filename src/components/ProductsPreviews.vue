@@ -115,13 +115,6 @@ async function addToCart(productId, quantity) {
                         </router-link>
     
                         <div class="buttonContainer">
-                            <!-- <button @click="addToCart(product.id, 1)"
-                                    type="button"
-                                    class="buyButton">
-                                <span class="material-symbols-outlined">
-                                    shopping_cart
-                                </span>
-                            </button> -->
                             <button 
                                     type="button"
                                     class="favoriteButton">
