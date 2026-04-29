@@ -67,8 +67,8 @@ async function loadOrders() {
 </script>
 
 <template>
-    <div class="orders" v-if="store.loggedInUser.orders">
-        <div v-for="order in store.loggedInUser.orders" :key="order.id" class="orderPreview">
+    <ul class="orders" v-if="store.loggedInUser.orders">
+        <li v-for="order in store.loggedInUser.orders" :key="order.id" class="orderPreview">
             <div>Order #{{  order.id  }}</div>
             <div>Items: {{  order.product_count }}</div>
             <div>Status: {{ order.status }}</div>
@@ -76,6 +76,6 @@ async function loadOrders() {
             <div>Placed: {{ new Date(order.placed_at).toLocaleString() }}</div>
 
             <router-link :to="`/orders/${order.id}`">Show details</router-link>
-        </div>
-    </div>
+        </li>
+    </ul>
 </template>
