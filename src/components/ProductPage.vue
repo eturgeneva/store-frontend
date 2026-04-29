@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, getCurrentInstance } from 'vue';
+import { onMounted, getCurrentInstance, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { store } from '../store.js';
 
@@ -10,6 +10,7 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const route = useRoute();
 const productId = route.params.id;
+const quantity = ref(1);
 
 onMounted(async () => {
     try {
@@ -72,8 +73,14 @@ async function addToCart(productId, quantity) {
                     <h3>Product Details</h3>
                     <div>Name: {{ store.selectedProduct.name }}</div>
                     <div>Price: {{ store.selectedProduct.price_cents / 100 + ' €'}}</div>
+                    <div class="quantity-input">
+                        <input  v-model="quantity"
+                                type="number" 
+                                name="quantity"
+                                id="quantity">
+                    </div>
                     <div class="buttonContainer">
-                        <button @click="addToCart(store.selectedProduct.id, 1)" 
+                        <button @click="addToCart(store.selectedProduct.id, quantity)" 
                                 type="button" 
                                 class="buyButton">
                                 Add to cart 

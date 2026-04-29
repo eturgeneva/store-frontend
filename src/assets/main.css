@@ -537,11 +537,14 @@ input {
 }
 
 button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
     width: 5rem;
     height: 1.8rem;
     border: none;
-    border-radius: 3px;
+    border-radius: 8px;
     margin: 0.8rem 0.6rem;
     padding: 0.3rem;
     color: white;
@@ -557,9 +560,6 @@ button:hover {
     margin-right: 0.1rem;
     background: transparent;
     color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .favoriteButton span {
@@ -577,34 +577,29 @@ button:hover {
     width: 3rem;
     margin: 0;
     padding: 0;
-    border-radius: 8px;
+}
+
+.buyButton:hover {
+  scale: 1.1;
+  transition: 4ms;
+}
+
+.productDescription .buttonContainer {
+    display: flex;
+    position: static;
+    top: 0.3rem;
+    right: 0.4rem;
+    align-items: center;
 }
 
 .productDescription .buyButton {
   color: white;
   width: 12rem;
-  margin-top: 5rem;
 }
 
-.productDescription .likeButton {
-    height: 2.5rem;
+.productDescription .favoriteButton {
     width: 3rem;
-    margin-right: 0.1rem;
-    margin-top: 5rem;
-    background: transparent;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.productDescription .likeButton span {
-    font-size: 2.3rem;
-}
-
-.likeButton:hover, .buyButton:hover {
-  scale: 1.1;
-  transition: 4ms;
+    background:rgb(174, 174, 174);
 }
 
 /* Gallery for featured products */
@@ -643,7 +638,6 @@ button:hover {
     transform: translateY(-50%);
     width: 3rem;
     height: 4rem;
-    /* border-radius: 50%; */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 2;
@@ -783,7 +777,6 @@ button:hover {
   align-items: center;
   margin: 0.5rem;
   min-width: 20%;
-  /* background-color: rgb(44, 44, 44); */
   background-color: rgb(236, 236, 236);
   border-radius: 5px;
 }
@@ -797,7 +790,9 @@ button:hover {
 }
 
 .productDescription {
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  /* width: 50%; */
   margin-left: 2rem;
 }
 
