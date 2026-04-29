@@ -7,9 +7,10 @@ const $api = appContext.config.globalProperties.$api;
 
 onBeforeMount(async() => {
     await getProfile()
+    console.log('cart id', store.cartId)
 })
 
-// Get profile (repeated in Profile)
+// Get profile (repeated in Profile and partly in Cart)
 async function getProfile() {
     console.log('store loggedIn', store.loggedIn);
     console.log('store loggedInUser', store.loggedInUser);
@@ -25,11 +26,25 @@ async function getProfile() {
                 Object.assign(store.loggedInUser, user);
             }
             console.log('Store loggedIn', store.loggedIn);
+
+            let cartId = user.cartId;
+            store.setCartId(cartId);
+            store.setCartIsLoading(true);
+
+            const cart = await $api.getCart(cartId);
+
+            if (cart) {
+                store.setCart(cart);
+                console.log('Store cart property:', store.cart.products);
+            }
+            store.setCartIsLoading(false);
         }
     } catch (err) {
         console.error(err);
     }
 }
+
+// Get cart 
 
 </script>
 
