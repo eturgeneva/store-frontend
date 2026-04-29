@@ -29,14 +29,14 @@ async function getProfile() {
 
             let cartId = user.cartId;
             store.setCartId(cartId);
-            store.setCartIsLoading(true);
 
-            const cart = await $api.getCart(cartId);
-
-            if (cart) {
+            // If a cart exists
+            if (cartId) {
+                store.setCartIsLoading(true);
+                const cart = await $api.getCart(cartId);
                 store.setCart(cart);
                 console.log('Store cart property:', store.cart.products);
-            }
+            } 
             store.setCartIsLoading(false);
         }
     } catch (err) {

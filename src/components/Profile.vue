@@ -112,9 +112,12 @@ async function logoutUser() {
     
                     <button class="logoutButton" @click="logoutUser">Log Out</button>
                 </div>
-
-                <router-link to="/orders">My orders</router-link>
-                <router-link to="/wishlist">Wishlist</router-link>
+                <div>
+                    <router-link to="/orders">My orders</router-link>
+                </div>
+                <div>
+                    <router-link to="/wishlist">Wishlist</router-link>
+                </div>
             </div>
         </div>
     </main>

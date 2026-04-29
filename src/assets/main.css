@@ -805,11 +805,45 @@ button:hover {
 }
 
 /* Oders */
+.orderContainer {
+  /* background-color: rgb(223, 223, 223); */
+  width: 90%;
+  margin: 0 auto;
+}
+
+.orderContent {
+  display: flex;
+  /* justify-content: center; */
+  /* flex-direction: column; */
+  margin-top: 5rem;
+  width: 80%;
+  /* background-color: rgb(223, 223, 223); */
+  border-bottom: 1px rgb(168, 168, 168) solid;
+}
 
 .orderItem {
-    margin: 1rem;
-    background-color: rgb(57, 57, 57);
-    width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  /* margin: 0.5rem; */
+  padding: 1rem;
+  /* background-color: rgb(223, 223, 223); */
+  width: 15%;
+  /* border: 1px rgb(168, 168, 168) solid; */
+}
+
+.orderItemImage {
+  width: 80%;
+  margin-top: 1rem;
+}
+
+.orderSummary {
+  background-color: rgb(223, 223, 223);
+  width: 80%;
+  padding: 1rem; 
+  /* border-top: 1px rgb(168, 168, 168) solid; */
 }
 
 /* Wishlist */

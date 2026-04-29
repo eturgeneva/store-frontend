@@ -6,6 +6,8 @@ import { store } from '../store.js';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
+const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
 const route = useRoute();
 const orderId = route.params.id;
 
@@ -43,17 +45,27 @@ async function cancelOrder(orderId) {
 </script>
 
 <template>
-    <div v-if="orderDetails">
-        <h2>Order ID: {{ orderDetails.orderId }}</h2>
-        <div v-for="item in orderDetails.items" :key="item.product_id" class="orderItem">
-            <div>Product ID: {{ item.product_id }}</div>
-            <div>Product: {{ item.name }}</div>
-            <div>Brand: {{  item.brand }}</div>
-            <div>Quantity: {{ item.quantity }}</div>
-            <div>Price: {{ item.price_cents }}</div>
+    <div class="orderContainer" v-if="orderDetails">
+        <div class="orderContent">
+            <!-- <h2>Order ID: {{ orderDetails.orderId }}</h2> -->
+            <div v-for="item in orderDetails.items" :key="item.product_id" class="orderItem">
+                <!-- <div> -->
+                    <img :src="productImgURL + item.name + '.png'" class="orderItemImage">
+                <!-- </div> -->
+                <div class="orderItemInfo">
+                    <!-- <div>Product ID: {{ item.product_id }}</div> -->
+                    <div>{{ item.name }}</div>
+                    <div>{{  item.brand }}</div>
+                    <div>Quantity: {{ item.quantity }}</div>
+                    <div>Price: {{ item.price_cents }}</div>
+                </div>
+            </div>
         </div>
-        <div>Total price: {{ orderDetails.priceTotal }}</div>
-        <div>Status: {{ orderDetails.status }}</div>
+        <div class="orderSummary">
+            <div>Total price: {{ orderDetails.priceTotal }}</div>
+            <div>Status: {{ orderDetails.status }}</div>
+            <div>Order ID: {{ orderDetails.orderId }}</div>
+        </div>
 
         <button v-if="orderDetails.status !== 'cancelled'"
                 type="button"
