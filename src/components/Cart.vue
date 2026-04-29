@@ -106,7 +106,11 @@ async function checkout() {
                 <div v-for="product in store.cart.products" 
                 :key="product.product_id"
                 class="product">
-                    <div>{{ product.name }}</div>
+                    <div>
+                        <router-link :to="`/products/${product.product_id}`" class="productLink">
+                            {{ product.name }}
+                        </router-link>
+                    </div>
                     <div>Quantity: {{ product.quantity }}</div>
                     <div>Product ID: {{ product.product_id }}</div>
                     <div class="buttonContainer">
