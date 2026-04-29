@@ -95,6 +95,13 @@ async function addToWishlist(productId) {
     }
 }
 
+function isInWishlist(productId) {
+    if (!Array.isArray(store.loggedInUser.wishlist)) {
+        return false;
+    }
+    return store.loggedInUser.wishlist.some(item => item.product_id === productId)
+}
+
 </script>
 
 <template>
@@ -117,7 +124,8 @@ async function addToWishlist(productId) {
                             <button @click="addToWishlist(product.id)"
                                     type="button"
                                     class="favoriteButton">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined"
+                                        :class="isInWishlist(product.id) ? 'filled' : 'outlined'">
                                     favorite
                                 </span>
                             </button>

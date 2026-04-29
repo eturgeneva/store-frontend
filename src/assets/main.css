@@ -894,3 +894,11 @@ ul {
   white-space: nowrap;
   direction: ltr;
 }
+
+.material-symbols-outlined.outlined {
+    font-variation-settings: 'FILL' 0;
+}
+
+.material-symbols-outlined.filled {
+    font-variation-settings: 'FILL' 1;
+}
