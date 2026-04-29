@@ -11,6 +11,7 @@ import { store } from '../store.js';
             <router-link to="/products">Products</router-link> |
             <router-link to="/profile">{{ store.loggedIn ? 'Profile' : 'Log In' }}</router-link> |
             <router-link to="/cart">Cart</router-link>
+            <div class="quantity-preview">{{ store.cartId ? store.cart.products.length: ''}}</div>
         </nav>
     </header>
 </template>

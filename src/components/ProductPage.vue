@@ -25,6 +25,41 @@ onMounted(async () => {
     }
 });
 
+// repeated in ProductsPreviews
+async function addToCart(productId, quantity) {
+    console.log('Add to cart store cart ID', store.cartId);
+
+    try {
+        // If a new cart needs to be created
+        if (!store.cartId) {
+            const newCartId = await $api.createCart();
+            console.log('new cart ID', newCartId);
+
+            if (newCartId) {
+                store.setCartId(newCartId);
+                const newCart = await $api.getCart(newCartId);
+                store.setCart(newCart);
+                console.log('Newly created cart', store.cart.products);
+                console.log('New store cart ID', store.cartId);
+            } else {
+                console.log('Failed to create cart');
+            }
+        }
+        // If a cart already exists, but needs to be updated
+        const cartUpdate = await $api.updateQuantityInCart(store.cartId, productId, quantity);
+        if (cartUpdate) {
+            store.setCart(cartUpdate);
+            console.log('Updated cart', store.cart.products);
+            console.log('Updated cart ID', store.cartId);
+
+        } else {
+            console.log('Failed to update cart');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -38,17 +73,12 @@ onMounted(async () => {
                     <div>Name: {{ store.selectedProduct.name }}</div>
                     <div>Price: {{ store.selectedProduct.price_cents / 100 + ' €'}}</div>
                     <div class="buttonContainer">
-                        <button @click="createUpdateCart(product.id)" 
+                        <button @click="addToCart(store.selectedProduct.id, 1)" 
                                 type="button" 
                                 class="buyButton">
-                                <!-- 🛒Add to bag -->
                                 Add to cart 
-                                <!-- <span class="material-symbols-outlined">
-                                    shopping_cart
-                                </span> -->
                         </button>
-                        <!-- <button type="button" class="likeButton">❤</button> -->
-                         <button type="button" class="favoriteButton">❤</button>
+                        <button type="button" class="favoriteButton">❤</button>
                     </div>
 
                     <h4>Description:</h4>

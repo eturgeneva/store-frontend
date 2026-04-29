@@ -63,8 +63,4 @@ onBeforeMount(async () => {
 
 <style scoped>
 
-/* .wishlistContainer {
-    margin: 5rem 0;
-} */
-
 </style>
