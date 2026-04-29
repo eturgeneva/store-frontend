@@ -1,5 +1,35 @@
 <script setup>
+import { onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
+
+const { appContext } = getCurrentInstance();
+const $api = appContext.config.globalProperties.$api;
+
+onBeforeMount(async() => {
+    await getProfile()
+})
+
+// Get profile (repeated in Profile)
+async function getProfile() {
+    console.log('store loggedIn', store.loggedIn);
+    console.log('store loggedInUser', store.loggedInUser);
+    try {
+        const user = await $api.getUser();
+        if (user) {
+            console.log('User object', user);
+            console.log('User first name:', user.first_name);
+            console.log('User cart ID:', user.cartId);
+
+            store.setLoggedIn(user.id !== null);
+            if (user.id !== null) {
+                Object.assign(store.loggedInUser, user);
+            }
+            console.log('Store loggedIn', store.loggedIn);
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 </script>
 
