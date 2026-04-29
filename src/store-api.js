@@ -153,18 +153,6 @@ export default class StoreApi {
     async getCart(cartId) {
         console.log('Fetching cart');
         try {
-            // const userResponse = await fetch(`${this.url}/users/me`, {
-            //     credentials: 'include'
-            // });
-            // const user = await userResponse.json();
-            // const cartId = user.cartId;
-            // console.log('cartId', cartId);
-
-            // if (!cartId) {
-            //     console.warn('No cart ID found for user');
-            //     return false;
-            // }
-            
             const cartResponse = await fetch(`${this.url}/carts/${cartId}`, {
                 credentials: 'include'
             })
@@ -349,7 +337,7 @@ export default class StoreApi {
                 throw new Error('Failed to create a wishlist');
             }
             // return true;
-            return response;
+            return await response.json();
         } catch (err) {
             console.error('Failed to create a wishlist', err);
             return false;
@@ -371,7 +359,7 @@ export default class StoreApi {
             if (!response.ok) {
                 throw new Error('Failed to update wishlist');
             }
-            return response;
+            return await response.json();
         } catch (err) {
             console.error('Failed to update wishlist', err);
             return false;
@@ -388,9 +376,9 @@ export default class StoreApi {
             if(!response.ok) {
                 throw new Error('Failed to fetch wishlist');
             }
-            // return true;
-            const wishlist = response.json();
+            const wishlist = await response.json();
             return wishlist;
+            
         } catch (err) {
             console.error('Failed to fetch wishlist', err);
             return false;
