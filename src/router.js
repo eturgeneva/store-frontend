@@ -9,6 +9,7 @@ import ProductPage from './components/ProductPage.vue';
 import Orders from './components/Orders.vue';
 import OrderDetails from './components/OrderDetails.vue';
 import Wishlist from './components/Wishlist.vue';
+import MissingPage from './components/MissingPage.vue';
 
 // const URL = 'http://localhost:3000';
 // const api = new StoreApi(URL);
@@ -23,6 +24,11 @@ const routes = [
   { path: '/orders', component: Orders },
   { path: '/orders/:id', component: OrderDetails },
   { path: '/wishlist', component: Wishlist },
+
+  { path: '/new', component: MissingPage},
+  { path: '/sale', component: MissingPage},
+  { path: '/gift-sets', component: MissingPage},
+
   // { path: '/cart', component: Cart, props: { api }},
 ];
 

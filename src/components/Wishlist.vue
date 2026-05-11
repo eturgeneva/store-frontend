@@ -31,10 +31,9 @@ console.log('store logged in user wishlist', store.loggedInUser.wishlist)
 </script>
 
 <template>
-<!-- <div v-if="wishlist.length > 0" class="wishlistContainer"> -->
 <div v-if="store.loggedIn" class="wishlistContainer">
-    <!-- <div v-if="wishlist.length > 0"> -->
-    <div v-if="store.loggedInUser.wishlist">
+    <div v-if="store.loggedInUser.wishlist"
+        class="wishlist">
         <div v-for="item in store.loggedInUser.wishlist"
             :key="item.id"
             class="wishlistItem">

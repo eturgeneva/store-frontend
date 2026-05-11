@@ -51,22 +51,24 @@ async function getProfile() {
 <template>
     <header>
         <nav>
-            <div class="catalogue">
+            <div class="headerTop">
                 <h3 id="logo"><span>Toyz</span>Store</h3>
-                    <router-link to="/products">New</router-link> |
-                    <router-link to="/products">Products</router-link> |
-                    <router-link to="/products">Sale %</router-link> |
-                    <router-link to="/products">Gift Sets</router-link> |
-            </div>
-            <div class="userSection">
-                <router-link to="/">Home</router-link> |
-                <router-link to="/profile">{{ store.loggedIn ? 'Profile' : 'Log In' }}</router-link> |
-                <router-link>Wishlist</router-link> |
-                <router-link to="/cart">Cart</router-link>
-                <div class="quantity-preview">{{ store.cartId 
-                    ? store.cart.products.reduce((acc, {quantity}) => acc + quantity, 0)
-                    : ''}}
+                <div class="userSection">
+                    <router-link to="/">Home</router-link> |
+                    <router-link to="/profile">{{ store.loggedIn ? 'Profile' : 'Log In' }}</router-link> |
+                    <router-link to="/wishlist">Wishlist</router-link> |
+                    <router-link to="/cart">Cart</router-link>
+                    <div class="quantity-preview">{{ store.cartId 
+                        ? store.cart.products.reduce((acc, {quantity}) => acc + quantity, 0)
+                        : ''}}
+                    </div>
                 </div>
+            </div>
+            <div class="catalogue">
+                    <router-link to="/new">New</router-link>
+                    <router-link to="/products">Products</router-link>
+                    <router-link to="/sale">Sale %</router-link>
+                    <router-link to="/gift-sets">Gift Sets</router-link>
             </div>
         </nav>
     </header>
