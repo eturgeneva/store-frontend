@@ -870,6 +870,19 @@ ul {
   margin-top: 1rem;
 }
 
+.orderItemInfo {
+    /* display: flex; */
+}
+
+.orderButtonContainer {
+    display: flex;
+    width: 15rem;
+}
+
+.orderButtonContainer input {
+    width: 30%;
+}
+
 .orderSummary {
   background-color: rgb(223, 223, 223);
   width: 80%;

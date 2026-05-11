@@ -108,14 +108,16 @@ async function checkout() {
                 :key="product.product_id"
                 class="orderItem">
                     <img :src="productImgURL + product.name + '.png'" class="orderItemImage">
-                    <div>
-                        <router-link :to="`/products/${product.product_id}`" class="productLink">
-                            {{ product.name }}
-                        </router-link>
+                    <div class="orderItemInfo">
+                        <div>
+                            <router-link :to="`/products/${product.product_id}`" class="productLink">
+                                {{ product.name }}
+                            </router-link>
+                        </div>
+                        <div>Quantity: {{ product.quantity }}</div>
+                        <div>Product ID: {{ product.product_id }}</div>
                     </div>
-                    <div>Quantity: {{ product.quantity }}</div>
-                    <div>Product ID: {{ product.product_id }}</div>
-                    <div class="buttonContainer">
+                    <div class="orderButtonContainer">
                         <button type="button" 
                                 @click="updateQuantity(product.product_id, -1)">-
                         </button>
