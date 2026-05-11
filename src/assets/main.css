@@ -764,7 +764,7 @@ button:hover {
 
 .product {
   display: flex;
-  margin: 0 auto;
+  margin: 6rem 3rem;
 }
 
 .productsSection {
@@ -849,15 +849,16 @@ ul {
 
 .orderContent {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  margin-top: 5rem;
+  margin: 6rem 3rem;
   width: 80%;
 }
 
 .orderItem {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  /* flex-direction: column; */
+  /* justify-content: center; */
   align-items: center;
   gap: 1rem;
   padding: 1rem;

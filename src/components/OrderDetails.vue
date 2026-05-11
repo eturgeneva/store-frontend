@@ -48,13 +48,9 @@ async function cancelOrder(orderId) {
 <template>
     <div class="orderContainer" v-if="orderDetails">
         <div class="orderContent">
-            <!-- <h2>Order ID: {{ orderDetails.orderId }}</h2> -->
             <div v-for="item in orderDetails.items" :key="item.product_id" class="orderItem">
-                <!-- <div> -->
-                    <img :src="productImgURL + item.name + '.png'" class="orderItemImage">
-                <!-- </div> -->
+                <img :src="productImgURL + item.name + '.png'" class="orderItemImage">
                 <div class="orderItemInfo">
-                    <!-- <div>Product ID: {{ item.product_id }}</div> -->
                     <div>{{ item.name }}</div>
                     <div>{{  item.brand }}</div>
                     <div>Quantity: {{ item.quantity }}</div>

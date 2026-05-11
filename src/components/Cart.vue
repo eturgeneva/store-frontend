@@ -5,6 +5,8 @@ import { store } from '../store.js';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
+const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
 // const props = defineProps(['api']);
 
 onBeforeMount(async () => {
@@ -99,13 +101,13 @@ async function checkout() {
 <template>
     <main>
         <div class="userCart">
-            <!-- <h3>Cart</h3> -->
             <div v-if="store.cart.products.length === 0">Your cart is empty</div>
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
-            <div v-else>
+            <div v-else class="orderContent">
                 <div v-for="product in store.cart.products" 
                 :key="product.product_id"
-                class="product">
+                class="orderItem">
+                    <img :src="productImgURL + product.name + '.png'" class="orderItemImage">
                     <div>
                         <router-link :to="`/products/${product.product_id}`" class="productLink">
                             {{ product.name }}
