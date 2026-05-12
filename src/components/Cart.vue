@@ -105,8 +105,8 @@ async function checkout() {
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
             <div v-else class="orderContent">
                 <div v-for="product in store.cart.products" 
-                :key="product.product_id"
-                class="orderItem">
+                    :key="product.product_id"
+                    class="orderItem">
                     <img :src="productImgURL + product.name + '.png'" class="orderItemImage">
                     <div class="orderItemInfo">
                         <div>
@@ -114,9 +114,11 @@ async function checkout() {
                                 {{ product.name }}
                             </router-link>
                         </div>
+                        <div>{{ product.brand }}</div>
                         <div>Quantity: {{ product.quantity }}</div>
-                        <div>Product ID: {{ product.product_id }}</div>
+                        <div>Price: {{ product.price_cents }}</div>
                     </div>
+
                     <div class="orderButtonContainer">
                         <button type="button" 
                                 @click="updateQuantity(product.product_id, -1)">-
@@ -134,8 +136,10 @@ async function checkout() {
                                 @click="setQuantity(product.product_id, 0)"
                                 >🗑
                         </button>
-
                     </div>
+                </div>
+                <div class="orderSummary">
+                    <div>Total price: {{ store.cart.products.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
                 </div>
             </div>
             <button v-if="store.cart.products.length > 0"
