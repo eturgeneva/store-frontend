@@ -32,7 +32,9 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
             <div class="itemPrice">Price: {{ item.price_cents }}</div>
         </div>
 
-        <div class="itemButtonContainer">
+        <slot :item="item"></slot>
+
+        <!-- <div class="itemButtonContainer">
             <button
                 type="button"
                 @click="emit('update-quantity', item.product_id, -1)"
@@ -59,7 +61,7 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
             >
                 🗑
             </button>
-        </div>
+        </div> -->
     </div>
     <div class="itemSummary">
         <div>Total price: {{ items.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>

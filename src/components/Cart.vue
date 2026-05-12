@@ -105,48 +105,44 @@ async function checkout() {
             <div v-if="store.cart.products.length === 0">Your cart is empty</div>
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
             <div v-else class="orderContent">
-                <!-- <div v-for="product in store.cart.products" 
-                    :key="product.product_id"
-                    class="orderItem">
-                    <img :src="productImgURL + product.name + '.png'" class="orderItemImage">
-                    <div class="orderItemInfo">
-                        <div>
-                            <router-link :to="`/products/${product.product_id}`" class="productLink">
-                                {{ product.name }}
-                            </router-link>
-                        </div>
-                        <div>{{ product.brand }}</div>
-                        <div>Quantity: {{ product.quantity }}</div>
-                        <div>Price: {{ product.price_cents }}</div>
-                    </div>
-
-                    <div class="orderButtonContainer">
-                        <button type="button" 
-                                @click="updateQuantity(product.product_id, -1)">-
-                        </button>
-                        
-                        <input v-model.number="product.quantity"
-                                @keyup.enter="setQuantity(product.product_id, product.quantity)">
-                        </input>
-                        
-                        <button type="button" 
-                                @click="updateQuantity(product.product_id, 1)">+
-                        </button>
-                        <button type="button"
-                                class="removeButton"
-                                @click="setQuantity(product.product_id, 0)"
-                                >🗑
-                        </button>
-                    </div>
-                </div> -->
-                <Item
+                <!-- <Item
                     :items="store.cart.products"
                     @update-quantity="updateQuantity"
                     @set-quantity="setQuantity"
-                />
-                <!-- <div class="orderSummary">
-                    <div>Total price: {{ store.cart.products.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
-                </div> -->
+                /> -->
+                <Item
+                    :items="store.cart.products">
+                    <template #default="{ item }">
+                        <div class="itemButtonContainer">
+                            <button
+                                type="button"
+                                @click="updateQuantity(item.product_id, -1)"
+                            >
+                                -
+                            </button>
+
+                            <input
+                                :value="item.quantity"
+                                @keyup.enter="setQuantity(item.product_id, Number($event.target.value))"
+                            >
+
+                            <button
+                                type="button"
+                                @click="updateQuantity(item.product_id, 1)"
+                            >
+                                +
+                            </button>
+
+                            <button
+                                type="button"
+                                class="removeButton"
+                                @click="setQuantity(item.product_id, 0)"
+                            >
+                                🗑
+                            </button>
+                        </div>
+                    </template>
+                </Item>
             </div>
             <button v-if="store.cart.products.length > 0"
                     type="button"
