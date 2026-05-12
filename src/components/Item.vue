@@ -28,7 +28,7 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
                 </router-link>
             </div>
             <div class="itemBrand">{{ item.brand }}</div>
-            <div class="itemQuantity">Quantity: {{ item.quantity }}</div>
+            <div v-if="item.quantity" class="itemQuantity">Quantity: {{ item.quantity }}</div>
             <div class="itemPrice">Price: {{ item.price_cents }}</div>
         </div>
 
