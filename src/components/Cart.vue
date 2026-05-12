@@ -110,8 +110,9 @@ async function checkout() {
                     @update-quantity="updateQuantity"
                     @set-quantity="setQuantity"
                 /> -->
-                <Item
-                    :items="store.cart.products">
+                <Item 
+                    :items="store.cart.products"
+                    show-summary>
                     <template #default="{ item }">
                         <div class="itemButtonContainer">
                             <button

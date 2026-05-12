@@ -5,6 +5,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    showSummary: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const emit = defineEmits(['update-quantity', 'set-quantity']);
@@ -63,7 +67,8 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
             </button>
         </div> -->
     </div>
-    <div class="itemSummary">
+    <div v-if="props.showSummary" 
+            class="itemSummary">
         <div>Total price: {{ items.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
     </div>
 </template>

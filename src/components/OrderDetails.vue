@@ -49,7 +49,9 @@ async function cancelOrder(orderId) {
 <template>
     <div class="orderContainer" v-if="orderDetails">
         <div class="order">
-            <Item :items="orderDetails.items"/>
+            <Item 
+                :items="orderDetails.items"
+                show-summary/>
         </div>
 
         <button v-if="orderDetails.status !== 'cancelled'"
