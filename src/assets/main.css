@@ -854,8 +854,9 @@ ul {
   margin: 6rem 3rem;
   width: 80%;
 }
+/* Item reusable */
 
-.orderItem {
+.orderItem, .item {
   display: flex;
   /* flex-direction: column; */
   /* justify-content: center; */
@@ -865,12 +866,12 @@ ul {
   width: 15%;
 }
 
-.orderItemImage {
+.orderItemImage, .itemImage {
   width: 80%;
   margin-top: 1rem;
 }
 
-.orderItemInfo {
+.orderItemInfo, .itemInfo {
     /* display: flex; */
 }
 
