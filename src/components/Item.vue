@@ -1,9 +1,11 @@
 <script setup>
 
-const props = defineProps({ products })
-
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const props = defineProps({
+    products: {
+        type: Array,
+        required: true,
+    },
+});
 
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
@@ -11,17 +13,20 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 <template>
     <div v-for="product in props.products"
-            key="product.product_id"
+            :key="product.product_id"
             class="item">
-        <img class="itemImage">
+        <img
+            :src="productImgURL + product.name + '.png'"
+            class="itemImage"
+        >
         <div class="itemInfo">
-            <div class="itemName"></div>
-            <div class="itemBrand"></div>
-            <div class="itemQuantity"></div>
-            <div class="itemPrice"></div>
+            <div class="itemName">{{ product.name }}</div>
+            <div class="itemBrand">{{ product.brand }}</div>
+            <div class="itemQuantity">Quantity: {{ product.quantity }}</div>
+            <div class="itemPrice">Price: {{ product.price_cents }}</div>
         </div>
         <div class="itemSummary">
-            <div></div>
+            <div>{{ (product.price_cents * product.quantity).toFixed(2) }}</div>
         </div>
 
     </div>
