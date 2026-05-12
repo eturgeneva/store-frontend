@@ -847,7 +847,7 @@ ul {
   margin: 0 auto;
 }
 
-.orderContent {
+.order {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -866,25 +866,25 @@ ul {
   width: 15%;
 }
 
-.orderItemImage, .itemImage {
+.itemImage {
   width: 80%;
   margin-top: 1rem;
 }
 
-.orderItemInfo, .itemInfo {
+.itemInfo {
     /* display: flex; */
 }
 
-.orderButtonContainer, .itemButtonContainer {
+.itemButtonContainer {
     display: flex;
     width: 15rem;
 }
 
-.orderButtonContainer input, .itemButtonContainer input {
+.itemButtonContainer input {
     width: 30%;
 }
 
-.orderSummary, .itemSummary {
+.itemSummary {
   background-color: rgb(223, 223, 223);
   width: 80%;
   padding: 1rem;
@@ -892,7 +892,7 @@ ul {
 }
 
 /* User cart */
-.userCart {
+.cartContainer {
     margin: 6rem 3rem;
 }
 

@@ -48,28 +48,7 @@ async function cancelOrder(orderId) {
 
 <template>
     <div class="orderContainer" v-if="orderDetails">
-        <div class="orderContent">
-            <!-- <div v-for="item in orderDetails.items" 
-                :key="item.product_id" 
-                class="orderItem">
-                <img :src="productImgURL + item.name + '.png'" class="orderItemImage">
-                <div class="orderItemInfo">
-                    <div>
-                        <router-link :to="`/products/${item.product_id}`" class="productLink">
-                            {{ item.name }}
-                        </router-link>
-                    </div>
-                    <div>{{  item.brand }}</div>
-                    <div>Quantity: {{ item.quantity }}</div>
-                    <div>Price: {{ item.price_cents }}</div>
-                </div>
-            </div>
-            <div class="orderSummary">
-                <div>Total price: {{ parseInt(orderDetails.priceTotal).toFixed(2) }}</div>
-                <div>Status: {{ orderDetails.status }}</div>
-                <div>Order ID: {{ orderDetails.orderId }}</div>
-                <div>Placed: {{ new Date(orderDetails.placedAt).toLocaleString() }}</div>
-            </div> -->
+        <div class="order">
             <Item :items="orderDetails.items"/>
         </div>
 

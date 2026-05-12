@@ -101,10 +101,10 @@ async function checkout() {
 
 <template>
     <main>
-        <div class="userCart">
+        <div class="cartContainer">
             <div v-if="store.cart.products.length === 0">Your cart is empty</div>
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
-            <div v-else class="orderContent">
+            <div v-else class="cart">
                 <!-- <Item
                     :items="store.cart.products"
                     @update-quantity="updateQuantity"

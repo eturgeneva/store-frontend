@@ -36,14 +36,6 @@ console.log('store logged in user wishlist', store.loggedInUser.wishlist)
     <div v-if="store.loggedInUser.wishlist"
         class="wishlist">
         <Item :items="store.loggedInUser.wishlist"/>
-        <!-- <div v-for="item in store.loggedInUser.wishlist"
-            :key="item.id"
-            class="wishlistItem">
-            <p>{{ item.name }}</p>
-            <p>{{ item.product_id }}</p>
-            <p>Price {{ (item.price_cents/100).toFixed(2) }}</p>
-            <p>Brand {{ item.brand }}</p>
-        </div> -->
     </div>
     <div v-else>
         <p>Your wishlist is empty</p>
