@@ -64,7 +64,7 @@ async function cancelOrder(orderId) {
                 </div>
             </div>
             <div class="orderSummary">
-                <div>Total price: {{ orderDetails.priceTotal }}</div>
+                <div>Total price: {{ parseInt(orderDetails.priceTotal).toFixed(2) }}</div>
                 <div>Status: {{ orderDetails.status }}</div>
                 <div>Order ID: {{ orderDetails.orderId }}</div>
                 <div>Placed: {{ new Date(orderDetails.placedAt).toLocaleString() }}</div>
