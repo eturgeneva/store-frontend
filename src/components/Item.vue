@@ -7,6 +7,8 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(['update-quantity', 'set-quantity']);
+
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 </script>
@@ -28,7 +30,36 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
             <div class="itemBrand">{{ item.brand }}</div>
             <div class="itemQuantity">Quantity: {{ item.quantity }}</div>
             <div class="itemPrice">Price: {{ item.price_cents }}</div>
-        </div> 
+        </div>
+
+        <div class="itemButtonContainer">
+            <button
+                type="button"
+                @click="emit('update-quantity', item.product_id, -1)"
+            >
+                -
+            </button>
+
+            <input
+                :value="item.quantity"
+                @keyup.enter="emit('set-quantity', item.product_id, Number($event.target.value))"
+            >
+
+            <button
+                type="button"
+                @click="emit('update-quantity', item.product_id, 1)"
+            >
+                +
+            </button>
+
+            <button
+                type="button"
+                class="removeButton"
+                @click="emit('set-quantity', item.product_id, 0)"
+            >
+                🗑
+            </button>
+        </div>
     </div>
     <div class="itemSummary">
         <div>Total price: {{ items.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>

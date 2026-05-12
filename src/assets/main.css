@@ -875,12 +875,12 @@ ul {
     /* display: flex; */
 }
 
-.orderButtonContainer {
+.orderButtonContainer, .itemButtonContainer {
     display: flex;
     width: 15rem;
 }
 
-.orderButtonContainer input {
+.orderButtonContainer input, .itemButtonContainer input {
     width: 30%;
 }
 

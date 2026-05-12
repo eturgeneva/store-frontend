@@ -139,7 +139,11 @@ async function checkout() {
                         </button>
                     </div>
                 </div> -->
-                <Item :items="store.cart.products"/>
+                <Item
+                    :items="store.cart.products"
+                    @update-quantity="updateQuantity"
+                    @set-quantity="setQuantity"
+                />
                 <!-- <div class="orderSummary">
                     <div>Total price: {{ store.cart.products.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
                 </div> -->
