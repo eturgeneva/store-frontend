@@ -2,6 +2,7 @@
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { useRoute } from 'vue-router';
 import { store } from '../store.js';
+import Item from './Item.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -48,7 +49,7 @@ async function cancelOrder(orderId) {
 <template>
     <div class="orderContainer" v-if="orderDetails">
         <div class="orderContent">
-            <div v-for="item in orderDetails.items" 
+            <!-- <div v-for="item in orderDetails.items" 
                 :key="item.product_id" 
                 class="orderItem">
                 <img :src="productImgURL + item.name + '.png'" class="orderItemImage">
@@ -68,7 +69,8 @@ async function cancelOrder(orderId) {
                 <div>Status: {{ orderDetails.status }}</div>
                 <div>Order ID: {{ orderDetails.orderId }}</div>
                 <div>Placed: {{ new Date(orderDetails.placedAt).toLocaleString() }}</div>
-            </div>
+            </div> -->
+            <Item :items="orderDetails.items"/>
         </div>
 
         <button v-if="orderDetails.status !== 'cancelled'"
