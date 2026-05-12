@@ -884,7 +884,7 @@ ul {
     width: 30%;
 }
 
-.orderSummary {
+.orderSummary, .itemSummary {
   background-color: rgb(223, 223, 223);
   width: 80%;
   padding: 1rem;

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
+import Item from './Item.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -104,7 +105,7 @@ async function checkout() {
             <div v-if="store.cart.products.length === 0">Your cart is empty</div>
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
             <div v-else class="orderContent">
-                <div v-for="product in store.cart.products" 
+                <!-- <div v-for="product in store.cart.products" 
                     :key="product.product_id"
                     class="orderItem">
                     <img :src="productImgURL + product.name + '.png'" class="orderItemImage">
@@ -137,7 +138,8 @@ async function checkout() {
                                 >🗑
                         </button>
                     </div>
-                </div>
+                </div> -->
+                <Item :products="store.cart.products"/>
                 <div class="orderSummary">
                     <div>Total price: {{ store.cart.products.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
                 </div>
