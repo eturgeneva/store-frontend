@@ -139,10 +139,10 @@ async function checkout() {
                         </button>
                     </div>
                 </div> -->
-                <Item :products="store.cart.products"/>
-                <div class="orderSummary">
+                <Item :items="store.cart.products"/>
+                <!-- <div class="orderSummary">
                     <div>Total price: {{ store.cart.products.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
-                </div>
+                </div> -->
             </div>
             <button v-if="store.cart.products.length > 0"
                     type="button"

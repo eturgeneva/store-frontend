@@ -1,7 +1,7 @@
 <script setup>
 
 const props = defineProps({
-    products: {
+    items: {
         type: Array,
         required: true,
     },
@@ -12,22 +12,25 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 </script>
 
 <template>
-    <div v-for="product in props.products"
-            :key="product.product_id"
+    <div v-for="item in props.items"
+            :key="item.product_id"
             class="item">
         <img
-            :src="productImgURL + product.name + '.png'"
+            :src="productImgURL + item.name + '.png'"
             class="itemImage"
         >
         <div class="itemInfo">
-            <div class="itemName">{{ product.name }}</div>
-            <div class="itemBrand">{{ product.brand }}</div>
-            <div class="itemQuantity">Quantity: {{ product.quantity }}</div>
-            <div class="itemPrice">Price: {{ product.price_cents }}</div>
-        </div>
-        <div class="itemSummary">
-            <div>{{ (product.price_cents * product.quantity).toFixed(2) }}</div>
-        </div>
-
+            <div class="itemName">
+                <router-link :to="`/products/${item.product_id}`" class="productLink">
+                    {{ item.name }}
+                </router-link>
+            </div>
+            <div class="itemBrand">{{ item.brand }}</div>
+            <div class="itemQuantity">Quantity: {{ item.quantity }}</div>
+            <div class="itemPrice">Price: {{ item.price_cents }}</div>
+        </div> 
+    </div>
+    <div class="itemSummary">
+        <div>Total price: {{ items.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
     </div>
 </template>
