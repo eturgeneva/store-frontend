@@ -1,9 +1,10 @@
 <script setup>
-import { onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
+const isProfilePopoverOpen = ref(false);
 
 onBeforeMount(async() => {
     await getProfile()
@@ -60,11 +61,34 @@ async function getProfile() {
                         </span>
                     </router-link>
                     <!-- <router-link to="/profile">{{ store.loggedIn ? 'Profile' : 'Log In' }}</router-link> | -->
-                    <router-link to="/profile">
-                        <span class="material-symbols-outlined">
-                            person
-                        </span>
-                    </router-link>
+                    <div
+                        class="profileMenu"
+                        @mouseenter="isProfilePopoverOpen = true"
+                        @mouseleave="isProfilePopoverOpen = false"
+                        @focusin="isProfilePopoverOpen = true"
+                        @focusout="isProfilePopoverOpen = false"
+                    >
+                        <router-link to="/profile" class="profileIconLink">
+                            <span class="material-symbols-outlined">
+                                person
+                            </span>
+                        </router-link>
+
+                        <div
+                            v-if="isProfilePopoverOpen"
+                            class="profilePopover"
+                        >
+                            <div class="profilePopoverHeader">
+                                {{ store.loggedIn ? `Hi, ${store.loggedInUser.first_name}` : 'Your account' }}
+                            </div>
+
+                            <router-link to="/profile">
+                                {{ store.loggedIn ? 'My profile' : 'Log in' }}
+                            </router-link>
+                            <router-link to="/orders">Orders</router-link>
+                            <router-link to="/wishlist">Wishlist</router-link>
+                        </div>
+                    </div>
                     <router-link to="/wishlist">
                         <span class="material-symbols-outlined">
                             favorite
