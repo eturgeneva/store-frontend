@@ -170,7 +170,7 @@ form, .userLogin {
     padding: 1rem;
 }
 
-.userProfile {
+.userProfile, .userDetails {
   margin: 6rem 3rem;
   padding: 0.3rem;
 }
