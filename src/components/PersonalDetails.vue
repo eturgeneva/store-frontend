@@ -70,34 +70,63 @@ async function editUserInfo() {
 
 <template>
     <div class="userDetails">
-        <div>First Name: {{ store.loggedInUser.first_name }}
-            <input v-if="editProfile" v-model="store.loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
-        </div>
-        <div>Last Name: {{ store.loggedInUser.last_name }}
-            <input v-if="editProfile" v-model="store.loggedInUser.last_name" type="text" name="lastName" id="lastName"></input>
-        </div>
-        <div>Address: {{ store.loggedInUser.address || ""}}
-            <input v-if="editProfile" v-model="store.loggedInUser.address" type="text" name="address" id="address"></input>
-        </div>
-        <div class="buttons">
-            <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit</button>
-            <button v-if="editProfile" @click="editUserInfo">Save</button>
+        <div class="userDetail">
+            <div>
+                <div>
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                </div>
+                <div class="userInfo">
+                    <div>First Name: {{ store.loggedInUser.first_name }}
+                        <input v-if="editProfile" v-model="store.loggedInUser.first_name" type="text" name="firstName" id="firstName"></input>
+                    </div>
+                    <div>Last Name: {{ store.loggedInUser.last_name }}
+                        <input v-if="editProfile" v-model="store.loggedInUser.last_name" type="text" name="lastName" id="lastName"></input>
+                    </div>
+                    <div>Address: {{ store.loggedInUser.address || ""}}
+                        <input v-if="editProfile" v-model="store.loggedInUser.address" type="text" name="address" id="address"></input>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit</button>
+                <button v-if="editProfile" @click="editUserInfo">Save</button>
+            </div>
         </div>
 
-        <div>Email: {{ store.loggedInUser.email || ""}}
-            <input v-if="editProfile" v-model="store.loggedInUser.email" type="email" name="email" id="email"></input>
-        </div>
-        <div class="buttons">
-            <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit</button>
-            <button v-if="editProfile" @click="editUserInfo">Save</button>
+        <div class="userDetail">
+            <div>
+                <div>
+                    <span class="material-symbols-outlined">
+                        mail
+                    </span>
+                </div>
+                <div>Email: {{ store.loggedInUser.email || ""}}
+                    <input v-if="editProfile" v-model="store.loggedInUser.email" type="email" name="email" id="email"></input>
+                </div>
+            </div>
+            <div class="buttons">
+                <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit</button>
+                <button v-if="editProfile" @click="editUserInfo">Save</button>
+            </div>
         </div>
 
-        <div>Password: {{ "\*******" || ""}}
-            <input v-if="editProfile" type="password" name="password" id="password"></input>
-        </div>
-        <div class="buttons">
-            <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit</button>
-            <button v-if="editProfile" @click="editUserInfo">Save</button>
+        <div class="userDetail">
+            <div>
+                <div>
+                    <span class="material-symbols-outlined">
+                        lock
+                    </span>
+                </div>
+                <div>Password: {{ "\*******" || ""}}
+                    <input v-if="editProfile" type="password" name="password" id="password"></input>
+                </div>
+            </div>
+            <div class="buttons">
+                <button v-if="!editProfile" @click="toggleEditProfile" class="editButton">Edit</button>
+                <button v-if="editProfile" @click="editUserInfo">Save</button>
+            </div>
         </div>
     </div>
 </template>
