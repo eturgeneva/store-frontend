@@ -68,6 +68,10 @@ header {
     margin: 1rem;
 }
 
+.catalogue a:hover {
+    color: #b69af8;
+}
+
 a,
 .green {
   text-decoration: none;
@@ -78,9 +82,16 @@ a,
 }
 
 .router-link-active {
-  /* background-color: hsla(160, 100%, 37%, 0.3); */
-  /* background-color: #8b5cf6; */
-  background-color: hsla(256, 88%, 67%, 0.3);
+  /* background-color: hsla(256, 88%, 67%, 0.3); */
+}
+
+.router-link-active .material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+    color: white;
 }
 
 .catalogue .router-link-active {
@@ -163,8 +174,10 @@ a,
 }
 
 .profilePopover a:hover {
-  background-color: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
+  /* background-color: rgba(139, 92, 246, 0.1); */
+  background-color: rgba(199, 179, 246, 0.2);
+  /* color: #8b5cf6; */
+  /* color: #b69af8; */
 }
 
 /* Promo */
