@@ -887,6 +887,7 @@ ul {
   gap: 1rem;
   padding: 1rem;
   width: 15%;
+  /* border-top: 1px solid rgb(184, 184, 184); */
 }
 
 .itemImage {
