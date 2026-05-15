@@ -52,7 +52,11 @@ onMounted(async () => {
                                 class="buyButton">
                                 Add to cart 
                         </button>
-                        <button type="button" class="favoriteButton">❤</button>
+                        <button type="button" class="favoriteButton">
+                            <span class="material-symbols-outlined">
+                                favorite
+                            </span>
+                        </button>
                     </div>
 
                     <h4>Description:</h4>

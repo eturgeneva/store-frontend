@@ -54,10 +54,27 @@ async function getProfile() {
             <div class="headerTop">
                 <h3 id="logo"><span>Toyz</span>Store</h3>
                 <div class="userSection">
-                    <router-link to="/">Home</router-link> |
-                    <router-link to="/profile">{{ store.loggedIn ? 'Profile' : 'Log In' }}</router-link> |
-                    <router-link to="/wishlist">Wishlist</router-link> |
-                    <router-link to="/cart">Cart</router-link>
+                    <router-link to="/">
+                        <span class="material-symbols-outlined">
+                            home
+                        </span>
+                    </router-link>
+                    <!-- <router-link to="/profile">{{ store.loggedIn ? 'Profile' : 'Log In' }}</router-link> | -->
+                    <router-link to="/profile">
+                        <span class="material-symbols-outlined">
+                            person
+                        </span>
+                    </router-link>
+                    <router-link to="/wishlist">
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+                    </router-link>
+                    <router-link to="/cart">
+                        <span class="material-symbols-outlined">
+                            shopping_bag
+                        </span>
+                    </router-link>
                     <div class="quantity-preview">{{ store.cartId 
                         ? store.cart.products.reduce((acc, {quantity}) => acc + quantity, 0)
                         : ''}}

@@ -123,6 +123,7 @@ async function checkout() {
                             </button>
 
                             <input
+                                type="number"
                                 :value="item.quantity"
                                 @keyup.enter="setQuantity(item.product_id, Number($event.target.value))"
                             >
