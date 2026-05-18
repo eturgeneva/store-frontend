@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
+import Searchbar from './Searchbar.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -53,14 +54,19 @@ async function getProfile() {
     <header>
         <nav>
             <div class="headerTop">
+                <!-- Company logo -->
                 <h3 id="logo"><span>Toyz</span>Store</h3>
+
+                <!-- Searchbar -->
+                <Searchbar />
+                
+                <!-- User section -->
                 <div class="userSection">
                     <router-link to="/">
                         <span class="material-symbols-outlined">
                             home
                         </span>
                     </router-link>
-                    <!-- <router-link to="/profile">{{ store.loggedIn ? 'Profile' : 'Log In' }}</router-link> | -->
                     <div
                         class="profileMenu"
                         @mouseenter="isProfilePopoverOpen = true"

@@ -56,6 +56,18 @@ header {
     /* flex-direction: column; */
 }
 
+.searchContainer {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    width: 100%;
+    /* height: 2rem; */
+}
+
+.searchContainer input {
+    width: 50%;
+}
+
 .catalogue {
     /* height: 2rem; */
     padding: 0.3rem;
