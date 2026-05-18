@@ -31,6 +31,21 @@ console.log('wishlist', wishlist)
 console.log('wishlist.value', wishlist.value)
 console.log('store logged in user wishlist', store.loggedInUser.wishlist)
 
+async function deleteProductFromWishlist(productId) {
+    try {
+        const updatedWishlist = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
+        console.log('updated wishlist request', updatedWishlist);
+        if (!updatedWishlist) {
+            console.log('Unable to delete product from wishlist');
+        }
+        store.loggedInUser.wishlist = updatedWishlist.updatedWishlist;
+        console.log('Updated wishlist', store.loggedInUser.wishlist);
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 </script>
 
 <template>
@@ -53,7 +68,7 @@ console.log('store logged in user wishlist', store.loggedInUser.wishlist)
                     <button
                         type="button"
                         class="removeButton"
-                        @click="setQuantity(item.product_id, 0)"
+                        @click="deleteProductFromWishlist(item.product_id)"
                     >
                         🗑
                     </button>
