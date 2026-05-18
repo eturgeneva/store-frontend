@@ -34,12 +34,12 @@ console.log('store logged in user wishlist', store.loggedInUser.wishlist)
 async function deleteProductFromWishlist(productId) {
     try {
         const updatedWishlist = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
-        console.log('updated wishlist request', updatedWishlist);
+
         if (!updatedWishlist) {
             console.log('Unable to delete product from wishlist');
+            return;
         }
         store.loggedInUser.wishlist = updatedWishlist.updatedWishlist;
-        console.log('Updated wishlist', store.loggedInUser.wishlist);
 
     } catch (err) {
         console.error(err);
