@@ -384,4 +384,29 @@ export default class StoreApi {
             return false;
         }
     }
+
+    // Delete an item from wishlist
+    async deleteFromWishlist(userId, productId) {
+        try {
+            const response = await fetch (`${this.url}/wishlist`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    userId: userId,
+                    productId: productId
+                }),
+                credentials: 'include'
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete item from wishlist');
+            }
+            const updatedWishlist = await response.json();
+            return updatedWishlist;
+
+        } catch (err) {
+            console.error('Failed to delete item from wishlist', err);
+            return false;
+        }
+    }
 }
