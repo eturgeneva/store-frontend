@@ -6,6 +6,10 @@ const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
 const searchInput = ref('');
+const products = ref([]);
+const foundMatch = ref(false);
+// let match = [];
+const match = ref([]);
 
 onBeforeMount(async () => {
     try {
@@ -21,6 +25,22 @@ onBeforeMount(async () => {
     }
 });
 
+function searchItem() {
+    console.log('products value 0', products.value[0].name);
+    // match.value = products.value.filter((product) => product.name.includes(searchInput));
+    match.value = products.value.filter((product) => {
+        product.name.includes(searchInput);
+        // console.log('product value', product);
+    }
+)
+    // match.value = ['lmao'];
+    console.log('match', match);
+    foundMatch.value = true;
+
+    console.log('searchInput', searchInput);
+    // return match;
+}
+
 </script>
 
 <template>
@@ -30,12 +50,18 @@ onBeforeMount(async () => {
                     type="text"
                     name="search"
                     id="search"
+                    placeholder="Search..."
             >
-            <button>
+            <button @click="searchItem"
+                    type="button">
                 <span class="material-symbols-outlined">
                     search
                 </span>
             </button>
+            <div v-if="foundMatch"
+                class="matches">
+                {{ match[0] }}
+            </div>
         <!-- </div> -->
     </div>
 
