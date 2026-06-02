@@ -6,7 +6,7 @@ import Item from './Item.vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+// const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 // const props = defineProps(['api']);
 
@@ -105,11 +105,6 @@ async function checkout() {
             <div v-if="store.cart.products.length === 0">Your cart is empty</div>
             <div v-else-if="store.cartIsLoading">Cart is loading...</div>
             <div v-else class="cart">
-                <!-- <Item
-                    :items="store.cart.products"
-                    @update-quantity="updateQuantity"
-                    @set-quantity="setQuantity"
-                /> -->
                 <Item 
                     :items="store.cart.products"
                     show-summary>

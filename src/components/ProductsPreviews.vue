@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
-import { store } from '@/store';
 import { useCart } from '@/composables/useCart';
 
 const { appContext } = getCurrentInstance();

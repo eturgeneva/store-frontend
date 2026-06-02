@@ -37,35 +37,6 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
         </div>
 
         <slot :item="item"></slot>
-
-        <!-- <div class="itemButtonContainer">
-            <button
-                type="button"
-                @click="emit('update-quantity', item.product_id, -1)"
-            >
-                -
-            </button>
-
-            <input
-                :value="item.quantity"
-                @keyup.enter="emit('set-quantity', item.product_id, Number($event.target.value))"
-            >
-
-            <button
-                type="button"
-                @click="emit('update-quantity', item.product_id, 1)"
-            >
-                +
-            </button>
-
-            <button
-                type="button"
-                class="removeButton"
-                @click="emit('set-quantity', item.product_id, 0)"
-            >
-                🗑
-            </button>
-        </div> -->
     </div>
     <div v-if="props.showSummary" 
             class="itemSummary">

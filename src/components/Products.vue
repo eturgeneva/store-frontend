@@ -15,7 +15,6 @@ console.log('Render', store.cartId);
 
 onBeforeMount(async () => {
     try {
-        // await $api.getCart(store.cartId);
         console.log('onBeforeMount store cart ID', store.cartId);
 
         const fetchedProducts = await $api.getAllProducts();

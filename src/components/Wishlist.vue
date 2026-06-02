@@ -8,7 +8,7 @@ const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
 const { addToCart } = useCart();
-const wishlist = ref([]);
+// const wishlist = ref([]);
 // console.log('wishlist', wishlist)
 // console.log('wishlist.value', wishlist.value)
 // console.log('store logged in user wishlist', store.loggedInUser.wishlist)

@@ -9,8 +9,8 @@ onBeforeMount(async () => {
     await getProfile();
 });
 
-const email = ref('');
-const password = ref('');
+// const email = ref('');
+// const password = ref('');
 
 const editProfile = ref(false);
 

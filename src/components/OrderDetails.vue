@@ -1,13 +1,12 @@
 <script setup>
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { useRoute } from 'vue-router';
-import { store } from '../store.js';
 import Item from './Item.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+// const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const route = useRoute();
 const orderId = route.params.id;
