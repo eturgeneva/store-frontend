@@ -12,7 +12,6 @@ export function useCart() {
             // If a new cart needs to be created
             if (!store.cartId) {
                 const newCartId = await $api.createCart();
-                // console.log('new cart ID', newCartId);
 
                 if (!newCartId) {
                     console.log('Failed to create cart');

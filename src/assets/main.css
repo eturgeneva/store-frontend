@@ -1009,7 +1009,7 @@ ul {
 }
 
 /* Wishlist */
-.wishlist {
+.wishlist, .wishlistContainer {
     margin: 6rem 3rem;
 }
 

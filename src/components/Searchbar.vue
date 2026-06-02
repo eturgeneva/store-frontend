@@ -26,7 +26,10 @@ onBeforeMount(async () => {
 
 function searchItem() {
     console.log('products value 0', products.value[0].name);
-    match.value = products.value.filter((product) => product.name.toLowerCase().includes(searchInput.value.toLowerCase()));
+    // match.value = products.value.filter((product) => product.name.toLowerCase().includes(searchInput.value.toLowerCase()));
+    match.value = products.value.filter((product) => {
+        return product.name.toLowerCase().includes(searchInput.value.toLowerCase());
+    })
     foundMatch.value = true;
 
     console.log('match', match.value);

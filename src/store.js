@@ -32,6 +32,5 @@ export const store = reactive({
 
     setCart(cartData) {
         this.cart.products = cartData.products || [];
-        // this.cartId = cartData.id || cartData.cartId || null;
     }
 });

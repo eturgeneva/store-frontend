@@ -336,7 +336,6 @@ export default class StoreApi {
             if (!response.ok) {
                 throw new Error('Failed to create a wishlist');
             }
-            // return true;
             return await response.json();
         } catch (err) {
             console.error('Failed to create a wishlist', err);

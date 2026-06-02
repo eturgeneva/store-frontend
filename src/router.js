@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import StoreApi from './store-api';
+// import StoreApi from './store-api';
 
 import Homepage from './components/Homepage.vue';
 import Profile from './components/Profile.vue';
@@ -30,8 +30,6 @@ const routes = [
   { path: '/new', component: MissingPage},
   { path: '/sale', component: MissingPage},
   { path: '/gift-sets', component: MissingPage},
-
-  // { path: '/cart', component: Cart, props: { api }},
 ];
 
 const router = createRouter({

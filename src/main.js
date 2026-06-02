@@ -11,5 +11,3 @@ const app = createApp(App);
 app.config.globalProperties.$api = new StoreApi(URL);
 
 app.use(router).mount('#app');
-
-// createApp(App).use(router).mount('#app');

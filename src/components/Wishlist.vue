@@ -9,16 +9,19 @@ const $api = appContext.config.globalProperties.$api;
 
 const { addToCart } = useCart();
 const wishlist = ref([]);
-console.log('wishlist', wishlist)
-console.log('wishlist.value', wishlist.value)
-console.log('store logged in user wishlist', store.loggedInUser.wishlist)
+// console.log('wishlist', wishlist)
+// console.log('wishlist.value', wishlist.value)
+// console.log('store logged in user wishlist', store.loggedInUser.wishlist)
 
 onBeforeMount(async () => {
     try {
+        if (!store.loggedIn) {
+            console.log('Log in to create or see the wishlist');
+            return;
+        }
         const wishlist = await $api.getWishlist();
         if (wishlist) {
             store.loggedInUser.wishlist = wishlist;
-            console.log('wishlist', store.loggedInUser.wishlist);
         } else {
             console.log('Failed to fetch wishlist');
         }
@@ -27,9 +30,7 @@ onBeforeMount(async () => {
     }
 })
 
-console.log('wishlist', wishlist)
-console.log('wishlist.value', wishlist.value)
-console.log('store logged in user wishlist', store.loggedInUser.wishlist)
+console.log('store logged in user wishlist', store.loggedInUser.wishlist);
 
 async function deleteProductFromWishlist(productId) {
     try {
@@ -49,8 +50,12 @@ async function deleteProductFromWishlist(productId) {
 </script>
 
 <template>
-<div v-if="store.loggedIn" class="wishlistContainer">
-    <div v-if="store.loggedInUser.wishlist"
+
+<div class="wishlistContainer">
+    <div v-if="!store.loggedIn">
+        <p>Log in to see or create a wishlist</p>
+    </div>
+    <div v-else-if="store.loggedInUser.wishlist"
         class="wishlist">
         <Item 
             :items="store.loggedInUser.wishlist">
