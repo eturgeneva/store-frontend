@@ -43,7 +43,73 @@ export function useWishlist() {
     }
 
     function updateWishlistInStore(wishlistResponse) {
-        store.loggedInUser.wishlist = wishlistResponse.updatedWishlist || wishlistResponse;
+        const wishlist = getWishlistArray(wishlistResponse);
+        if (wishlist) {
+            store.loggedInUser.wishlist = wishlist;
+        }
+    }
+
+    function getWishlistArray(wishlistResponse) {
+        if (Array.isArray(wishlistResponse)) {
+            return wishlistResponse;
+        }
+
+        if (Array.isArray(wishlistResponse?.updatedWishlist)) {
+            return wishlistResponse.updatedWishlist;
+        }
+
+        if (Array.isArray(wishlistResponse?.wishlist)) {
+            return wishlistResponse.wishlist;
+        }
+
+        if (Array.isArray(wishlistResponse?.products)) {
+            return wishlistResponse.products;
+        }
+
+        return null;
+    }
+
+    function getWishlistProductId(item) {
+        return item.product_id || item.productId || item.id;
+    }
+
+    function addProductToLocalWishlist(productId, wishlistResponse) {
+        const wishlist = getWishlistArray(wishlistResponse);
+        if (wishlist) {
+            store.loggedInUser.wishlist = wishlist;
+            return;
+        }
+
+        const currentWishlist = Array.isArray(store.loggedInUser.wishlist)
+            ? store.loggedInUser.wishlist
+            : [];
+
+        if (currentWishlist.some(item => getWishlistProductId(item) === productId)) {
+            store.loggedInUser.wishlist = currentWishlist;
+            return;
+        }
+
+        const wishlistItem = wishlistResponse?.product_id || wishlistResponse?.productId
+            ? wishlistResponse
+            : { product_id: productId };
+
+        store.loggedInUser.wishlist = [...currentWishlist, wishlistItem];
+    }
+
+    function removeProductFromLocalWishlist(productId, wishlistResponse) {
+        const wishlist = getWishlistArray(wishlistResponse);
+        if (wishlist) {
+            store.loggedInUser.wishlist = wishlist;
+            return;
+        }
+
+        const currentWishlist = Array.isArray(store.loggedInUser.wishlist)
+            ? store.loggedInUser.wishlist
+            : [];
+
+        store.loggedInUser.wishlist = currentWishlist.filter(item => {
+            return getWishlistProductId(item) !== productId;
+        });
     }
 
     async function ensureWishlist() {
@@ -79,14 +145,14 @@ export function useWishlist() {
             if (isInWishlist(productId)) {
                 const updatedWishlist = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
                 if (updatedWishlist) {
-                    updateWishlistInStore(updatedWishlist);
+                    removeProductFromLocalWishlist(productId, updatedWishlist);
                 }
                 return;
             }
 
             const updatedWishlist = await $api.updateWishList(store.loggedInUser.id, productId);
             if (updatedWishlist) {
-                updateWishlistInStore(updatedWishlist);
+                addProductToLocalWishlist(productId, updatedWishlist);
             }
         } catch (err) {
             console.error(err);
@@ -98,7 +164,7 @@ export function useWishlist() {
             return false;
         }
 
-        return store.loggedInUser.wishlist.some(item => item.product_id === productId);
+        return store.loggedInUser.wishlist.some(item => getWishlistProductId(item) === productId);
     }
 
     return {
