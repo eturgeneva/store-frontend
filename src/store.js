@@ -8,6 +8,7 @@ export const store = reactive({
     cartIsLoading: true,
     miniCartOpen: false,
     lastAddedProductId: null,
+    toasts: [],
     cart: {
         products: []
     },
@@ -43,5 +44,17 @@ export const store = reactive({
 
     hideMiniCart() {
         this.miniCartOpen = false;
+    },
+
+    addToast(toast) {
+        this.toasts.push({
+            id: Date.now() + Math.random(),
+            type: toast.type || 'info',
+            message: toast.message,
+        });
+    },
+
+    removeToast(toastId) {
+        this.toasts = this.toasts.filter(toast => toast.id !== toastId);
     }
 });

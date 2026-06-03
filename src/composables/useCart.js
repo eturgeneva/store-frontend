@@ -32,14 +32,26 @@ export function useCart() {
             if (cartUpdate) {
                 store.setCart(cartUpdate);
                 store.showMiniCart(productId);
+                store.addToast({
+                    type: 'success',
+                    message: 'Added to cart',
+                });
                 console.log('Updated cart', store.cart.products);
                 console.log('Updated cart ID', store.cartId);
 
             } else {
                 console.log('Failed to update cart');
+                store.addToast({
+                    type: 'warning',
+                    message: 'Unable to update cart',
+                });
             }
         } catch (err) {
             console.error(err);
+            store.addToast({
+                type: 'warning',
+                message: 'Unable to update cart',
+            });
         }
     }
     return {

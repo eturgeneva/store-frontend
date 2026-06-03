@@ -132,6 +132,10 @@ export function useWishlist() {
 
         if (!store.loggedIn || !store.loggedInUser.id) {
             console.log('Please log in to create a wishlist');
+            store.addToast({
+                type: 'warning',
+                message: 'Log in to save favorites',
+            });
             return;
         }
 
@@ -146,6 +150,10 @@ export function useWishlist() {
                 const updatedWishlist = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
                 if (updatedWishlist) {
                     removeProductFromLocalWishlist(productId, updatedWishlist);
+                    store.addToast({
+                        type: 'info',
+                        message: 'Removed from wishlist',
+                    });
                 }
                 return;
             }
@@ -153,9 +161,17 @@ export function useWishlist() {
             const updatedWishlist = await $api.updateWishList(store.loggedInUser.id, productId);
             if (updatedWishlist) {
                 addProductToLocalWishlist(productId, updatedWishlist);
+                store.addToast({
+                    type: 'success',
+                    message: 'Added to wishlist',
+                });
             }
         } catch (err) {
             console.error(err);
+            store.addToast({
+                type: 'warning',
+                message: 'Unable to update wishlist',
+            });
         }
     }
 
