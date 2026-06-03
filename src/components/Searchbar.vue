@@ -44,6 +44,7 @@ function showSearchResults() {
         return;
     }
     isPopoverOpen.value = false;
+    searchInput.value = '';
     router.push({
         path: '/search',
         query: { q: query },
@@ -65,6 +66,7 @@ function openProductDetails(productId) {
         return;
     }
     isPopoverOpen.value = false;
+    searchInput.value = '';
     router.push(`/products/${productId}`);
 }
 
