@@ -60,6 +60,11 @@ function closePopover() {
     }, 120);
 }
 
+function openProductDetails(productId) {
+    isPopoverOpen.value = false;
+    router.push(`/products/${productId}`);
+}
+
 </script>
 
 <template>
@@ -86,24 +91,25 @@ function closePopover() {
                 <div v-if="previewMatches.length === 0" class="searchPopoverEmpty">
                     No matching products
                 </div>
-                <router-link v-for="product in previewMatches"
+                <button v-for="product in previewMatches"
                     :key="product.id"
-                    :to="`/products/${product.id}`"
+                    type="button"
                     class="searchPreview"
-                    @click="isPopoverOpen = false">
+                    @mousedown.prevent="openProductDetails(product.id)"
+                    @click="openProductDetails(product.id)">
                     <img :src="productImgURL + product.name + '.png'"
                         :alt="product.name"
                         @error="e => e.target.style.display = 'none'">
                     <div>
                         <div class="searchPreviewName">{{ product.name }}</div>
                         <div class="searchPreviewMeta">
-                            {{ product.brand }}
+                            <span>{{ product.brand }}</span>
                             <span v-if="product.price_cents">
                                 {{ (product.price_cents / 100).toFixed(2) }}
                             </span>
                         </div>
                     </div>
-                </router-link>
+                </button>
             </div>
         <!-- </div> -->
     </div>

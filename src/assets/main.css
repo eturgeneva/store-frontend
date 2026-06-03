@@ -90,7 +90,7 @@ header {
     height: 2.8rem;
 }
 
-.searchContainer button {
+.searchContainer > button {
     width: 5rem;
     height: 2rem;
     margin: 0 0 0 0.5rem;
@@ -112,20 +112,35 @@ header {
     box-shadow: 0 10px 30px rgba(30, 20, 60, 0.16);
 }
 
-.searchPreview {
+.searchContainer .searchPreview {
     display: grid;
     grid-template-columns: 3.25rem 1fr;
     align-items: center;
     gap: 0.75rem;
+    width: 100%;
+    height: auto;
     min-height: 4rem;
+    margin: 0;
     padding: 0.45rem;
     color: #4b3b74;
+    background: transparent;
+    border: none;
     border-radius: 6px;
+    box-shadow: none;
+    text-align: left;
     transition: all 0.3s ease;
 }
 
-.searchPreview:hover {
+.searchContainer .searchPreview:hover {
     background-color: rgba(199, 179, 246, 0.2);
+    box-shadow: none;
+    transform: none;
+}
+
+.searchPreview > div {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
 }
 
 .searchPreview img {
@@ -140,14 +155,30 @@ header {
     color: #374151;
     font-weight: 700;
     line-height: 1.25;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .searchPreviewMeta {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 0.75rem;
     color: #6b7280;
     font-size: 0.9rem;
+    min-width: 0;
+}
+
+.searchPreviewMeta span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.searchPreviewMeta span:last-child {
+    flex: 0 0 auto;
+    font-weight: 700;
 }
 
 .searchPopoverEmpty {
