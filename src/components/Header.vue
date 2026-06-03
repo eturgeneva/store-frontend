@@ -100,15 +100,15 @@ async function getProfile() {
                             favorite
                         </span>
                     </router-link>
-                    <router-link to="/cart">
+                    <router-link to="/cart" class="cartIconLink">
                         <span class="material-symbols-outlined">
                             shopping_bag
                         </span>
+                        <span v-if="store.cartId"
+                            class="quantityPreview">
+                            {{ store.cart.products.reduce((acc, {quantity}) => acc + quantity, 0) }}
+                        </span>
                     </router-link>
-                    <div class="quantity-preview">{{ store.cartId 
-                        ? store.cart.products.reduce((acc, {quantity}) => acc + quantity, 0)
-                        : ''}}
-                    </div>
                 </div>
             </div>
             <div class="catalogue">
