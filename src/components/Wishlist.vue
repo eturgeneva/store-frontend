@@ -8,6 +8,7 @@ const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
 const { addToCart } = useCart();
+const isLoading = ref(true);
 // const wishlist = ref([]);
 // console.log('wishlist', wishlist)
 // console.log('wishlist.value', wishlist.value)
@@ -15,10 +16,13 @@ const { addToCart } = useCart();
 
 onBeforeMount(async () => {
     try {
+        await loadProfile();
+
         if (!store.loggedIn) {
             console.log('Log in to create or see the wishlist');
             return;
         }
+
         const wishlist = await $api.getWishlist();
         if (wishlist) {
             store.loggedInUser.wishlist = wishlist;
@@ -27,10 +31,32 @@ onBeforeMount(async () => {
         }
     } catch (err) {
         console.error(err);
+    } finally {
+        isLoading.value = false;
     }
 })
 
 console.log('store logged in user wishlist', store.loggedInUser.wishlist);
+
+async function loadProfile() {
+    if (store.loggedIn) {
+        return;
+    }
+
+    try {
+        const user = await $api.getUser();
+        if (user) {
+            store.setLoggedIn(user.id !== null);
+            if (user.id !== null) {
+                Object.assign(store.loggedInUser, user);
+                store.setCartId(user.cartId);
+            }
+        }
+    } catch (err) {
+        console.error(err);
+        store.setLoggedIn(false);
+    }
+}
 
 async function deleteProductFromWishlist(productId) {
     try {
@@ -52,7 +78,10 @@ async function deleteProductFromWishlist(productId) {
 <template>
     <main>
         <div class="wishlistContainer">
-            <div v-if="!store.loggedIn" class="emptyState">
+            <div v-if="isLoading" class="emptyState">
+                <p>Wishlist is loading...</p>
+            </div>
+            <div v-else-if="!store.loggedIn" class="emptyState">
                 <p>Log in to see or create a wishlist</p>
             </div>
             <div v-else-if="store.loggedInUser.wishlist?.length"
