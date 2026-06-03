@@ -27,8 +27,59 @@ async function loadProduct(productId) {
     }
 }
 
+async function loadWishlist() {
+    if (!store.loggedIn || Array.isArray(store.loggedInUser.wishlist)) {
+        return;
+    }
+
+    try {
+        const wishlist = await $api.getWishlist();
+        if (wishlist) {
+            store.loggedInUser.wishlist = wishlist;
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function addToWishlist(productId) {
+    if (!store.loggedIn || !store.loggedInUser) {
+        console.log('Please log in to create a wishlist');
+        return;
+    }
+
+    try {
+        const userId = store.loggedInUser.id;
+
+        if (!store.loggedInUser.wishlistId) {
+            const wishlistId = await $api.createWishlist(userId);
+            if (wishlistId) {
+                store.loggedInUser.wishlistId = wishlistId;
+            } else {
+                console.log('Failed to create a wishlist');
+                return;
+            }
+        }
+
+        const wishlistUpdate = await $api.updateWishList(userId, productId);
+        if (wishlistUpdate) {
+            store.loggedInUser.wishlist = wishlistUpdate;
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function isInWishlist(productId) {
+    if (!Array.isArray(store.loggedInUser.wishlist)) {
+        return false;
+    }
+    return store.loggedInUser.wishlist.some(item => item.product_id === productId);
+}
+
 onMounted(async () => {
     await loadProduct(route.params.id);
+    await loadWishlist();
 });
 
 watch(() => route.params.id, async (productId) => {
@@ -60,8 +111,11 @@ watch(() => route.params.id, async (productId) => {
                                 class="buyButton">
                                 Add to cart 
                         </button>
-                        <button type="button" class="favoriteButton">
-                            <span class="material-symbols-outlined">
+                        <button @click="addToWishlist(store.selectedProduct.id)"
+                                type="button"
+                                class="favoriteButton">
+                            <span class="material-symbols-outlined"
+                                    :class="isInWishlist(store.selectedProduct.id) ? 'filled' : 'outlined'">
                                 favorite
                             </span>
                         </button>
