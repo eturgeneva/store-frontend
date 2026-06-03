@@ -11,6 +11,7 @@ import OrderDetails from './components/OrderDetails.vue';
 import Wishlist from './components/Wishlist.vue';
 import MissingPage from './components/MissingPage.vue';
 import PersonalDetails from './components/PersonalDetails.vue';
+import SearchResults from './components/SearchResults.vue';
 
 // const URL = 'http://localhost:3000';
 // const api = new StoreApi(URL);
@@ -20,6 +21,7 @@ const routes = [
   { path: '/', component: Homepage },
   { path: '/products', component: Products },
   { path: '/products/:id', component: ProductPage},
+  { path: '/search', component: SearchResults },
   { path: '/profile', component: Profile },
   { path: '/profile/details', component: PersonalDetails },
   { path: '/cart', component: Cart },

@@ -985,6 +985,12 @@ button:hover {
     justify-content: center;
 }
 
+.searchResultsPage {
+    width: min(90%, 72rem);
+    margin: 6rem auto 0;
+    padding: 3rem 0;
+}
+
 /* Same as products previews, but without gallery and arrows */
 .productsPreviews {
     padding: 3rem 0;

@@ -1,39 +1,19 @@
 <script setup>
-import { ref, onBeforeMount, getCurrentInstance } from 'vue';
-import { store } from '../store.js';
-
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const searchInput = ref('');
-const products = ref([]);
-const foundMatch = ref(false);
-const match = ref([]);
+const router = useRouter();
 
-onBeforeMount(async () => {
-    try {
-        const fetchedProducts = await $api.getAllProducts();
-        if (fetchedProducts) {
-            products.value = fetchedProducts;
-            console.log('Products', products.value);
-        } else {
-            console.log('Failed to fetch products');
-        }
-    } catch (err) {
-        console.error(err);
+function showSearchResults() {
+    const query = searchInput.value.trim();
+    if (!query) {
+        return;
     }
-});
-
-function searchItem() {
-    console.log('products value 0', products.value[0].name);
-    // match.value = products.value.filter((product) => product.name.toLowerCase().includes(searchInput.value.toLowerCase()));
-    match.value = products.value.filter((product) => {
-        return product.name.toLowerCase().includes(searchInput.value.toLowerCase());
-    })
-    foundMatch.value = true;
-
-    console.log('match', match.value);
-    console.log('searchInput', searchInput.value);
+    router.push({
+        path: '/search',
+        query: { q: query },
+    });
 }
 
 </script>
@@ -46,19 +26,14 @@ function searchItem() {
                     name="search"
                     id="search"
                     placeholder="Search..."
+                    @keyup.enter="showSearchResults"
             >
-            <button @click="searchItem"
+            <button @click="showSearchResults"
                     type="button">
                 <span class="material-symbols-outlined">
                     search
                 </span>
             </button>
-            <div v-if="foundMatch"
-                class="matches">
-                <div v-for="item in match" :key="item.id">
-                    {{ item.name }}
-                </div>
-            </div>
         <!-- </div> -->
     </div>
 
