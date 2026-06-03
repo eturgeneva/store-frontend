@@ -87,7 +87,7 @@ header {
 
 .searchContainer input {
     width: min(100%, 30rem);
-    height: 2.8rem;
+    height: 2rem;
 }
 
 .searchContainer > button {
@@ -461,7 +461,8 @@ form, .userLogin {
 }
 
 input {
-    padding: 0.7rem 1rem;
+    /* padding: 0.7rem 1rem; */
+    padding: 0.4rem;
     border: 2px solid #e5e7eb;
     border-radius: 8px;
     background: #fafafa;

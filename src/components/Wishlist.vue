@@ -50,43 +50,42 @@ async function deleteProductFromWishlist(productId) {
 </script>
 
 <template>
+    <main>
+        <div class="wishlistContainer">
+            <div v-if="!store.loggedIn" class="emptyState">
+                <p>Log in to see or create a wishlist</p>
+            </div>
+            <div v-else-if="store.loggedInUser.wishlist?.length"
+                class="wishlist">
+                <Item 
+                    :items="store.loggedInUser.wishlist">
+                    <template #default="{ item }">
+                        <div class="itemButtonContainer">
+                            <button
+                                type="button"
+                                @click="addToCart(item.product_id, 1)"
+                            >
+                                <span class="material-symbols-outlined">
+                                        shopping_cart
+                                </span>
+                            </button>
 
-<div class="wishlistContainer">
-    <div v-if="!store.loggedIn">
-        <p>Log in to see or create a wishlist</p>
-    </div>
-    <div v-else-if="store.loggedInUser.wishlist"
-        class="wishlist">
-        <Item 
-            :items="store.loggedInUser.wishlist">
-            <template #default="{ item }">
-                <div class="itemButtonContainer">
-                    <button
-                        type="button"
-                        @click="addToCart(item.product_id, 1)"
-                    >
-                        <span class="material-symbols-outlined">
-                                shopping_cart
-                        </span>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="removeButton"
-                        @click="deleteProductFromWishlist(item.product_id)"
-                    >
-                        🗑
-                    </button>
-                </div>
-            </template>
-        </Item>
-    </div>
-    <div v-else>
-        <p>Your wishlist is empty</p>
-        <button>Create a wishlist</button>
-    </div>
-</div>
-
+                            <button
+                                type="button"
+                                class="removeButton"
+                                @click="deleteProductFromWishlist(item.product_id)"
+                            >
+                                🗑
+                            </button>
+                        </div>
+                    </template>
+                </Item>
+            </div>
+            <div v-else class="emptyState">
+                <p>Your wishlist is empty</p>
+            </div>
+        </div>
+    </main>
 </template>
 
 <style scoped>
