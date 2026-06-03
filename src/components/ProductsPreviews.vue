@@ -2,6 +2,7 @@
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
+import ProductBadges from './ProductBadges.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -78,6 +79,7 @@ function handleScroll() {
                     class="featuredProductPreview">
 
                     <div class="featuredProductImage">
+                        <ProductBadges :product="product" />
                         <router-link :to="`/products/${product.id}`">
                             <img :src="productImgURL + product.name + '.png'"
                                 :alt="product.name" 
