@@ -109,7 +109,7 @@ function openProductDetails(productId) {
                         <div class="searchPreviewMeta">
                             <span>{{ product.brand }}</span>
                             <span v-if="product.price_cents">
-                                {{ (product.price_cents / 100).toFixed(2) }}
+                                {{ (product.price_cents / 100).toFixed(2) + ' €'}}
                             </span>
                         </div>
                     </div>
