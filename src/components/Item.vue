@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue';
 
 const props = defineProps({
     items: {
@@ -14,6 +15,13 @@ const props = defineProps({
 const emit = defineEmits(['update-quantity', 'set-quantity']);
 
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
+const totalPrice = computed(() => {
+    return props.items.reduce((acc, item) => {
+        const quantity = item.quantity || 1;
+        return acc + (item.price_cents * quantity);
+    }, 0);
+});
 
 </script>
 
@@ -40,6 +48,6 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
     </div>
     <div v-if="props.showSummary" 
             class="itemSummary">
-        <div>Total price: {{ items.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) / 100 + ' €'}}</div>
+        <div>Total price: {{ (totalPrice / 100).toFixed(2) + ' €'}}</div>
     </div>
 </template>
