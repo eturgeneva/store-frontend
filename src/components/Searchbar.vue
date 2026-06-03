@@ -57,10 +57,13 @@ function openPopover() {
 function closePopover() {
     setTimeout(() => {
         isPopoverOpen.value = false;
-    }, 120);
+    }, 180);
 }
 
 function openProductDetails(productId) {
+    if (!productId) {
+        return;
+    }
     isPopoverOpen.value = false;
     router.push(`/products/${productId}`);
 }
@@ -95,8 +98,9 @@ function openProductDetails(productId) {
                     :key="product.id"
                     type="button"
                     class="searchPreview"
-                    @mousedown.prevent="openProductDetails(product.id)"
-                    @click="openProductDetails(product.id)">
+                    @mousedown.prevent.stop="openProductDetails(product.id)"
+                    @touchstart.prevent.stop="openProductDetails(product.id)"
+                    @click.prevent.stop="openProductDetails(product.id)">
                     <img :src="productImgURL + product.name + '.png'"
                         :alt="product.name"
                         @error="e => e.target.style.display = 'none'">

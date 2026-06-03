@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, getCurrentInstance, ref } from 'vue';
+import { onMounted, getCurrentInstance, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { store } from '../store.js';
 import { useCart } from '@/composables/useCart.js';
@@ -11,10 +11,9 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const { addToCart } = useCart();
 const route = useRoute();
-const productId = route.params.id;
 const quantity = ref(1);
 
-onMounted(async () => {
+async function loadProduct(productId) {
     try {
         const selectedProduct = await $api.getProductById(productId);
         if (selectedProduct) {
@@ -26,6 +25,15 @@ onMounted(async () => {
     } catch (err) {
         console.error(err);
     }
+}
+
+onMounted(async () => {
+    await loadProduct(route.params.id);
+});
+
+watch(() => route.params.id, async (productId) => {
+    await loadProduct(productId);
+    quantity.value = 1;
 });
 
 </script>
