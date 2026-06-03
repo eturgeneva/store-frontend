@@ -61,13 +61,9 @@ async function logoutUser() {
     
             <div class="userProfile" v-if="store.loggedIn">
                 <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
-                <div>
+                <div class="profileLinks">
                     <router-link to="/profile/details">Personal details</router-link>
-                </div>
-                <div>
                     <router-link to="/orders">My orders</router-link>
-                </div>
-                <div>
                     <router-link to="/wishlist">Wishlist</router-link>
                 </div>
                 <div class="buttons">    

@@ -102,8 +102,8 @@ async function checkout() {
 <template>
     <main>
         <div class="cartContainer">
-            <div v-if="store.cart.products.length === 0">Your cart is empty</div>
-            <div v-else-if="store.cartIsLoading">Cart is loading...</div>
+            <div v-if="store.cart.products.length === 0" class="emptyState">Your cart is empty</div>
+            <div v-else-if="store.cartIsLoading" class="emptyState">Cart is loading...</div>
             <div v-else class="cart">
                 <Item 
                     :items="store.cart.products"
@@ -119,6 +119,7 @@ async function checkout() {
 
                             <input
                                 type="number"
+                                class="quantityInput"
                                 :value="item.quantity"
                                 @keyup.enter="setQuantity(item.product_id, Number($event.target.value))"
                             >

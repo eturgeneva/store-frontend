@@ -33,7 +33,7 @@ onMounted(async () => {
 <template>
     <div v-if="store.selectedProduct" class="productDetails">
             <div class="product">
-                <div>
+                <div class="productDetailsMedia">
                     <img :src="productImgURL + store.selectedProduct.name + '.png'" class="productDetailsImage">
                 </div>
                 <div class="productDescription">
