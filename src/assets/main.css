@@ -81,6 +81,7 @@ header {
     flex: 1 1 28rem;
     max-width: 46rem;
     min-width: 14rem;
+    position: relative;
     /* height: 2rem; */
 }
 
@@ -94,6 +95,65 @@ header {
     height: 2rem;
     margin: 0 0 0 0.5rem;
     flex: 0 0 auto;
+}
+
+.searchPopover {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    z-index: 30;
+    display: grid;
+    gap: 0.25rem;
+    width: min(100%, 30rem);
+    padding: 0.6rem;
+    background: #ffffff;
+    border: 1px solid rgba(139, 92, 246, 0.18);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(30, 20, 60, 0.16);
+}
+
+.searchPreview {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 4rem;
+    padding: 0.45rem;
+    color: #4b3b74;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.searchPreview:hover {
+    background-color: rgba(199, 179, 246, 0.2);
+}
+
+.searchPreview img {
+    width: 3.25rem;
+    height: 3.25rem;
+    object-fit: cover;
+    background: #f9f6ff;
+    border-radius: 6px;
+}
+
+.searchPreviewName {
+    color: #374151;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.searchPreviewMeta {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+.searchPopoverEmpty {
+    padding: 0.75rem;
+    color: #6b7280;
+    text-align: center;
 }
 
 .catalogue {
