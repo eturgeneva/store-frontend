@@ -267,6 +267,12 @@ a,
   min-height: 2rem;
 }
 
+.cartMenu {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .quantityPreview {
   position: absolute;
   top: -0.45rem;
@@ -285,6 +291,153 @@ a,
   font-size: 0.72rem;
   font-weight: 800;
   line-height: 1;
+}
+
+.miniCartPopover {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: -0.3rem;
+  z-index: 30;
+  width: 22rem;
+  padding: 0.85rem;
+  color: #4b3b74;
+  background: #ffffff;
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(30, 20, 60, 0.16);
+}
+
+.miniCartPopover::before {
+  content: '';
+  position: absolute;
+  top: -0.5rem;
+  right: 0.8rem;
+  width: 1rem;
+  height: 1rem;
+  background: #ffffff;
+  border-left: 1px solid rgba(139, 92, 246, 0.18);
+  border-top: 1px solid rgba(139, 92, 246, 0.18);
+  transform: rotate(45deg);
+}
+
+.miniCartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.1rem 0.2rem 0.7rem;
+  color: #374151;
+  font-weight: 800;
+}
+
+.miniCartClose {
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  color: #8b5cf6;
+  background: #f9f6ff;
+  border: 1px solid rgba(139, 92, 246, 0.14);
+  box-shadow: none;
+}
+
+.miniCartClose span {
+  font-size: 1.1rem;
+}
+
+.miniCartItems {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.miniCartItem {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem;
+  background: #f9f6ff;
+  border: 1px solid rgba(139, 92, 246, 0.12);
+  border-radius: 8px;
+}
+
+.miniCartItem img {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  background: #ffffff;
+  border-radius: 6px;
+}
+
+.miniCartItemInfo {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.miniCartItemInfo a {
+  overflow: hidden;
+  color: #374151;
+  font-weight: 700;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.miniCartItemInfo span {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.miniCartItemPrice {
+  color: #4b3b74;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.miniCartSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.7rem;
+  padding: 0.7rem 0.2rem;
+  color: #6b7280;
+  border-top: 1px solid rgba(139, 92, 246, 0.14);
+}
+
+.miniCartSummary strong {
+  color: #374151;
+}
+
+.miniCartActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.miniCartPrimary,
+.miniCartSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  margin: 0;
+  padding: 0.55rem;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.miniCartPrimary {
+  color: #ffffff;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  box-shadow: 0 3px 10px rgba(139, 92, 246, 0.18);
+}
+
+.miniCartSecondary {
+  width: auto;
+  height: auto;
+  color: #8b5cf6;
+  background: #ffffff;
+  border: 1px solid rgba(139, 92, 246, 0.24);
+  box-shadow: none;
 }
 
 .profileMenu {

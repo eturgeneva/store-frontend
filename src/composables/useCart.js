@@ -31,6 +31,7 @@ export function useCart() {
             const cartUpdate = await $api.updateQuantityInCart(store.cartId, productId, quantity);
             if (cartUpdate) {
                 store.setCart(cartUpdate);
+                store.showMiniCart(productId);
                 console.log('Updated cart', store.cart.products);
                 console.log('Updated cart ID', store.cartId);
 
