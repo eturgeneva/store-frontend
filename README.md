@@ -28,6 +28,12 @@ npm run dev
 npm run build
 ```
 
+To customize the backend URL at build time, set `VITE_BACKEND_URL` before running the build:
+
+```sh
+VITE_BACKEND_URL=https://your-backend.example.com npm run build
+```
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh

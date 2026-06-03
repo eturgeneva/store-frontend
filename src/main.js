@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from './router';
 import StoreApi from './store-api';
 
-const URL = 'http://localhost:3000';
+const URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 const app = createApp(App);
 
