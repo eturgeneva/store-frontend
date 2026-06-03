@@ -33,13 +33,13 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
             </div>
             <div class="itemBrand">{{ item.brand }}</div>
             <div v-if="item.quantity" class="itemQuantity">Quantity: {{ item.quantity }}</div>
-            <div class="itemPrice">Price: {{ item.price_cents }}</div>
+            <div class="itemPrice">Price: {{ item.price_cents / 100 + ' €'}}</div>
         </div>
 
         <slot :item="item"></slot>
     </div>
     <div v-if="props.showSummary" 
             class="itemSummary">
-        <div>Total price: {{ items.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) }}</div>
+        <div>Total price: {{ items.reduce((acc, curVal) => acc + curVal.price_cents, 0).toFixed(2) / 100 + ' €'}}</div>
     </div>
 </template>

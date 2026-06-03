@@ -55,6 +55,7 @@ async function cancelOrder(orderId) {
 
         <button v-if="orderDetails.status !== 'cancelled'"
                 type="button"
+                class="cancelOrderButton"
                 @click="cancelOrder(orderDetails.orderId)">
             Cancel order
         </button>

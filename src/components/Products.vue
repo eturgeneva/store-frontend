@@ -104,7 +104,7 @@ function isInWishlist(productId) {
                             <router-link :to="`/products/${product.id}`" class="productLink">
                                 <h3 class="productName">{{ product.name }}</h3>
                             </router-link>
-                            <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) }}</div>
+                            <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) +' €'}}</div>
                         </div>
     
                         <button @click="addToCart(product.id, 1)"
