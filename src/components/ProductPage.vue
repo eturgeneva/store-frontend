@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, getCurrentInstance, ref, watch } from 'vue';
+import { computed, onMounted, getCurrentInstance, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { store } from '../store.js';
 import { useCart } from '@/composables/useCart.js';
@@ -14,6 +14,20 @@ const { addToCart } = useCart();
 const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
 const route = useRoute();
 const quantity = ref(1);
+const selectedImageIndex = ref(0);
+
+const productImages = computed(() => {
+    if (!store.selectedProduct?.name) {
+        return [];
+    }
+
+    return [
+        {
+            src: productImgURL + store.selectedProduct.name + '.png',
+            alt: store.selectedProduct.name,
+        },
+    ];
+});
 
 async function loadProduct(productId) {
     try {
@@ -37,6 +51,7 @@ onMounted(async () => {
 watch(() => route.params.id, async (productId) => {
     await loadProduct(productId);
     quantity.value = 1;
+    selectedImageIndex.value = 0;
 });
 
 </script>
@@ -44,19 +59,71 @@ watch(() => route.params.id, async (productId) => {
 <template>
     <div v-if="store.selectedProduct" class="productDetails">
             <div class="product">
-                <div class="productDetailsMedia">
-                    <img :src="productImgURL + store.selectedProduct.name + '.png'" class="productDetailsImage">
+                <div class="productGallery">
+                    <div class="productDetailsMedia">
+                        <img
+                            v-if="productImages[selectedImageIndex]"
+                            :src="productImages[selectedImageIndex].src"
+                            :alt="productImages[selectedImageIndex].alt"
+                            class="productDetailsImage"
+                        >
+                    </div>
+
+                    <div class="productThumbnails">
+                        <button
+                            v-for="(image, index) in productImages"
+                            :key="image.src"
+                            type="button"
+                            :class="['productThumbnail', { active: selectedImageIndex === index }]"
+                            @click="selectedImageIndex = index"
+                        >
+                            <img
+                                :src="image.src"
+                                :alt="image.alt"
+                            >
+                        </button>
+                    </div>
                 </div>
-                <div class="productDescription">
-                    <h3>Product Details</h3>
-                    <div>Name: {{ store.selectedProduct.name }}</div>
-                    <div>Price: {{ store.selectedProduct.price_cents / 100 + ' €'}}</div>
-                    <div class="quantity-input">
+
+                <aside class="productBuyPanel">
+                    <div class="productBadgeRow">
+                        <span>Best gift pick</span>
+                        <span>Age 0+</span>
+                    </div>
+
+                    <h2>{{ store.selectedProduct.name }}</h2>
+                    <p class="productBuyPanelBrand">{{ store.selectedProduct.brand }}</p>
+                    <div class="productBuyPanelPrice">
+                        {{ (store.selectedProduct.price_cents / 100).toFixed(2) + ' €'}}
+                    </div>
+
+                    <div class="productTrustList">
+                        <div>Soft plush material</div>
+                        <div>Easy gifting</div>
+                        <div>Fast dispatch</div>
+                    </div>
+
+                    <label for="quantity" class="formLabel">Quantity</label>
+                    <div class="quantityStepper">
+                        <button
+                            type="button"
+                            @click="quantity = Math.max(1, Number(quantity) - 1)"
+                        >
+                            -
+                        </button>
                         <input  v-model="quantity"
-                                type="number" 
+                                type="number"
+                                min="1"
                                 name="quantity"
                                 id="quantity">
+                        <button
+                            type="button"
+                            @click="quantity = Number(quantity) + 1"
+                        >
+                            +
+                        </button>
                     </div>
+
                     <div class="buttonContainer">
                         <button @click="addToCart(store.selectedProduct.id, quantity)" 
                                 type="button" 
@@ -72,7 +139,10 @@ watch(() => route.params.id, async (productId) => {
                             </span>
                         </button>
                     </div>
+                </aside>
 
+                <div class="productDescription">
+                    <h3>Product Details</h3>
                     <h4>Description:</h4>
                     <div>Meet {{ store.selectedProduct.name}}, the ultimate cuddle companion! With his velvety-soft fur, gentle smile, and droopy eyelids, {{ store.selectedProduct.name }} is always ready for nap time—whether it's a lazy afternoon snooze or a bedtime snuggle. Hand-stitched details and ultra-plush stuffing make him irresistibly huggable and safe for all ages. Whether you're gifting a little one or adding charm to your own cozy corner, {{ store.selectedProduct.name }} brings warmth, comfort, and a touch of woodland magic wherever he goes.</div>
 
