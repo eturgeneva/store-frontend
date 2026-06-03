@@ -2,6 +2,7 @@
 import { ref, onBeforeMount, getCurrentInstance} from 'vue';
 import { store } from '@/store';
 import { useCart } from '@/composables/useCart';
+import { useWishlist } from '@/composables/useWishlist';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -9,6 +10,7 @@ const $api = appContext.config.globalProperties.$api;
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const { addToCart } = useCart();
+const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
 const products = ref([]);
 
 console.log('Render', store.cartId);
@@ -20,6 +22,7 @@ onBeforeMount(async () => {
         const fetchedProducts = await $api.getAllProducts();
         if (fetchedProducts) {
             products.value = fetchedProducts;
+            await loadWishlist();
             console.log('Products', products.value);
         } else {
             console.log('Failed to fetch products');
@@ -28,46 +31,6 @@ onBeforeMount(async () => {
         console.error(err);
     }
 });
-
-async function addToWishlist(productId) {
-    if (!store.loggedIn || !store.loggedInUser) {
-        console.log('Please log in to create a wishlist');
-        return;
-    }
-
-    try {
-        const userId = store.loggedInUser.id;
-        console.log('store.loggedInUser.wishlistId', store.loggedInUser.wishlistId)
-
-        if (!store.loggedInUser.wishlistId) {
-            const wishlistId = await $api.createWishlist(userId);
-            if (wishlistId) {
-                console.log('wishlistId response', wishlistId)
-                store.loggedInUser.wishlistId = wishlistId;
-                console.log('wishlist id from Products', store.loggedInUser.wishlistId);
-            } else {
-                console.log('Failed to create a wishlist');
-            }
-        }
-
-        const wishlistUpdate = await $api.updateWishList(userId, productId);
-        if (wishlistUpdate) {
-            console.log('updated wishlist', wishlistUpdate)
-            store.loggedInUser.wishlist = wishlistUpdate;
-        }
-
-
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-function isInWishlist(productId) {
-    if (!Array.isArray(store.loggedInUser.wishlist)) {
-        return false;
-    }
-    return store.loggedInUser.wishlist.some(item => item.product_id === productId)
-}
 
 </script>
 
@@ -88,7 +51,7 @@ function isInWishlist(productId) {
                         </router-link>
     
                         <div class="buttonContainer">
-                            <button @click="addToWishlist(product.id)"
+                            <button @click="toggleWishlist(product.id)"
                                     type="button"
                                     class="favoriteButton">
                                 <span class="material-symbols-outlined"

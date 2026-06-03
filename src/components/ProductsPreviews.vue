@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount, getCurrentInstance } from 'vue';
 import { useCart } from '@/composables/useCart';
+import { useWishlist } from '@/composables/useWishlist';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -8,6 +9,7 @@ const $api = appContext.config.globalProperties.$api;
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const { addToCart } = useCart();
+const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
 const products = ref([]);
 const galleryContainer = ref(null);
 
@@ -21,6 +23,7 @@ onBeforeMount(async () => {
             // products.value = fetchedProducts;
             // Display first 8 products
             products.value = fetchedProducts.slice(0, 8);
+            await loadWishlist();
             console.log('Products Previews', products.value);
         } else {
             console.log('Failed to fetch products');
@@ -82,10 +85,11 @@ function handleScroll() {
                         </router-link>
     
                         <div class="buttonContainer">
-                            <button 
+                            <button @click="toggleWishlist(product.id)"
                                     type="button"
                                     class="favoriteButton">
-                                <span class="material-symbols-outlined">
+                                <span class="material-symbols-outlined"
+                                        :class="isInWishlist(product.id) ? 'filled' : 'outlined'">
                                     favorite
                                 </span>
                             </button>

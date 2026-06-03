@@ -3,6 +3,7 @@ import { onMounted, getCurrentInstance, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { store } from '../store.js';
 import { useCart } from '@/composables/useCart.js';
+import { useWishlist } from '@/composables/useWishlist.js';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -10,6 +11,7 @@ const $api = appContext.config.globalProperties.$api;
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const { addToCart } = useCart();
+const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
 const route = useRoute();
 const quantity = ref(1);
 
@@ -27,91 +29,8 @@ async function loadProduct(productId) {
     }
 }
 
-async function loadProfile() {
-    if (store.loggedIn) {
-        return;
-    }
-
-    try {
-        const user = await $api.getUser();
-        if (user) {
-            store.setLoggedIn(user.id !== null);
-            if (user.id !== null) {
-                Object.assign(store.loggedInUser, user);
-                store.setCartId(user.cartId);
-            }
-        }
-    } catch (err) {
-        console.error(err);
-        store.setLoggedIn(false);
-    }
-}
-
-async function loadWishlist() {
-    if (!store.loggedIn || Array.isArray(store.loggedInUser.wishlist)) {
-        return;
-    }
-
-    try {
-        const wishlist = await $api.getWishlist();
-        if (wishlist) {
-            store.loggedInUser.wishlist = wishlist;
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-function updateWishlistInStore(wishlistResponse) {
-    store.loggedInUser.wishlist = wishlistResponse.updatedWishlist || wishlistResponse;
-}
-
-async function toggleWishlist(productId) {
-    if (!store.loggedIn || !store.loggedInUser) {
-        console.log('Please log in to create a wishlist');
-        return;
-    }
-
-    try {
-        const userId = store.loggedInUser.id;
-
-        if (!store.loggedInUser.wishlistId) {
-            const wishlistId = await $api.createWishlist(userId);
-            if (wishlistId) {
-                store.loggedInUser.wishlistId = wishlistId;
-            } else {
-                console.log('Failed to create a wishlist');
-                return;
-            }
-        }
-
-        if (isInWishlist(productId)) {
-            const updatedWishlist = await $api.deleteFromWishlist(userId, productId);
-            if (updatedWishlist) {
-                updateWishlistInStore(updatedWishlist);
-            }
-            return;
-        }
-
-        const updatedWishlist = await $api.updateWishList(userId, productId);
-        if (updatedWishlist) {
-            updateWishlistInStore(updatedWishlist);
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-function isInWishlist(productId) {
-    if (!Array.isArray(store.loggedInUser.wishlist)) {
-        return false;
-    }
-    return store.loggedInUser.wishlist.some(item => item.product_id === productId);
-}
-
 onMounted(async () => {
     await loadProduct(route.params.id);
-    await loadProfile();
     await loadWishlist();
 });
 
