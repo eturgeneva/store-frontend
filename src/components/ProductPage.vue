@@ -27,6 +27,26 @@ async function loadProduct(productId) {
     }
 }
 
+async function loadProfile() {
+    if (store.loggedIn) {
+        return;
+    }
+
+    try {
+        const user = await $api.getUser();
+        if (user) {
+            store.setLoggedIn(user.id !== null);
+            if (user.id !== null) {
+                Object.assign(store.loggedInUser, user);
+                store.setCartId(user.cartId);
+            }
+        }
+    } catch (err) {
+        console.error(err);
+        store.setLoggedIn(false);
+    }
+}
+
 async function loadWishlist() {
     if (!store.loggedIn || Array.isArray(store.loggedInUser.wishlist)) {
         return;
@@ -42,7 +62,11 @@ async function loadWishlist() {
     }
 }
 
-async function addToWishlist(productId) {
+function updateWishlistInStore(wishlistResponse) {
+    store.loggedInUser.wishlist = wishlistResponse.updatedWishlist || wishlistResponse;
+}
+
+async function toggleWishlist(productId) {
     if (!store.loggedIn || !store.loggedInUser) {
         console.log('Please log in to create a wishlist');
         return;
@@ -61,9 +85,17 @@ async function addToWishlist(productId) {
             }
         }
 
-        const wishlistUpdate = await $api.updateWishList(userId, productId);
-        if (wishlistUpdate) {
-            store.loggedInUser.wishlist = wishlistUpdate;
+        if (isInWishlist(productId)) {
+            const updatedWishlist = await $api.deleteFromWishlist(userId, productId);
+            if (updatedWishlist) {
+                updateWishlistInStore(updatedWishlist);
+            }
+            return;
+        }
+
+        const updatedWishlist = await $api.updateWishList(userId, productId);
+        if (updatedWishlist) {
+            updateWishlistInStore(updatedWishlist);
         }
     } catch (err) {
         console.error(err);
@@ -79,6 +111,7 @@ function isInWishlist(productId) {
 
 onMounted(async () => {
     await loadProduct(route.params.id);
+    await loadProfile();
     await loadWishlist();
 });
 
@@ -111,7 +144,7 @@ watch(() => route.params.id, async (productId) => {
                                 class="buyButton">
                                 Add to cart 
                         </button>
-                        <button @click="addToWishlist(store.selectedProduct.id)"
+                        <button @click="toggleWishlist(store.selectedProduct.id)"
                                 type="button"
                                 class="favoriteButton">
                             <span class="material-symbols-outlined"
