@@ -97,15 +97,28 @@ async function getProfile() {
 <template>
     <header>
         <nav>
-            <div class="headerTop">
+            <div class="header">
                 <!-- Company logo -->
-                <h3 id="logo"><span>Toyz</span>Store</h3>
+                <router-link to="/">
+                    <h3 id="logo"><span>Toyz</span>Store</h3>
+                </router-link>
 
                 <!-- Searchbar -->
-                <Searchbar />
+                <!-- <Searchbar /> -->
+
+                <!-- Catalogue -->
+                <div class="catalogue">
+                    <router-link to="/new">New Collection</router-link>
+                    <router-link to="/products">Products</router-link>
+                    <router-link to="/sale">Sale %</router-link>
+                    <router-link to="/gift-sets">Gift Sets</router-link>
+                </div>
                 
                 <!-- User section -->
                 <div class="userSection">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
                     <router-link to="/">
                         <span class="material-symbols-outlined">
                             home
@@ -227,12 +240,12 @@ async function getProfile() {
                     </div>
                 </div>
             </div>
-            <div class="catalogue">
+            <!-- <div class="catalogue">
                     <router-link to="/new">New Collection</router-link>
                     <router-link to="/products">Products</router-link>
                     <router-link to="/sale">Sale %</router-link>
                     <router-link to="/gift-sets">Gift Sets</router-link>
-            </div>
+            </div> -->
         </nav>
     </header>
 </template>
