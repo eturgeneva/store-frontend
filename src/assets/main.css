@@ -188,21 +188,38 @@ header {
 }
 
 .catalogue {
-    /* height: 2rem; */
+    text-align: center;
     padding: 0.3rem;
-    /* background-color: #d6c5ff; */
     background-color: rgba(255, 255, 255, 0.92);
     border-bottom: 1px solid rgba(139, 92, 246, 0.14);
     box-shadow: 0 8px 24px rgba(30, 20, 60, 0.08);
 }
 
 .catalogue a {
+    position: relative;
     color: #8b5cf6;
-    margin: 1rem;
+    margin: 4rem;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.catalogue a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: -0.5rem;
+    height: 1px;
+    background: currentColor;
+    transition: right 0.25s;
 }
 
 .catalogue a:hover {
     color: #b69af8;
+}
+
+.catalogue a:hover::after {
+    right: 0;
 }
 
 a,
