@@ -4,6 +4,8 @@ import { useRoute } from 'vue-router';
 import { store } from '../store.js';
 import { useCart } from '@/composables/useCart.js';
 import { useWishlist } from '@/composables/useWishlist.js';
+import productGalleryDetailPlaceholder from '@/assets/product-gallery-placeholder-detail.png';
+import productGalleryLifestylePlaceholder from '@/assets/product-gallery-placeholder-lifestyle.png';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -25,6 +27,14 @@ const productImages = computed(() => {
         {
             src: productImgURL + store.selectedProduct.name + '.png',
             alt: store.selectedProduct.name,
+        },
+        {
+            src: productGalleryDetailPlaceholder,
+            alt: `${store.selectedProduct.name} detail placeholder`,
+        },
+        {
+            src: productGalleryLifestylePlaceholder,
+            alt: `${store.selectedProduct.name} lifestyle placeholder`,
         },
     ];
 });
