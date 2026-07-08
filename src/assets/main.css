@@ -31,7 +31,7 @@
   --shadow-control: 0 3px 10px rgba(139, 92, 246, 0.18);
   --shadow-popover: 0 10px 30px rgba(30, 20, 60, 0.16);
   --shadow-card: 0 4px 15px rgba(30, 20, 60, 0.1);
-  --shadow-card-soft: 0 4px 15px rgba(30, 20, 60, 0.08);
+  --shadow-card-soft: 0 4px 8px rgba(30, 20, 60, 0.08);
   --focus-ring: 0 0 0 3px rgba(139, 92, 246, 0.1);
   --transition-standard: all 0.3s ease;
   --shell: min(92vw, 1380px);
@@ -58,7 +58,13 @@ main {
   margin: 0 auto;
   width: 100%;
   min-height: 100vh;
-  padding: 0.1rem 0 3rem;
+  /* padding: 0.1rem 0 3rem; */
+  /* background: linear-gradient(135deg, #f8f9ff 0%, var(--surface) 100%); */
+  background: linear-gradient(135deg, #f8f9ff 0%, var(--paper) 100%);
+}
+
+nav {
+  /* border-bottom: 1px var(--line) solid; */
 }
 
 nav a {
@@ -70,7 +76,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(255,255,255,.94);
+  background: rgb(255,255,255);
   border-bottom: 1px solid transparent;
   backdrop-filter: blur(16px);
   transition: border-color .25s;
@@ -1202,7 +1208,7 @@ button {
 
 button:hover {
   cursor: pointer;
-  transform: translateY(-1px);
+  /* transform: translateY(-1px); */
   box-shadow: 0 6px 16px rgba(139, 92, 246, 0.24);
 }
 
@@ -1357,14 +1363,14 @@ button:hover {
     border-radius: var(--radius-md);
     overflow: hidden;
     border: 1px solid var(--accent-border-soft);
-    box-shadow: var(--shadow-card);
+    /* box-shadow: var(--shadow-card); */
     transition: var(--transition-standard);
     position: relative;
 }
 
 .featuredProductPreview:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(30, 20, 60, 0.16);
+    /* transform: translateY(-4px); */
+    box-shadow: 0 10px 10px rgba(15, 20, 30, 0.16);
 }
 
 .featuredProductImage {
@@ -1388,14 +1394,16 @@ button:hover {
 
 .productBadge {
     padding: 0.25rem 0.55rem;
-    color: var(--accent-strong);
+    /* color: var(--accent-strong); */
+    color: var(--text-accent);
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid var(--accent-border);
-    border-radius: 999px;
+    border-radius: 5px;
     box-shadow: 0 4px 12px rgba(30, 20, 60, 0.12);
     font-size: 0.72rem;
-    font-weight: 900;
+    font-weight: 500;
     line-height: 1;
+    text-transform: uppercase;
 }
 
 .featuredProductImage a {
@@ -1428,10 +1436,11 @@ button:hover {
 /* Products */
 .productsContainer {
     display: flex;
-    gap: 1.5rem;
-    width: 100%;
+    gap: 2.5rem;
+    width: 90%;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 0 auto;
 }
 
 .productFilters {
@@ -1439,7 +1448,8 @@ button:hover {
     justify-content: space-between;
     align-items: flex-end;
     gap: 1rem;
-    width: min(90%, 64rem);
+    /* width: min(90%, 64rem); */
+    width: 87%;
     margin: 0 auto 2rem;
     padding: 1rem;
     background: var(--surface);
@@ -1471,10 +1481,11 @@ button:hover {
     min-height: 2.2rem;
     margin: 0;
     padding: 0.45rem 0.75rem;
-    color: var(--accent-strong);
+    /* color: var(--accent-strong); */
+    color: var(--text-soft);
     background: var(--surface-soft);
     border: 1px solid rgba(139, 92, 246, 0.16);
-    border-radius: 999px;
+    /* border-radius: 999px; */
     box-shadow: none;
     font-weight: 800;
 }
@@ -1506,8 +1517,8 @@ button:hover {
 /* Same as products previews, but without gallery and arrows */
 .productsPreviews {
     padding: 3rem 0;
-    margin: 2rem 0;
-    background: linear-gradient(135deg, #f8f9ff 0%, var(--surface) 100%);
+    /* margin: 2rem 0; */
+    /* background: linear-gradient(135deg, #f8f9ff 0%, var(--surface) 100%); */
 }
 
 .productsPreviewsHeader {
@@ -1519,7 +1530,7 @@ button:hover {
     font-size: 2.2rem;
     font-weight: 700;
     color: #1f2937;
-    margin-bottom: 0.5rem;
+    /* margin-bottom: 0.5rem; */
 }
 
 .productsPreviewsHeader p {
@@ -1555,7 +1566,7 @@ button:hover {
     object-fit: cover;
     object-position: center 30%;
     transition: transform 0.3s ease;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     display: block;
 }
 
