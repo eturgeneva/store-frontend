@@ -567,43 +567,128 @@ a,
 
 .promoSection {
   position: relative;
-  margin: 0 auto;
+  width: min(92vw, 1380px);
+  min-height: 90vh;
+  max-height: calc(100vh - 4rem);
+  margin-inline: auto;
+  overflow: hidden;
+  background: #dedbcb;
+}
+
+.promoMedia,
+.promoMedia img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+.promoMedia img {
   width: 100%;
-  /* background: #8b5cf6; */
+  object-fit: cover;
+}
+
+.promoSection::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(67, 37, 12, 0.478) 0%,
+    rgba(43, 25, 13, 0.34) 36%,
+    transparent 68%
+  );
 }
 
 .promoText {
-  z-index: 1;
-  text-align: center;
-  width: 11rem;
-  border-radius: 10px;
-  /* color: #dcb7a2; */
+  position: relative;
+  z-index: 2;
   color: #ffffff;
-  /* background-color: white; */
-  filter: drop-shadow(0 0 5px #dcb7a2);
-  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  filter: drop-shadow(0 0 5px #746a64b6);
+  width: min(720px, 75%);
+  height: 10rem;
+  padding: clamp(5rem, 12vh, 8rem) clamp(1.5rem, 5vw, 5.5rem);
 }
 
-.promoText h2 {
-  padding: 0.3rem;
-  font-family: 'Helvetica', sans-serif;
-  font-size: 1.5rem;
+.promoText h1 {
+  margin-bottom: 1.5rem;
+  font-size: clamp(2.7rem, 6vw, 6.4rem);
   font-weight: 400;
+  line-height: 1.18;
 }
 
-.promoBanner {
+.promoText p {
+  max-width: 420px;
+  margin-bottom: 2.2rem;
+  font-size: 1.08rem;
+}
+
+.promoButton {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.25s, background 0.25s;
+}
+
+.promoButton:hover {
+  color: #171914;
+  background: white;
+}
+
+.promoCaption {
+  position: absolute;
+  z-index: 2;
+  right: 2rem;
+  bottom: 1.5rem;
+  color: white;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .promoSection {
+    width: 100%;
+    min-height: calc(100svh - 102px);
+  }
+
+  .promoText {
+    width: 100%;
+    padding: 5rem 1.5rem;
+  }
+
+  .promoCaption {
+    display: none;
+  }
+
+  .promoSection::after {
+    background: linear-gradient(
+      90deg,
+      rgba(25, 28, 20, 0.48),
+      rgba(25, 28, 20, 0.05)
+    );
+  }
+}
+
+/* .promoBanner {
   position: relative;
   margin: 0 auto;
   padding: 2rem;
-  /* max-width: 45rem; */
   height: 23rem;
   width: 70%;
   background-image: url('https://eturgeneva.github.io/toy-store-assets/promo-banner-2.png');
   background-size: cover;
   background-position: center -85px;
-}
+} */
 
-.bannerOverlay {
+/* .bannerOverlay {
     position: absolute;
     top: 0;
     right: 0;
@@ -613,7 +698,7 @@ a,
         rgba(255, 255, 255, 0.9) 0%, 
         rgba(248, 249, 255, 0.7) 20%,
         rgba(139, 92, 246, 0.1) 100%);
-}
+} */
 
 /* User area */
 
