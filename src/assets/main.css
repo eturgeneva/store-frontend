@@ -1593,6 +1593,7 @@ button:hover {
 
 .productGallery {
   display: grid;
+  justify-content: center;
   gap: 1rem;
   align-self: start;
 }
@@ -1603,20 +1604,21 @@ button:hover {
   justify-content: center;
   min-height: 31rem;
   padding: 1.5rem;
-  background: var(--surface-soft);
-  border: 1px solid var(--accent-border-soft);
+  /* background: var(--surface-soft); */
+  /* border: 1px solid var(--accent-border-soft); */
   border-radius: var(--radius-md);
 }
 
 .productDetailsImage {
   width: min(100%, 28rem);
-  max-height: 28rem;
+  max-height: 35rem;
   object-fit: contain;
   border-radius: 10px;
 }
 
 .productThumbnails {
   display: flex;
+  /* width: 80%; */
   gap: 0.75rem;
   overflow-x: auto;
   padding-bottom: 0.15rem;
@@ -1629,8 +1631,9 @@ button:hover {
   padding: 0.35rem;
   background: var(--surface);
   border: 1px solid var(--accent-border);
-  border-radius: var(--radius-sm);
-  box-shadow: 0 4px 12px rgba(30, 20, 60, 0.08);
+  /* border-radius: var(--radius-sm); */
+  border-radius: 5px;
+  /* box-shadow: 0 4px 12px rgba(30, 20, 60, 0.08); */
   flex: 0 0 auto;
 }
 
@@ -1659,9 +1662,9 @@ button:hover {
   overflow-y: auto;
   padding: 1.25rem;
   background: var(--surface);
-  border: 1px solid var(--accent-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 8px 24px rgba(30, 20, 60, 0.12);
+  /* border: 1px solid var(--accent-border); */
+  /* border-radius: var(--radius-md); */
+  /* box-shadow: 0 8px 24px rgba(30, 20, 60, 0.12); */
 }
 
 .productBadgeRow {
