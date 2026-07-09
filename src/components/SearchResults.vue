@@ -76,9 +76,9 @@ async function loadProducts() {
             <div v-else class="productsContainer">
                 <div v-for="product in searchResults"
                     :key="product.id"
-                    class="featuredProductPreview">
+                    class="productPreview">
 
-                    <div class="featuredProductImage">
+                    <div class="productPreviewImage">
                         <router-link :to="`/products/${product.id}`">
                             <img :src="productImgURL + product.name + '.png'"
                                 :alt="product.name"
@@ -87,7 +87,7 @@ async function loadProducts() {
                         </router-link>
                     </div>
 
-                    <div class="featuredProductDetails">
+                    <div class="productPreviewDetails">
                         <div>
                             <router-link :to="`/products/${product.id}`" class="productLink">
                                 <h3 class="productName">{{ product.name }}</h3>

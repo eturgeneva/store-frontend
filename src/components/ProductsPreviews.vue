@@ -76,9 +76,9 @@ function handleScroll() {
                 @scroll="handleScroll">
                 <div v-for="product in products"
                     :key="product.id"
-                    class="featuredProductPreview">
+                    class="productPreview">
 
-                    <div class="featuredProductImage">
+                    <div class="productPreviewImage">
                         <ProductBadges :product="product" />
                         <router-link :to="`/products/${product.id}`">
                             <img :src="productImgURL + product.name + '.png'"
@@ -98,7 +98,7 @@ function handleScroll() {
                         </div>
                     </div>
 
-                    <div class="featuredProductDetails">
+                    <div class="productPreviewDetails">
                         <div>
                             <router-link :to="`/products/${product.id}`" class="productLink">
                                 <h3 class="productName">{{ product.name }}</h3>

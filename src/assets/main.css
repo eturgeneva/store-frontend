@@ -1219,14 +1219,14 @@ button:hover {
     font-size: 2.3rem;
 }
 
-.featuredProductImage .favoriteButton {
+.productPreviewImage .favoriteButton {
     background: transparent;
     color: var(--surface);
     border: none;
     box-shadow: none;
 }
 
-.featuredProductImage .favoriteButton:hover {
+.productPreviewImage .favoriteButton:hover {
     transform: none;
     box-shadow: none;
 }
@@ -1332,8 +1332,8 @@ button:hover {
     color: var(--text-strong);
 }
 
-/* Featured products rendering */
-.featuredProductPreview {
+/* Product preview cards */
+.productPreview {
     flex: 0 0 240px;
     background: var(--surface);
     border-radius: var(--radius-md);
@@ -1344,12 +1344,12 @@ button:hover {
     position: relative;
 }
 
-.featuredProductPreview:hover {
+.productPreview:hover {
     /* transform: translateY(-4px); */
     box-shadow: 0 10px 10px rgba(15, 20, 30, 0.16);
 }
 
-.featuredProductImage {
+.productPreviewImage {
     position: relative;
     overflow: hidden;
     height: 18rem;
@@ -1382,16 +1382,16 @@ button:hover {
     text-transform: uppercase;
 }
 
-.featuredProductImage a {
+.productPreviewImage a {
     padding: 0;
 }
 
 
-.featuredProductImage:hover .productImage {
+.productPreviewImage:hover .productImage {
     transform: scale(1.05);
 }
 
-.featuredProductDetails {
+.productPreviewDetails {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -1551,17 +1551,6 @@ button:hover {
   scale: 1.05;
   transition-duration: 0.3s;
   cursor: pointer;
-}
-
-.productPreview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0.5rem;
-  min-width: 20%;
-  background-color: var(--surface);
-  border: 1px solid var(--accent-border-soft);
-  border-radius: var(--radius-sm);
 }
 
 .productDetails {

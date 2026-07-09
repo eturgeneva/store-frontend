@@ -106,9 +106,9 @@ function getProductCategory(product) {
             <div class="productsContainer">
                 <div v-for="product in filteredProducts"
                     :key="product.id"
-                    class="featuredProductPreview">
+                    class="productPreview">
     
-                    <div class="featuredProductImage">
+                    <div class="productPreviewImage">
                         <ProductBadges :product="product" />
                         <router-link :to="`/products/${product.id}`">
                             <img :src="productImgURL + product.name + '.png'"
@@ -129,7 +129,7 @@ function getProductCategory(product) {
                         </div>
                     </div>
     
-                    <div class="featuredProductDetails">
+                    <div class="productPreviewDetails">
                         <div>
                             <router-link :to="`/products/${product.id}`" class="productLink">
                                 <h3 class="productName">{{ product.name }}</h3>
