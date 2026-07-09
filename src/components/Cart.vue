@@ -122,7 +122,6 @@ async function checkout() {
                 <div class="checkoutCard">
                     <div class="checkoutCardHeading">
                         <div>
-                            <p class="eyebrow">Cart</p>
                             <h2>Your toys</h2>
                         </div>
                         <span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span>
@@ -163,16 +162,18 @@ async function checkout() {
                                     :src="productImgURL + item.name + '.png'"
                                     :alt="item.name"
                                 >
-                                <!-- <span>{{ item.quantity }}</span> -->
                             </div>
 
                             <div class="cartItemDetails">
-                                <h3>
-                                    <router-link :to="`/products/${item.product_id}`">
-                                        {{ item.name }}
-                                    </router-link>
-                                </h3>
-                                <p>{{ item.brand }}</p>
+                                <div>
+                                    <p>{{ item.brand }}</p>
+                                    <h3>
+                                        <router-link :to="`/products/${item.product_id}`">
+                                            {{ item.name }}
+                                        </router-link>
+                                    </h3>
+                                    <span>{{ ((item.price_cents * (item.quantity || 1)) / 100).toFixed(2) + ' €' }}</span>
+                                </div>
 
                                 <div class="cartQuantityControls">
                                     <button
@@ -210,8 +211,6 @@ async function checkout() {
                                     </button>
                                 </div>
                             </div>
-
-                            <strong>{{ ((item.price_cents * (item.quantity || 1)) / 100).toFixed(2) + ' €' }}</strong>
                         </article>
                     </div>
                 </div>
@@ -243,7 +242,6 @@ async function checkout() {
                 <div class="orderSummarySticky">
                     <div class="orderSummaryHeader">
                         <div>
-                            <!-- <p class="eyebrow">Order summary</p> -->
                             <h2 id="cart-summary-title">Order summary</h2>
                         </div>
                         <span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span>

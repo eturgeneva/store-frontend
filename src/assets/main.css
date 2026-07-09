@@ -1241,6 +1241,7 @@ button:hover {
 .checkoutButton, .cancelOrderButton {
     width: auto;
     padding: 0.65rem 1rem;
+    margin: 0;
 }
 
 .logoutButton {
@@ -2096,6 +2097,7 @@ ul {
   grid-template-columns: 74px minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: start;
+  border-bottom: 1px solid var(--line);
 }
 
 .cartItemImage {
@@ -2126,11 +2128,13 @@ ul {
 }
 
 .cartItemDetails {
+  display: flex;
+  justify-content: space-between;
   min-width: 0;
 }
 
 .cartItem h3 {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.8rem;
   font-size: 0.95rem;
   line-height: 1.25;
 }
@@ -2263,8 +2267,13 @@ ul {
 
 .cartOutlineButton {
   background: var(--surface);
-  color: var(--purple);
+  color: var(--ink);
   box-shadow: none;
+}
+
+.cartOutlineButton:hover {
+  color: var(--white);
+  background: var(--ink);
 }
 
 .checkoutButton {
