@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch, onBeforeMount, getCurrentInstance } from 'vue';
+import { useRoute } from 'vue-router';
 import { store } from '../store.js';
 import CartDrawer from './CartDrawer.vue';
 
@@ -9,6 +10,7 @@ defineOptions({
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
+const route = useRoute();
 const isProfilePopoverOpen = ref(false);
 let miniCartTimer = null;
 
@@ -16,10 +18,18 @@ const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, { quantity }) => acc + quantity, 0);
 });
 
+const isCartPage = computed(() => route.path === '/cart');
+
 onBeforeMount(async() => {
     await getProfile()
     console.log('cart id', store.cartId)
 })
+
+watch(isCartPage, (onCartPage) => {
+    if (onCartPage) {
+        store.closeCartDrawer();
+    }
+});
 
 watch(() => store.cartDrawerOpen, (isOpen) => {
     if (miniCartTimer) {
@@ -33,6 +43,15 @@ watch(() => store.cartDrawerOpen, (isOpen) => {
     }
 });
 
+function openCartDrawerOnHover() {
+    if (isCartPage.value) {
+        store.closeCartDrawer();
+        return;
+    }
+
+    store.openCartDrawer();
+}
+
 function keepMiniCartOpen() {
     if (miniCartTimer) {
         clearTimeout(miniCartTimer);
@@ -45,7 +64,7 @@ function restartMiniCartTimer() {
     }
     miniCartTimer = setTimeout(() => {
         store.closeCartDrawer();
-    }, 350);
+    }, 1200);
 }
 
 // Get profile (repeated in Profile and partly in Cart)
@@ -151,7 +170,7 @@ async function getProfile() {
                     </router-link>
                     <div
                         class="cartMenu"
-                        @mouseenter="store.openCartDrawer()"
+                        @mouseenter="openCartDrawerOnHover"
                         @mouseleave="restartMiniCartTimer"
                     >
                         <router-link
