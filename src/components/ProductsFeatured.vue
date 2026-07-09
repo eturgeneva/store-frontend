@@ -106,7 +106,7 @@ function handleScroll() {
                         <div>
                             <p class="productPreviewType">{{ getProductCategory(product) }}</p>
                             <router-link :to="`/products/${product.id}`" class="productLink">
-                                <h3 class="productName">{{ product.name }}</h3>
+                                <h3 class="productName">{{ product.name.charAt(0).toUpperCase() + product.name.slice(1) }}</h3>
                             </router-link>
                         </div>
                         <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) + ' €'}}</div>

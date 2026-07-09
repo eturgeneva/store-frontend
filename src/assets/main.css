@@ -1468,12 +1468,21 @@ button:hover {
 }
 
 /* Products */
-.productsContainer {
+/* .productsContainer {
     display: flex;
     gap: 2.5rem;
     width: 90%;
     flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 0 auto;
+} */
+
+.productsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 16.25rem);
     justify-content: center;
+    gap: 2.5rem;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -1793,11 +1802,11 @@ button:hover {
   margin: 0;
   padding: .75rem;
   color: white;
-  /* background: var(--ink); */
 }
 
 .productBuyPanel .buyButton:hover {
   transform: none;
+  background: var(--ink);
 }
 
 .saveButton {
