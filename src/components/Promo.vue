@@ -6,8 +6,6 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 <template>
     <div class="promoSection">
-        <!-- <div class="promoBanner"> -->
-            <!-- <div class="bannerOverlay"></div> -->
             <div class="promoMedia">
                 <img
                     :src="`${productImgURL}promo-banner-2.png`"
@@ -22,10 +20,11 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
                     Big little moments.
                 </h1>
                 <p>Discover cheerful picks made for gifting, collecting, and everyday play.</p>
-                <a class="promoButton" href="#products">Explore the collection</a>
+                <router-link to="/products">
+                    <a class="promoButton" href="#products">Explore the collection</a>
+                </router-link>
             </div>
             <p class="promoCaption">Soft toys · Collectibles · Made for joy</p>
-        <!-- </div> -->
     </div>
 </template>
 

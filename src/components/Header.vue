@@ -190,12 +190,6 @@ async function getProfile() {
                     </div>
                 </div>
             </div>
-            <!-- <div class="catalogue">
-                    <router-link to="/new">New Collection</router-link>
-                    <router-link to="/products">Products</router-link>
-                    <router-link to="/sale">Sale %</router-link>
-                    <router-link to="/gift-sets">Gift Sets</router-link>
-            </div> -->
         </nav>
         <CartDrawer
             :keep-open="keepMiniCartOpen"
