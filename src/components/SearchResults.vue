@@ -57,6 +57,10 @@ async function loadProducts() {
         isLoading.value = false;
     }
 }
+
+function getProductCategory(product) {
+    return product.category || product.type || product.product_type || product.brand || 'Toy';
+}
 </script>
 
 <template>
@@ -76,7 +80,7 @@ async function loadProducts() {
             <div v-else class="productsContainer">
                 <div v-for="product in searchResults"
                     :key="product.id"
-                    class="productPreview">
+                    class="productPreview reveal visible">
 
                     <div class="productPreviewImage">
                         <router-link :to="`/products/${product.id}`">
@@ -89,18 +93,20 @@ async function loadProducts() {
 
                     <div class="productPreviewDetails">
                         <div>
+                            <p class="productPreviewType">{{ getProductCategory(product) }}</p>
                             <router-link :to="`/products/${product.id}`" class="productLink">
                                 <h3 class="productName">{{ product.name }}</h3>
                             </router-link>
-                            <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) + ' €'}}</div>
                         </div>
+                        <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) + ' €'}}</div>
+                    </div>
 
+                    <div class="productPreviewActions">
                         <button @click="addToCart(product.id, 1)"
                                 type="button"
                                 class="buyButton">
-                            <span class="material-symbols-outlined">
-                                shopping_cart
-                            </span>
+                            <span>Add to cart</span>
+                            <span class="material-symbols-outlined">shopping_cart</span>
                         </button>
                     </div>
                 </div>

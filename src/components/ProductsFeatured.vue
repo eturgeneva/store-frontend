@@ -17,6 +17,10 @@ const galleryContainer = ref(null);
 const showLeftArrow = ref(false);
 const showRightArrow = ref(true);
 
+function getProductCategory(product) {
+    return product.category || product.type || product.product_type || product.brand || 'Toy';
+}
+
 onBeforeMount(async () => {
     try {
         const fetchedProducts = await $api.getAllProducts();
@@ -76,7 +80,7 @@ function handleScroll() {
                 @scroll="handleScroll">
                 <div v-for="product in products"
                     :key="product.id"
-                    class="productPreview">
+                    class="productPreview reveal visible">
 
                     <div class="productPreviewImage">
                         <ProductBadges :product="product" />
@@ -100,18 +104,20 @@ function handleScroll() {
 
                     <div class="productPreviewDetails">
                         <div>
+                            <p class="productPreviewType">{{ getProductCategory(product) }}</p>
                             <router-link :to="`/products/${product.id}`" class="productLink">
                                 <h3 class="productName">{{ product.name }}</h3>
                             </router-link>
-                            <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) + ' €'}}</div>
                         </div>
+                        <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) + ' €'}}</div>
+                    </div>
 
+                    <div class="productPreviewActions">
                         <button @click="addToCart(product.id, 1)"
-                                type="button"
-                                class="buyButton">
-                            <span class="material-symbols-outlined">
-                                shopping_cart
-                            </span>
+                            type="button"
+                            class="buyButton">
+                            <span>Add to cart</span>
+                            <span class="material-symbols-outlined">shopping_cart</span>
                         </button>
                     </div>
                 </div>
