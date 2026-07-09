@@ -1,4 +1,4 @@
-import { reactive, ref, toRefs } from 'vue';
+import { reactive } from 'vue';
 
 export const store = reactive({
     loggedIn: false,
@@ -7,6 +7,7 @@ export const store = reactive({
     cartId: null,
     cartIsLoading: true,
     miniCartOpen: false,
+    cartDrawerOpen: false,
     lastAddedProductId: null,
     toasts: [],
     cart: {
@@ -39,11 +40,21 @@ export const store = reactive({
 
     showMiniCart(productId) {
         this.lastAddedProductId = productId;
-        this.miniCartOpen = true;
+        this.openCartDrawer();
     },
 
     hideMiniCart() {
+        this.closeCartDrawer();
+    },
+
+    openCartDrawer() {
+        this.miniCartOpen = true;
+        this.cartDrawerOpen = true;
+    },
+
+    closeCartDrawer() {
         this.miniCartOpen = false;
+        this.cartDrawerOpen = false;
     },
 
     addToast(toast) {

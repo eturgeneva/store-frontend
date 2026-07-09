@@ -1,27 +1,19 @@
 <script setup>
 import { ref, computed, watch, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
-import Searchbar from './Searchbar.vue';
+import CartDrawer from './CartDrawer.vue';
+
+defineOptions({
+    name: 'SiteHeader',
+});
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 const isProfilePopoverOpen = ref(false);
 let miniCartTimer = null;
 
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
-
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, { quantity }) => acc + quantity, 0);
-});
-
-const cartSubtotal = computed(() => {
-    return store.cart.products.reduce((acc, item) => {
-        return acc + (item.price_cents * (item.quantity || 1));
-    }, 0);
-});
-
-const miniCartItems = computed(() => {
-    return [...store.cart.products].slice(-3).reverse();
 });
 
 onBeforeMount(async() => {
@@ -29,14 +21,14 @@ onBeforeMount(async() => {
     console.log('cart id', store.cartId)
 })
 
-watch(() => store.miniCartOpen, (isOpen) => {
+watch(() => store.cartDrawerOpen, (isOpen) => {
     if (miniCartTimer) {
         clearTimeout(miniCartTimer);
     }
 
     if (isOpen) {
         miniCartTimer = setTimeout(() => {
-            store.hideMiniCart();
+            store.closeCartDrawer();
         }, 5000);
     }
 });
@@ -48,12 +40,12 @@ function keepMiniCartOpen() {
 }
 
 function restartMiniCartTimer() {
-    if (!store.miniCartOpen) {
+    if (!store.cartDrawerOpen) {
         return;
     }
     miniCartTimer = setTimeout(() => {
-        store.hideMiniCart();
-    }, 3000);
+        store.closeCartDrawer();
+    }, 350);
 }
 
 // Get profile (repeated in Profile and partly in Cart)
@@ -159,10 +151,15 @@ async function getProfile() {
                     </router-link>
                     <div
                         class="cartMenu"
-                        @mouseenter="keepMiniCartOpen"
+                        @mouseenter="store.openCartDrawer()"
                         @mouseleave="restartMiniCartTimer"
                     >
-                        <router-link to="/cart" class="cartIconLink">
+                        <router-link
+                            to="/cart"
+                            class="cartIconLink"
+                            aria-label="Open cart page"
+                            @click="store.closeCartDrawer()"
+                        >
                             <span class="material-symbols-outlined">
                                 shopping_bag
                             </span>
@@ -171,72 +168,6 @@ async function getProfile() {
                                 {{ cartQuantity }}
                             </span>
                         </router-link>
-
-                        <div
-                            v-if="store.miniCartOpen"
-                            class="miniCartPopover"
-                        >
-                            <div class="miniCartHeader">
-                                <span>Added to cart</span>
-                                <button
-                                    type="button"
-                                    class="miniCartClose"
-                                    @click="store.hideMiniCart()"
-                                >
-                                    <span class="material-symbols-outlined">
-                                        close
-                                    </span>
-                                </button>
-                            </div>
-
-                            <div v-if="miniCartItems.length" class="miniCartItems">
-                                <div
-                                    v-for="item in miniCartItems"
-                                    :key="item.product_id"
-                                    class="miniCartItem"
-                                >
-                                    <img
-                                        :src="productImgURL + item.name + '.png'"
-                                        :alt="item.name"
-                                        @error="e => e.target.style.display = 'none'"
-                                    >
-                                    <div class="miniCartItemInfo">
-                                        <router-link
-                                            :to="`/products/${item.product_id}`"
-                                            @click="store.hideMiniCart()"
-                                        >
-                                            {{ item.name }}
-                                        </router-link>
-                                        <span>Qty {{ item.quantity }}</span>
-                                    </div>
-                                    <div class="miniCartItemPrice">
-                                        {{ ((item.price_cents * (item.quantity || 1)) / 100).toFixed(2) + ' €' }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="miniCartSummary">
-                                <span>{{ cartQuantity }} item{{ cartQuantity === 1 ? '' : 's' }}</span>
-                                <strong>{{ (cartSubtotal / 100).toFixed(2) + ' €' }}</strong>
-                            </div>
-
-                            <div class="miniCartActions">
-                                <router-link
-                                    to="/cart"
-                                    class="miniCartPrimary"
-                                    @click="store.hideMiniCart()"
-                                >
-                                    View cart
-                                </router-link>
-                                <button
-                                    type="button"
-                                    class="miniCartSecondary"
-                                    @click="store.hideMiniCart()"
-                                >
-                                    Continue shopping
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -247,5 +178,9 @@ async function getProfile() {
                     <router-link to="/gift-sets">Gift Sets</router-link>
             </div> -->
         </nav>
+        <CartDrawer
+            :keep-open="keepMiniCartOpen"
+            :schedule-close="restartMiniCartTimer"
+        />
     </header>
 </template>
