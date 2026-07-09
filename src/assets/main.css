@@ -1639,7 +1639,7 @@ button:hover {
   width: auto;
   max-height: none;
   overflow: visible;
-  padding: 2rem 0 0;
+  /* padding: 2rem 0 0; */
   background: transparent;
 }
 
@@ -1648,6 +1648,7 @@ button:hover {
   font-size: .72rem;
   letter-spacing: .12em;
   text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
 .productInfoTitle {
@@ -1690,14 +1691,20 @@ button:hover {
 }
 
 .productActions {
+  display: grid;
+  gap: .7rem;
   width: 100%;
+}
+
+.productActions > * {
+  width: 100%;
+  min-width: 0;
 }
 
 .purchaseRow {
   display: grid;
   grid-template-columns: 120px 1fr;
   gap: .7rem;
-  width: 100%;
 }
 
 .quantityStepper {
@@ -1706,6 +1713,7 @@ button:hover {
   align-items: center;
   width: auto;
   border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
 }
 
 .quantityStepper button {
@@ -1714,10 +1722,11 @@ button:hover {
   margin: 0;
   padding: 0;
   border: 0;
-  background: white;
+  background: transparent;
   cursor: pointer;
   font-size: 1.1rem;
   box-shadow: none;
+  color: black;
 }
 
 .quantityStepper input {
@@ -1730,12 +1739,17 @@ button:hover {
   background: white;
 }
 
+.quantityStepper input:focus {
+  box-shadow: none;
+}
+
 .productBuyPanel .buyButton {
   width: 100%;
   height: auto;
   margin: 0;
   padding: .75rem;
   color: white;
+  /* background: var(--ink); */
 }
 
 .productBuyPanel .buyButton:hover {
@@ -1749,7 +1763,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   gap: .7rem;
-  margin-top: .7rem;
+  margin: 0;
   padding: .75rem;
   border: 1px solid var(--line);
   background: white;
