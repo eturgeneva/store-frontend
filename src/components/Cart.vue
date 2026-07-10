@@ -9,6 +9,7 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const promoCode = ref('');
 const promoCodeApplied = ref(false);
+const email = ref('');
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
@@ -229,6 +230,33 @@ async function checkout() {
                     </div>
                 </div>
 
+                <div class="checkoutCard">
+                    <!-- <p class="eyebrow">Contact</p> -->
+                    <h2>Contact</h2>
+                    <p>Where should we send updates?</p>
+                    <div class="checkoutContactForm">
+                        <label for="email" class="formLabel">
+                            Email address
+                        </label>
+                        <input
+                            v-model="email"
+                            type="email"
+                            name="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            required>
+    
+                        <label for="newsletter">
+                            <input
+                                type="checkbox"
+                                name="newsletter"
+                                id="newsletter"
+                            >
+                            <span>Send me news and launch updates</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div
                     v-if="store.cart.products.length > 0"
                     class="cartActions"
@@ -244,7 +272,7 @@ async function checkout() {
                         class="checkoutButton"
                         @click="checkout"
                     >
-                        Place order
+                        Place concept order
                     </button>
                 </div>
             </div>

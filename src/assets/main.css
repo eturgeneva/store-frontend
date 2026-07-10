@@ -2068,7 +2068,8 @@ ul {
 }
 
 .checkoutCardHeading h2,
-.orderSummaryHeader h2 {
+.orderSummaryHeader h2,
+.checkoutCard h2 {
   margin: 0;
   font-family: var(--display);
   font-size: clamp(1.25rem, 2.2vw, 2rem);
@@ -2220,6 +2221,11 @@ ul {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 } */
+
+.checkoutContactForm {
+  display: flex;
+  flex-direction: column;
+}
 
 .cartOutlineButton,
 .checkoutButton {
