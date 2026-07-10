@@ -90,6 +90,11 @@ function applyPromoCode() {
     promoCodeApplied.value = true;
 }
 
+function removePromoCode() {
+    promoCode.value = '';
+    promoCodeApplied.value = false;
+}
+
 // Checkout
 async function checkout() {
     if (!store.cartId || !store.cart.products) {
@@ -268,13 +273,23 @@ async function checkout() {
                             type="button"
                             @click="applyPromoCode"
                             :disabled="promoCodeApplied || !promoCode"
-                            >Apply</button>
+                            >Apply
+                        </button>
                     </div>
 
                     <div class="summaryLines">
-                        <div v-if="promoCodeApplied">
+                        <div v-if="promoCodeApplied" class="promoCodeSummary">
                             <span>Promo Code </span>
-                            <strong>10% Off Your First Order</strong>
+                            <div>
+                                <strong>10% Off Your First Order</strong>
+                                <button
+                                    type="button"
+                                    class="removeButton"
+                                    aria-label="remove-promo-code"
+                                    @click="removePromoCode"
+                                        >x
+                                </button>
+                            </div>
                         </div>
                         <div>
                             <span>Subtotal</span>

@@ -1251,9 +1251,17 @@ button:hover {
 
 .removeButton {
     width: 2.4rem;
-    background: #fff1f2;
+    background: none;
     color: var(--text-muted);
-    border: 1px solid rgba(190, 18, 60, 0.16);
+    width: auto;
+    border: 0;
+    min-height: 0;
+    padding: 0;
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     box-shadow: none;
 }
 
@@ -2199,12 +2207,10 @@ ul {
   box-shadow: none;
 }
 
-.cartQuantityControls .removeButton {
+/* .cartQuantityControls .removeButton {
   width: auto;
   background: transparent;
-  /* color: var(--purple); */
   border: 0;
-  /* border-bottom: 1px solid currentColor; */
   box-shadow: none;
   min-height: 0;
   padding: 0;
@@ -2213,7 +2219,7 @@ ul {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
+} */
 
 .cartOutlineButton,
 .checkoutButton {
@@ -2335,6 +2341,11 @@ ul {
   font-family: var(--display);
   font-size: 1.6rem;
   font-weight: 400;
+}
+
+.promoCodeSummary button {
+  margin: 0;
+  align-items: start;
 }
 
 .orderPromoCode {
