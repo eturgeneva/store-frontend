@@ -333,12 +333,13 @@ async function checkout() {
                                 required>
                         </div>
                     </div>
-                    <div class="deliveryOptions" aria-label="Delivery options">
+                    <!-- Delivery options -->
+                    <div class="deliveryOptions" aria-label="delivery options">
                         <label>
                             <input type="radio" name="shipping" checked>
                             <span>
                                 <strong>Complimentary ground</strong>
-                                3-5 business days · Free over $75
+                                <p>3-5 business days · Free over $75</p>
                             </span>
                             <strong>Free</strong>
                         </label>
@@ -346,13 +347,37 @@ async function checkout() {
                             <input type="radio" name="shipping">
                             <span>
                                 <strong>Priority delivery</strong>
-                                1-2 business days
+                                <p>1-2 business days</p>
                             </span>
                             <strong>12 €</strong>
                         </label>
                     </div>
                 </div>
 
+                <!-- Payment info -->
+                <div class="checkoutCard">
+                    <h2>Payment method</h2>
+                    <div class="paymentOptions" aria-label="payment options">
+                        <label>
+                            <input type="radio" name="payment" checked>
+                            <span>
+                                <strong>Use saved payment method</strong>
+                                <p>Default method</p>
+                            </span>
+                            <strong>Selected</strong>
+                        </label>
+                        <label>
+                            <input type="radio" name="payment">
+                            <span>
+                                <strong>Add a new payment method</strong>
+                                <p>Opens a secure payment step</p>
+                            </span>
+                            <strong>Demo</strong>
+                        </label>
+                        
+                    </div>
+                </div>
+                
                 <!-- Checkout buttons -->
                 <div
                     v-if="store.cart.products.length > 0"
@@ -373,15 +398,7 @@ async function checkout() {
                     </button>
                 </div>
             </div>
-
-            <!-- Payment info -->
-            <div class="checkoutCard">
-                <h2>Payment method</h2>
-                    <div class="checkoutPaymentForm">
-                    </div>
-
-            </div>
-
+            
             <!-- Order summary -->
             <aside
                 class="orderSummary"

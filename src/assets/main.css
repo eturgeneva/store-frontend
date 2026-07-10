@@ -2203,34 +2203,34 @@ ul {
 }
 
 .cartQuantityControls button:not(.removeButton):hover,
-.cartQuantityControls .quantityInput:focus {
+.cartQuantityControls .quantityInput:focus,
+.deliveryOptions input:focus,
+.paymentOptions input:focus {
   background: var(--surface-soft);
   box-shadow: none;
 }
-
-/* .cartQuantityControls .removeButton {
-  width: auto;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  min-height: 0;
-  padding: 0;
-  cursor: pointer;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-} */
 
 .checkoutContactForm {
   display: flex;
   flex-direction: column;
 }
 
+.checkoutContactForm input {
+  margin-bottom: 1rem;
+}
+
 .checkoutShippingForm {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.9rem;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--accent-strong);
+}
+
+input#newsletter {
+  margin-right: 0.5rem;
 }
 
 .field {
@@ -2242,29 +2242,38 @@ ul {
   grid-column: 1/ -1;
 }
 
-/* .deliveryOptions {
-  display: flex;
-  flex-direction: column;
-}
-
-.deliveryOptions label {
-  display: flex;
-  flex-direction: column;
-} */
-
-.deliveryOptions {
+.deliveryOptions, .paymentOptions {
   display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
 }
 
-.deliveryOptions label {
+.deliveryOptions label, .paymentOptions label {
   display: grid;
   grid-template-columns: auto 1fr auto;
+  padding: 1rem;
   border-bottom: 1px solid var(--line);
 }
 
-.deliveryOptions span {
+.deliveryOptions input, .paymentOptions input {
+  accent-color: var(--accent-strong);
+  margin-right: 1rem;
+}
+
+.deliveryOptions span, .paymentOptions span {
   display: flex;
   flex-direction: column;
+}
+
+.deliveryOptions label:has(input:checked), .paymentOptions label:has(input:checked) {
+  border: 2px solid;
+  border-radius: var(--radius-sm);
+  border-color: var(--purple);
+}
+
+.deliveryOptions p, .paymentOptions p {
+  color: var(--text-muted);
+  font-size: 0.86rem;
 }
 
 .cartOutlineButton,
@@ -2408,7 +2417,6 @@ ul {
 }
 
 .orderPromoCode input {
-  /* width: auto; */
   flex-grow: 3;
   flex-basis: auto;
 }
