@@ -2227,6 +2227,46 @@ ul {
   flex-direction: column;
 }
 
+.checkoutShippingForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field-lg {
+  grid-column: 1/ -1;
+}
+
+/* .deliveryOptions {
+  display: flex;
+  flex-direction: column;
+}
+
+.deliveryOptions label {
+  display: flex;
+  flex-direction: column;
+} */
+
+.deliveryOptions {
+  display: grid;
+}
+
+.deliveryOptions label {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  border-bottom: 1px solid var(--line);
+}
+
+.deliveryOptions span {
+  display: flex;
+  flex-direction: column;
+}
+
 .cartOutlineButton,
 .checkoutButton {
   min-height: 46px;

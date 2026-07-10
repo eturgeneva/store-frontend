@@ -9,7 +9,13 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const promoCode = ref('');
 const promoCodeApplied = ref(false);
+
 const email = ref('');
+const firstName = ref('');
+const lastName = ref('');
+const address = ref('');
+const city = ref('');
+const zipCode = ref('');
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
@@ -132,6 +138,7 @@ async function checkout() {
             </div>
         </section>
 
+        <!-- Items -->
         <section class="cartShell">
             <div class="cartForm">
                 <div class="checkoutCard">
@@ -230,10 +237,9 @@ async function checkout() {
                     </div>
                 </div>
 
+                <!-- Contact form -->
                 <div class="checkoutCard">
-                    <!-- <p class="eyebrow">Contact</p> -->
                     <h2>Contact</h2>
-                    <p>Where should we send updates?</p>
                     <div class="checkoutContactForm">
                         <label for="email" class="formLabel">
                             Email address
@@ -257,6 +263,97 @@ async function checkout() {
                     </div>
                 </div>
 
+                <!-- Shipping info -->
+                <div class="checkoutCard">
+                    <h2>Shipping details</h2>
+                    <div class="checkoutShippingForm">
+                        <!-- First name -->
+                        <div class="field">
+                            <label for="first_name" class="formLabel">
+                                First name
+                            </label>
+                            <input
+                                v-model="firstName"
+                                type="text"
+                                name="first_name"
+                                id="first_name"
+                                placeholder="First name"
+                                required>
+                        </div>
+                        <!-- Last name -->
+                         <div class="field">
+                            <label for="last_name" class="formLabel">
+                                Last name
+                            </label>
+                            <input
+                                v-model="lastName"
+                                type="text"
+                                name="last_name"
+                                id="last_name"
+                                placeholder="Last name"
+                                required>
+                         </div>
+                        <!-- Address -->
+                        <div class="field field-lg">
+                            <label for="address" class="formLabel">
+                                    Address
+                            </label>
+                            <input
+                                    v-model="address"
+                                    type="text"
+                                    name="address"
+                                    id="address"
+                                    placeholder="Adress"
+                                    required>
+                        </div>
+                        <!-- City -->
+                        <div class="field">
+                            <label for="city" class="formLabel">
+                                City
+                            </label>
+                            <input
+                                v-model="city"
+                                type="text"
+                                name="city"
+                                id="city"
+                                placeholder="City"
+                                required>
+                        </div>
+                        <!-- Zip code -->
+                        <div class="field">
+                            <label for="zip_code" class="formLabel">
+                                ZIP code
+                            </label>
+                            <input
+                                v-model="zipCode"
+                                type="number"
+                                name="zip_code"
+                                id="zip_code"
+                                placeholder="ZIP code"
+                                required>
+                        </div>
+                    </div>
+                    <div class="deliveryOptions" aria-label="Delivery options">
+                        <label>
+                            <input type="radio" name="shipping" checked>
+                            <span>
+                                <strong>Complimentary ground</strong>
+                                3-5 business days · Free over $75
+                            </span>
+                            <strong>Free</strong>
+                        </label>
+                        <label>
+                            <input type="radio" name="shipping">
+                            <span>
+                                <strong>Priority delivery</strong>
+                                1-2 business days
+                            </span>
+                            <strong>12 €</strong>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Checkout buttons -->
                 <div
                     v-if="store.cart.products.length > 0"
                     class="cartActions"
@@ -277,6 +374,15 @@ async function checkout() {
                 </div>
             </div>
 
+            <!-- Payment info -->
+            <div class="checkoutCard">
+                <h2>Payment method</h2>
+                    <div class="checkoutPaymentForm">
+                    </div>
+
+            </div>
+
+            <!-- Order summary -->
             <aside
                 class="orderSummary"
                 aria-labelledby="cart-summary-title"
