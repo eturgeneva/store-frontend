@@ -15,6 +15,7 @@
   --surface: #ffffff;
   --surface-soft: #f9f6ff;
   --surface-input: #fafafa;
+  --button-disabled: #9599a2;
   --text-strong: #374151;
   --text-muted: #6b7280;
   --text-soft: #4b5563;
@@ -2334,6 +2335,44 @@ ul {
   font-family: var(--display);
   font-size: 1.6rem;
   font-weight: 400;
+}
+
+.orderPromoCode {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  border-bottom: 1px solid var(--line);
+  padding: 1rem 0;
+}
+
+.orderPromoCode button, .orderPromoCode input {
+  height: auto;
+}
+
+.orderPromoCode input {
+  /* width: auto; */
+  flex-grow: 3;
+  flex-basis: auto;
+}
+
+.orderPromoCode button {
+  margin: 0;
+}
+
+.orderPromoCode button:hover {
+  background: var(--ink);
+}
+
+.orderPromoCode button:disabled {
+  background: var(--button-disabled);
+  box-shadow: none;
+}
+
+.orderPromoCode button:disabled:hover {
+  background: var(--button-disabled);
+  box-shadow: none;
+  cursor: default;
 }
 
 .checkoutNote {

@@ -1,11 +1,14 @@
 <script setup>
-import { computed, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, computed, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
 const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
+const promoCode = ref('');
+const promoCodeApplied = ref(false);
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
@@ -79,6 +82,12 @@ async function setQuantity(productId, quantity) {
     } catch (err) {
         console.error(err);
     }
+}
+
+// Promo code (unfinished)
+function applyPromoCode() {
+    promoCode.value = '';
+    promoCodeApplied.value = true;
 }
 
 // Checkout
@@ -247,7 +256,26 @@ async function checkout() {
                         <span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span>
                     </div>
 
+                    <div class="orderPromoCode">
+                        <input
+                            v-model="promoCode"
+                            type="text"
+                            name="promo_code"
+                            id="promo_code"
+                            :placeholder="promoCodeApplied ? 'Promo code successfully applied!' : 'Promo code'"
+                            :disabled="promoCodeApplied">
+                        <button
+                            type="button"
+                            @click="applyPromoCode"
+                            :disabled="promoCodeApplied || !promoCode"
+                            >Apply</button>
+                    </div>
+
                     <div class="summaryLines">
+                        <div v-if="promoCodeApplied">
+                            <span>Promo Code </span>
+                            <strong>10% Off Your First Order</strong>
+                        </div>
                         <div>
                             <span>Subtotal</span>
                             <strong>{{ (cartSubtotal / 100).toFixed(2) + ' €' }}</strong>
