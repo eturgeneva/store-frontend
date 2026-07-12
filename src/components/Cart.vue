@@ -9,13 +9,22 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const promoCode = ref('');
 const promoCodeApplied = ref(false);
+const orderPlaced = ref(false);
+const newPaymentMethod = ref(false);
 
+/* Shipping form */
 const email = ref('');
 const firstName = ref('');
 const lastName = ref('');
 const address = ref('');
 const city = ref('');
 const zipCode = ref('');
+
+/* Payment form */
+const cardName = ref('');
+const cardNumber = ref('');
+const cardExpiry = ref('');
+const cardSecurityCode = ref('');
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
@@ -266,7 +275,7 @@ async function checkout() {
                 <!-- Shipping info -->
                 <div class="checkoutCard">
                     <h2>Shipping details</h2>
-                    <div class="checkoutShippingForm">
+                    <div class="checkoutForm">
                         <!-- First name -->
                         <div class="field">
                             <label for="first_name" class="formLabel">
@@ -352,6 +361,10 @@ async function checkout() {
                             <strong>12 €</strong>
                         </label>
                     </div>
+                    <div class="checkoutNote">
+                        <span aria-hidden="true">&bull;</span>
+                        <p>No items will be shipped, this is a portfolio project</p>
+                    </div>
                 </div>
 
                 <!-- Payment info -->
@@ -359,22 +372,80 @@ async function checkout() {
                     <h2>Payment method</h2>
                     <div class="paymentOptions" aria-label="payment options">
                         <label>
-                            <input type="radio" name="payment" checked>
+                            <input type="radio" name="payment" checked @click="() => newPaymentMethod = false">
                             <span>
                                 <strong>Use saved payment method</strong>
                                 <p>Default method</p>
                             </span>
                             <strong>Selected</strong>
                         </label>
+                        <!-- New payment method -->
                         <label>
-                            <input type="radio" name="payment">
+                            <input type="radio" name="payment" @click="() => newPaymentMethod = true">
                             <span>
                                 <strong>Add a new payment method</strong>
                                 <p>Opens a secure payment step</p>
                             </span>
                             <strong>Demo</strong>
                         </label>
-                        
+                    </div>
+                    <div v-if="newPaymentMethod" class="checkoutForm">
+                        <!-- Name on card -->
+                        <div class="field field-lg">
+                            <label for="card_name" class="formLabel">
+                                Name on card
+                            </label>
+                            <input
+                                v-model="cardName"
+                                type="text"
+                                name="card_name"
+                                id="card_name"
+                                placeholder=""
+                                required>
+                        </div>
+                        <!-- Card number -->
+                        <div class="field field-lg">
+                            <label for="card_number" class="formLabel">
+                                Card number
+                            </label>
+                            <input
+                                v-model="cardNumber"
+                                type="number"
+                                name="card_number"
+                                id="card_number"
+                                placeholder=""
+                                required>
+                        </div>
+                        <!-- Card expiry date -->
+                        <div class="field">
+                            <label for="card_expiry" class="formLabel">
+                                Expiry
+                            </label>
+                            <input
+                                v-model="cardExpiry"
+                                type="date"
+                                name="card_expiry"
+                                id="card_expiry"
+                                placeholder=""
+                                required>
+                        </div>
+                        <!-- Card security code -->
+                        <div class="field">
+                            <label for="card_security" class="formLabel">
+                                Security code
+                            </label>
+                            <input
+                                v-model="cardSecurityCode"
+                                type="number"
+                                name="card_security"
+                                id="card_security"
+                                placeholder=""
+                                required>
+                        </div>
+                    </div>
+                    <div class="checkoutNote">
+                        <span aria-hidden="true">&bull;</span>
+                        <p>No payment details are collected, this is a portfolio project.</p>
                     </div>
                 </div>
                 

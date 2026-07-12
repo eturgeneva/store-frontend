@@ -2219,7 +2219,7 @@ ul {
   margin-bottom: 1rem;
 }
 
-.checkoutShippingForm {
+.checkoutForm {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.9rem;
@@ -2385,7 +2385,7 @@ input#newsletter {
 
 .summaryTotal {
   align-items: baseline;
-  padding: 1.1rem 0;
+  padding: 1rem 0 0 0;
 }
 
 .summaryTotal span {
@@ -2445,6 +2445,7 @@ input#newsletter {
   grid-template-columns: auto 1fr;
   gap: 0.6rem;
   padding: 1rem;
+  margin-top: 1rem;
   border: 1px solid var(--accent-border-soft);
   border-radius: var(--radius-sm);
   background: var(--surface-soft);
