@@ -142,7 +142,7 @@ async function checkout() {
         <section class="hero">
             <div class="heroInner">
                 <p class="eyebrow">Secure checkout</p>
-                <h1>Review your order.</h1>
+                <h1>Review your order</h1>
                 <p>This is a portfolio project. No orders will be processed and no items will be shipped.</p>
             </div>
         </section>

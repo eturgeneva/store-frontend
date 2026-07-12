@@ -1499,15 +1499,12 @@ button:hover {
 .productFilters {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
     gap: 1rem;
-    width: 87%;
+    width: 80%;
     margin: 0 auto 2rem;
     padding: 1rem;
     background: var(--surface);
     border: 1px solid var(--accent-border-soft);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-card-soft);
 }
 
 .filterGroup {
@@ -1516,9 +1513,9 @@ button:hover {
 }
 
 .filterLabel {
-    color: var(--text-accent);
-    font-size: 0.85rem;
-    font-weight: 800;
+    font-weight: 500;
+    color: var(--muted);
+    font-size: 0.86rem;
 }
 
 .categoryFilters {
@@ -1533,20 +1530,18 @@ button:hover {
     min-height: 2.2rem;
     margin: 0;
     padding: 0.45rem 0.75rem;
-    /* color: var(--accent-strong); */
     color: var(--text-soft);
     background: var(--surface-soft);
     border: 1px solid rgba(139, 92, 246, 0.16);
-    /* border-radius: 999px; */
     box-shadow: none;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .filterChip.active,
 .filterChip:hover {
     color: var(--surface);
     background: var(--accent-gradient);
-    box-shadow: 0 6px 16px rgba(139, 92, 246, 0.22);
+    box-shadow: none;
 }
 
 .sortControl {
@@ -1568,7 +1563,7 @@ button:hover {
 
 /* Same as products previews, but without gallery and arrows */
 .productsPreviews {
-  padding: 3rem 0;
+  /* padding: 3rem 0; */
 }
 
 .productsPreviewsHeader {
@@ -2598,11 +2593,6 @@ input#newsletter {
   .loginCard, .registerCard {
     width: 100%;
     max-width: 25rem;
-  }
-
-  .productFilters {
-    align-items: stretch;
-    flex-direction: column;
   }
 
   .sortControl {

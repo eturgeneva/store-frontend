@@ -9,6 +9,6 @@ import Products from './Products.vue';
     <main>
         <Promo />
         <ProductsFeatured />
-        <Products />
+        <!-- <Products /> -->
     </main>
 </template>
