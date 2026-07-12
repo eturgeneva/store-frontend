@@ -1308,38 +1308,40 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 50%;
+    top: 36%;
     transform: translateY(-50%);
-    width: 3rem;
-    height: 4rem;
-    border-radius: 10px;
-    border: 1px solid var(--accent-border);
-    box-shadow: 0 10px 24px rgba(30, 20, 60, 0.12);
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 999px;
+    border: 0;
+    box-shadow: none;
     z-index: 2;
-    transition: var(--transition-standard);
-    backdrop-filter: blur(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
     margin: 0;
     background: var(--surface);
+    color: var(--ink);
+    border: 1px solid var(--line);
 }
 
 .scrollArrow:hover {
     background: var(--surface);
-    box-shadow: 0 14px 28px rgba(30, 20, 60, 0.16);
-    transform: translateY(-50%) scale(1.05);
+    box-shadow: none;
+    transform: translateY(-50%);
 }
 
 .scrollArrowLeft {
-    left: 0.5rem;
+    left: 1.5rem;
 }
 
 .scrollArrowRight {
-    right: 0.5rem;
+    right: 1.5rem;
 }
 
 .arrowIcon {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-strong);
+    font-size: 2.25rem;
+    font-weight: 300;
+    line-height: 1;
+    color: currentColor;
 }
 
 /* Product preview cards */
