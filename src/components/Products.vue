@@ -70,12 +70,15 @@ function getProductCategory(product) {
 
 <template>
     <main>
-        <div class="productsPreviews">
-            <div class="productsPreviewsHeader">
-                <h2>Products</h2>
-                <p>Find the right toy by category, price, or name</p>
+        <section class="hero">
+            <div class="heroInner">
+                <p class="eyebrow">Browse and discover</p>
+                <h1>Products</h1>
+                <p>Find the right toy by category, price or name</p>
             </div>
-
+        </section>
+        
+        <section class="productsPreviews">
             <div class="productFilters">
                 <div class="filterGroup">
                     <span class="filterLabel">Category</span>
@@ -133,7 +136,6 @@ function getProductCategory(product) {
                         <div>
                             <p class="productPreviewType">{{ getProductCategory(product) }}</p>
                             <router-link :to="`/products/${product.id}`" class="productLink">
-                                <!-- <h3 class="productName">{{ product.name }}</h3> -->
                                  <h3 class="productName">{{ product.name.charAt(0).toUpperCase() + product.name.slice(1) }}</h3>
                             </router-link>
                         </div>
@@ -150,7 +152,7 @@ function getProductCategory(product) {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 </template>
 

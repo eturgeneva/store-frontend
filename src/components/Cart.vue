@@ -139,11 +139,11 @@ async function checkout() {
 
 <template>
     <main>
-        <section class="cartHero">
-            <div class="cartHeroInner">
+        <section class="hero">
+            <div class="heroInner">
                 <p class="eyebrow">Secure checkout</p>
                 <h1>Review your order.</h1>
-                <p>Adjust quantities, confirm your toys, and place your order when everything looks right.</p>
+                <p>This is a portfolio project. No orders will be processed and no items will be shipped.</p>
             </div>
         </section>
 
