@@ -247,7 +247,7 @@ async function checkout() {
                 </div>
 
                 <!-- Contact form -->
-                <div class="checkoutCard">
+                <div class="checkoutCard" v-if="store.cart.products.length > 0">
                     <h2>Contact</h2>
                     <div class="checkoutContactForm">
                         <label for="email" class="formLabel">
@@ -273,7 +273,7 @@ async function checkout() {
                 </div>
 
                 <!-- Shipping info -->
-                <div class="checkoutCard">
+                <div class="checkoutCard" v-if="store.cart.products.length > 0">
                     <h2>Shipping details</h2>
                     <div class="checkoutForm">
                         <!-- First name -->
@@ -368,7 +368,7 @@ async function checkout() {
                 </div>
 
                 <!-- Payment info -->
-                <div class="checkoutCard">
+                <div class="checkoutCard" v-if="store.cart.products.length > 0">
                     <h2>Payment method</h2>
                     <div class="paymentOptions" aria-label="payment options">
                         <label>
