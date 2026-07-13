@@ -112,35 +112,48 @@ async function logoutUser() {
                 <router-link to="/profile/details">Personal details</router-link>
                 <router-link to="/orders">My orders</router-link>
                 <router-link to="/wishlist">Wishlist</router-link>
-            </aside>
-            
-            <div class="profileOverview">
-                <h1>Welcome {{ store.loggedInUser.first_name }}</h1>
-
                 <div class="buttons">    
                     <button class="logoutButton" @click="logoutUser">Log Out</button>
                 </div> 
-                <div class="profileCard">
-                    <div class="profileCardHeading">
+            </aside>
+            
+            <div class="profileOverview">
+                <!-- <h1>Welcome {{ store.loggedInUser.first_name }}</h1> -->
+
+                <section class="profileCard profilePanel">
+                    <div class="profileCardHeading profilePanelHeading">
                         <div>
-                            <h2>Overview</h2>
+                            <!-- <p class="eyebrow">Overview</p> -->
+                            <!-- <h2>Today's toy edit</h2> -->
                         </div>
                     </div>
                     <div class="profileMetrics">
                         <div class="profileMetric">
+                            <div class="profileAvatar">
+                                {{ store.loggedInUser.first_name?.charAt(0) || 'U' }}
+                            </div>
+                            <!-- <p class="eyebrow">Concept member</p> -->
+                            <h2>{{ store.loggedInUser.first_name }}</h2>
+                            <p>{{ store.loggedInUser.email }}</p>
+                        </div>
+                        <div class="profileMetric">
                             <h4>Saved</h4>
-                            <p><span>{{ wishlistQuantity }} {{ wishlistQuantity === 1 ? 'item' : 'items' }}</span> in your wishlist</p>
+                            <!-- <p><span>{{ wishlistQuantity }} {{ wishlistQuantity === 1 ? 'item' : 'items' }}</span> in your wishlist</p> -->
+                             <strong>{{ wishlistQuantity }}</strong>
+                             <p>Items in your wishlist</p>
                         </div>
                         <div class="profileMetric">
                             <h4>Bag</h4>
-                            <p><span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span> in your cart waiting for checkout</p>
+                            <!-- <p><span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span> in your cart waiting for checkout</p> -->
+                            <strong>{{ cartQuantity }}</strong>
+                            <p>Items waiting for checkout</p>
                         </div>
-                        <div class="profileMetric">
+                        <!-- <div class="profileMetric">
                             <h4>Toy Club</h4>
-                            <p><span>Explorer tier</span> with early access to concept drops</p>
-                        </div>
+                             <p>Early access to concept drops</p>
+                        </div> -->
                     </div>
-                </div>
+                </section>
 
                 <div class="profileCard">
                     <div class="profileCardHeading">

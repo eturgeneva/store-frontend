@@ -792,7 +792,7 @@ form, .userLogin {
   align-self: start;
   display: grid;
   gap: 0.75rem;
-  padding: clamp(1.3rem, 2.4vw, 2rem);
+  padding: 1rem;
   border: 1px solid var(--line);
   background: var(--surface);
 }
@@ -805,9 +805,10 @@ form, .userLogin {
 .profileNav a {
   display: flex;
   align-items: center;
-  min-height: 3rem;
+  min-height: auto;
   padding: 0.75rem 1rem;
-  color: var(--text-accent);
+  /* color: var(--text-accent); */
+  color: var(--text-soft);
   background: var(--surface-soft);
   border: 1px solid var(--accent-border-soft);
   border-radius: var(--radius-sm);
@@ -816,9 +817,28 @@ form, .userLogin {
 }
 
 .profileNav a:hover {
-  color: var(--purple);
+  color: var(--text-strong);
   background: var(--accent-hover);
-  transform: translateY(-1px);
+  /* transform: translateY(-1px); */
+}
+
+.profilePanel {
+  padding: clamp(1.5rem, 3vw, 2.6rem);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.profileAvatar {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--surface);
+  font-family: var(--display);
+  font-size: 1.15rem;
 }
 
 .profileMetrics {
@@ -827,6 +847,9 @@ form, .userLogin {
 }
 
 .profileMetric {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
   min-width: 0;
   padding: 1rem;
   border-right: 1px solid var(--line);
@@ -845,13 +868,20 @@ form, .userLogin {
 }
 
 .profileMetric p {
-  color: var(--text-accent);
+  color: var(--text-muted);
 }
 
-.profileMetric span {
+.profileMetric strong {
+  margin: 1.8rem 0 0.4rem;
+  font-family: var(--display);
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-weight: 400;
+}
+
+/* .profileMetric span {
   color: var(--ink);
   font-weight: 700;
-}
+} */
 
 .userDetail {
     display: flex;
@@ -2121,8 +2151,7 @@ ul {
   gap: 1rem;
 }
 
-.checkoutCardHeading,
-.profileCardHeading {
+.checkoutCardHeading {
   margin-bottom: 1.6rem;
 }
 
