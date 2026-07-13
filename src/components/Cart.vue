@@ -125,6 +125,7 @@ async function checkout() {
 
             store.setCartId(null);
             store.setCart({ products: []});
+            orderPlaced.value = true;
 
             console.log('Store cart after checkout', store.cartId, store.cart);
         } else {
@@ -489,7 +490,7 @@ async function checkout() {
                             type="text"
                             name="promo_code"
                             id="promo_code"
-                            :placeholder="promoCodeApplied ? 'Promo code successfully applied!' : 'Promo code'"
+                            :placeholder="promoCodeApplied && !orderPlaced? 'Promo code successfully applied!' : 'Promo code'"
                             :disabled="promoCodeApplied">
                         <button
                             type="button"
@@ -500,7 +501,7 @@ async function checkout() {
                     </div>
 
                     <div class="summaryLines">
-                        <div v-if="promoCodeApplied" class="promoCodeSummary">
+                        <div v-if="promoCodeApplied && !orderPlaced" class="promoCodeSummary">
                             <span>Promo Code </span>
                             <div>
                                 <strong>10% Off Your First Order</strong>

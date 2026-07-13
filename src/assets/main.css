@@ -2461,9 +2461,9 @@ input#newsletter {
     text-align: center;
     color: var(--text-muted);
     background: var(--surface);
-    border: 1px solid var(--accent-border-soft);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-card-soft);
+    /* border: 1px solid var(--accent-border-soft); */
+    /* border-radius: var(--radius-md); */
+    /* box-shadow: var(--shadow-card-soft); */
 }
 
 /* Wishlist */
