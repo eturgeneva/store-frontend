@@ -743,17 +743,6 @@ form, .userLogin {
     padding: 1rem;
 }
 
-/* .userProfile, .userDetails {
-  width: min(90%, 48rem);
-  margin: 6rem auto;
-  padding: 2rem;
-  background: var(--surface);
-  border: 1px solid var(--accent-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 10px 30px rgba(30, 20, 60, 0.12);
-  transition: var(--transition-standard);
-} */
-
 .userProfile {
   display: grid;
   grid-template-columns: minmax(230px, 300px) minmax(0, 1fr);
@@ -772,11 +761,6 @@ form, .userLogin {
   border-radius: var(--radius-md);
   box-shadow: 0 10px 30px rgba(30, 20, 60, 0.12);
   transition: var(--transition-standard);
-}
-
-.userProfile:hover, .userDetails:hover {
-  /* transform: translateY(-2px); */
-  /* box-shadow: 0 14px 34px rgba(30, 20, 60, 0.16); */
 }
 
 .userProfile h1 {
@@ -807,7 +791,6 @@ form, .userLogin {
   align-items: center;
   min-height: auto;
   padding: 0.75rem 1rem;
-  /* color: var(--text-accent); */
   color: var(--text-soft);
   background: var(--surface-soft);
   border: 1px solid var(--accent-border-soft);
@@ -819,7 +802,6 @@ form, .userLogin {
 .profileNav a:hover {
   color: var(--text-strong);
   background: var(--accent-hover);
-  /* transform: translateY(-1px); */
 }
 
 .profilePanel {
@@ -877,11 +859,6 @@ form, .userLogin {
   font-size: clamp(1.2rem, 2vw, 1.8rem);
   font-weight: 400;
 }
-
-/* .profileMetric span {
-  color: var(--ink);
-  font-weight: 700;
-} */
 
 .userDetail {
     display: flex;
@@ -1339,6 +1316,12 @@ button:hover {
 
 .logoutButton {
     width: 5rem;
+    margin: 1rem 0;
+    background: var(--ink);
+}
+
+.logoutButton:hover {
+  box-shadow: none;
 }
 
 .removeButton {

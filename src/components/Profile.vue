@@ -118,13 +118,10 @@ async function logoutUser() {
             </aside>
             
             <div class="profileOverview">
-                <!-- <h1>Welcome {{ store.loggedInUser.first_name }}</h1> -->
-
                 <section class="profileCard profilePanel">
                     <div class="profileCardHeading profilePanelHeading">
                         <div>
-                            <!-- <p class="eyebrow">Overview</p> -->
-                            <!-- <h2>Today's toy edit</h2> -->
+                            <!-- Not sure if needed -->
                         </div>
                     </div>
                     <div class="profileMetrics">
@@ -132,26 +129,20 @@ async function logoutUser() {
                             <div class="profileAvatar">
                                 {{ store.loggedInUser.first_name?.charAt(0) || 'U' }}
                             </div>
-                            <!-- <p class="eyebrow">Concept member</p> -->
                             <h2>{{ store.loggedInUser.first_name }}</h2>
                             <p>{{ store.loggedInUser.email }}</p>
                         </div>
                         <div class="profileMetric">
                             <h4>Saved</h4>
-                            <!-- <p><span>{{ wishlistQuantity }} {{ wishlistQuantity === 1 ? 'item' : 'items' }}</span> in your wishlist</p> -->
                              <strong>{{ wishlistQuantity }}</strong>
                              <p>Items in your wishlist</p>
                         </div>
                         <div class="profileMetric">
                             <h4>Bag</h4>
-                            <!-- <p><span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span> in your cart waiting for checkout</p> -->
+
                             <strong>{{ cartQuantity }}</strong>
                             <p>Items waiting for checkout</p>
                         </div>
-                        <!-- <div class="profileMetric">
-                            <h4>Toy Club</h4>
-                             <p>Early access to concept drops</p>
-                        </div> -->
                     </div>
                 </section>
 
