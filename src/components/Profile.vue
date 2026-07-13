@@ -169,24 +169,27 @@ async function logoutUser() {
                             <h2>Recent concept order</h2>
                         </div>
                     </div>
-                        <div class="recentOrderItem">
-                            <div class="recentOrderImage">
-                                <img 
-                                    :src="productImgURL + store.loggedInUser.recentOrder.items[0].name + '.png'"
-                                    :alt="store.loggedInUser.recentOrder.items[0].name"
-                                >
-                            </div>
-                            <div class="recentOrderDetails">
-                                <p>{{ store.loggedInUser.recentOrder.items[0].brand}}</p>
-                                <h3>{{ store.loggedInUser.recentOrder.items[0].name}}</h3>
-                                <span>
-                                    <p>Placed: {{ new Date(store.loggedInUser.recentOrder.placedAt).toLocaleString() }}</p>
-                                </span>
-                            </div>
-
-                            <button type="button" class="orderDetailsButton">View details</button>
+                    <div class="recentOrderItem">
+                        <div class="recentOrderImage">
+                            <img 
+                                :src="productImgURL + store.loggedInUser.recentOrder.items[0].name + '.png'"
+                                :alt="store.loggedInUser.recentOrder.items[0].name"
+                            >
                         </div>
-                    <!-- </div> -->
+                        <div class="recentOrderDetails">
+                            <p>{{ store.loggedInUser.recentOrder.items[0].brand}}</p>
+                            <h3>{{ store.loggedInUser.recentOrder.items[0].name}}</h3>
+                            <span>
+                                <p>Placed: {{ new Date(store.loggedInUser.recentOrder.placedAt).toLocaleString() }}</p>
+                            </span>
+                        </div>
+                        <div>
+                            <!-- need to calculate each item quantity -->
+                            <p>+ {{ store.loggedInUser.recentOrder.items.length - 1 }} more item(s)</p>
+                        </div>
+
+                        <button type="button" class="orderDetailsButton">View details</button>
+                    </div>
                 </div>
                 <div class="profileCard">
                     <div class="profileCardHeading">
@@ -194,8 +197,23 @@ async function logoutUser() {
                             <h2>Your saved pieces</h2>
                         </div>
                     </div>
-                    <div>
-                        <p>{{ store.loggedInUser.wishlist[0] }}</p>
+                    <div class="wishlistFirstItem">
+                        <div class="wishlistFirstImage">
+                            <img 
+                                :src="productImgURL + store.loggedInUser.wishlist[0].name + '.png'"
+                                :alt="store.loggedInUser.wishlist[0].name"
+                            >
+                        </div>
+                        <div class="wishlistFirstDetails">
+                            <p>{{ store.loggedInUser.wishlist[0].brand}}</p>
+                            <h3>{{ store.loggedInUser.wishlist[0].name}}</h3>
+                        </div>
+                        <div>
+                            <p>+ {{ store.loggedInUser.wishlist.length - 1 }} more item(s)</p>
+                        </div>
+                        <router-link to="/wishlist">
+                            <button type="button" class="wishlistViewButton">View wishlist</button>
+                        </router-link>
                     </div>
                 </div>
             </div>
