@@ -19,6 +19,7 @@ onBeforeMount(async () => {
     try {
         await getProfile();
         await loadOrders();
+        await loadRecentOrder();
 
         const wishlist = await $api.getWishlist();
         if (wishlist) {
@@ -69,6 +70,25 @@ async function loadOrders() {
             console.log('Store logged in user', store.loggedInUser);
         } else {
             console.log('Failed to fetch oder details');
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+// Get recent order:
+async function loadRecentOrder() {
+    if (!store.loggedIn || !store.loggedInUser) {
+        console.log('Unable to load orders');
+        return;
+    }
+    const recentOrderId = store.loggedInUser.orders.at(-1).id;
+    try {
+        const recentOrder = await $api.getOrderById(recentOrderId);
+        if (recentOrder) {
+            store.loggedInUser.recentOrder = recentOrder;
+        } else {
+            console.log('Failed to fetch recent order');
         }
     } catch (err) {
         console.error(err);
