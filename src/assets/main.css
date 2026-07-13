@@ -743,7 +743,25 @@ form, .userLogin {
     padding: 1rem;
 }
 
-.userProfile, .userDetails {
+/* .userProfile, .userDetails {
+  width: min(90%, 48rem);
+  margin: 6rem auto;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(30, 20, 60, 0.12);
+  transition: var(--transition-standard);
+} */
+
+.userProfile {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 2rem;
+  width: var(--shell);
+}
+
+.userDetails {
   width: min(90%, 48rem);
   margin: 6rem auto;
   padding: 2rem;
@@ -755,8 +773,8 @@ form, .userLogin {
 }
 
 .userProfile:hover, .userDetails:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 34px rgba(30, 20, 60, 0.16);
+  /* transform: translateY(-2px); */
+  /* box-shadow: 0 14px 34px rgba(30, 20, 60, 0.16); */
 }
 
 .userProfile h1 {
@@ -766,13 +784,13 @@ form, .userLogin {
   margin-bottom: 1.25rem;
 }
 
-.profileLinks {
+.profileNav {
   display: grid;
   gap: 0.75rem;
   margin-bottom: 1.25rem;
 }
 
-.profileLinks a {
+.profileNav a {
   display: flex;
   align-items: center;
   min-height: 3rem;
@@ -785,10 +803,14 @@ form, .userLogin {
   transition: var(--transition-standard);
 }
 
-.profileLinks a:hover {
+.profileNav a:hover {
   color: var(--purple);
   background: var(--accent-hover);
   transform: translateY(-1px);
+}
+
+.profileCard {
+
 }
 
 .userDetail {
@@ -2040,30 +2062,34 @@ ul {
 }
 
 .checkoutCard,
-.orderSummarySticky {
+.orderSummarySticky,
+.profileCard {
   border: 1px solid var(--line);
   background: var(--surface);
 }
 
-.checkoutCard {
+.checkoutCard, .profileCard {
   padding: clamp(1.4rem, 3vw, 2.4rem);
 }
 
 .checkoutCardHeading,
-.orderSummaryHeader {
+.orderSummaryHeader,
+.profileCardHeading {
   display: flex;
   justify-content: space-between;
   align-items: start;
   gap: 1rem;
 }
 
-.checkoutCardHeading {
+.checkoutCardHeading,
+.profileCardHeading {
   margin-bottom: 1.6rem;
 }
 
 .checkoutCardHeading h2,
 .orderSummaryHeader h2,
-.checkoutCard h2 {
+.checkoutCard h2,
+.profileCard h2 {
   margin: 0;
   font-family: var(--display);
   font-size: clamp(1.25rem, 2.2vw, 2rem);
