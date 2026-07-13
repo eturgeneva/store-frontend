@@ -795,8 +795,10 @@ form, .userLogin {
   background: var(--surface-soft);
   border: 1px solid var(--accent-border-soft);
   border-radius: var(--radius-sm);
-  font-weight: 600;
+  font-weight: 400;
   transition: var(--transition-standard);
+  text-transform: uppercase;
+  font-size: 0.85rem;
 }
 
 .profileNav a:hover {
@@ -826,6 +828,7 @@ form, .userLogin {
 .profileMetrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* grid-template-columns: 1.3fr 1fr 1fr; */
 }
 
 .profileMetric {
@@ -861,13 +864,61 @@ form, .userLogin {
 }
 
 .profileCardHeading {
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
 .recentOrderItem {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  /* background: var(--surface-soft); */
+}
+
+.recentOrderDetails {
+  min-width: 0;
+}
+
+.recentOrderDetails h3 {
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.recentOrderDetails p {
+  margin-bottom: 0.55rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.recentOrderDetails span {
+  font-size: 0.86rem;
+}
+
+.orderDetailsButton,
+.logoutButton {
+  min-height: 46px;
+  width: auto;
+  padding: 1rem;
+  margin: 0;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--text-strong);
+  box-shadow: none;
+}
+
+.orderDetailsButton:hover,
+.logoutButton:hover {
+  background: var(--ink);
+  color: var(--white);
+  box-shadow: none;
 }
 
 .userDetail {
@@ -1322,16 +1373,6 @@ button:hover {
     width: auto;
     padding: 0.65rem 1rem;
     margin: 0;
-}
-
-.logoutButton {
-    width: 5rem;
-    margin: 1rem 0;
-    background: var(--ink);
-}
-
-.logoutButton:hover {
-  box-shadow: none;
 }
 
 .removeButton {
@@ -2675,6 +2716,11 @@ input#newsletter {
     min-height: 38px;
   }
 
+  .cartShell,
+  .userProfile {
+    grid-template-columns: 1fr;
+  }
+
   form, .userLogin {
     flex-direction: column;
     padding: 1rem;
@@ -2754,6 +2800,19 @@ input#newsletter {
 
   .profileMetric:last-child {
     border-bottom: 0;
+  }
+
+  .recentOrderItem {
+    grid-template-columns: 66px 1fr;
+  }
+
+  .recentOrderImage img {
+    width: 66px;
+    height: 78px;
+  }
+
+  .recentOrderItem button {
+    grid-column: 2;
   }
 
   .cartActions {

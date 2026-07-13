@@ -141,11 +141,6 @@ async function logoutUser() {
             
             <div class="profileOverview">
                 <section class="profileCard profilePanel">
-                    <div class="profileCardHeading profilePanelHeading">
-                        <div>
-                            <!-- Not sure if needed -->
-                        </div>
-                    </div>
                     <div class="profileMetrics">
                         <div class="profileMetric">
                             <div class="profileAvatar">
@@ -173,19 +168,25 @@ async function logoutUser() {
                         <div>
                             <h2>Recent concept order</h2>
                         </div>
+                    </div>
                         <div class="recentOrderItem">
-                            <p>Placed: {{ new Date(store.loggedInUser.recentOrder.placedAt).toLocaleString() }}</p>
-                            <p>{{ store.loggedInUser.recentOrder.items[0].name}}</p>
-                            <p>{{ store.loggedInUser.recentOrder.items[0].brand}}</p>
                             <div class="recentOrderImage">
                                 <img 
                                     :src="productImgURL + store.loggedInUser.recentOrder.items[0].name + '.png'"
                                     :alt="store.loggedInUser.recentOrder.items[0].name"
                                 >
                             </div>
-                            <button>View details</button>
+                            <div class="recentOrderDetails">
+                                <p>{{ store.loggedInUser.recentOrder.items[0].brand}}</p>
+                                <h3>{{ store.loggedInUser.recentOrder.items[0].name}}</h3>
+                                <span>
+                                    <p>Placed: {{ new Date(store.loggedInUser.recentOrder.placedAt).toLocaleString() }}</p>
+                                </span>
+                            </div>
+
+                            <button type="button" class="orderDetailsButton">View details</button>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <div class="profileCard">
                     <div class="profileCardHeading">
