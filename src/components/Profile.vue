@@ -7,6 +7,8 @@ import UserRegister from './UserRegister.vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
+const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
 });
@@ -171,9 +173,18 @@ async function logoutUser() {
                         <div>
                             <h2>Recent concept order</h2>
                         </div>
-                    </div>
-                    <div>
-                        <p>{{ store.loggedInUser.orders.at(-1) }}</p>
+                        <div class="recentOrderItem">
+                            <p>Placed: {{ new Date(store.loggedInUser.recentOrder.placedAt).toLocaleString() }}</p>
+                            <p>{{ store.loggedInUser.recentOrder.items[0].name}}</p>
+                            <p>{{ store.loggedInUser.recentOrder.items[0].brand}}</p>
+                            <div class="recentOrderImage">
+                                <img 
+                                    :src="productImgURL + store.loggedInUser.recentOrder.items[0].name + '.png'"
+                                    :alt="store.loggedInUser.recentOrder.items[0].name"
+                                >
+                            </div>
+                            <button>View details</button>
+                        </div>
                     </div>
                 </div>
                 <div class="profileCard">

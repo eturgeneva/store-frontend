@@ -860,6 +860,16 @@ form, .userLogin {
   font-weight: 400;
 }
 
+.profileCardHeading {
+  display: flex;
+  flex-direction: column;
+}
+
+.recentOrderItem {
+  display: flex;
+  flex-direction: column;
+}
+
 .userDetail {
     display: flex;
     width: 100%;
@@ -2182,12 +2192,12 @@ ul {
   border-bottom: 1px solid var(--line);
 }
 
-.cartItemImage {
+.cartItemImage, .recentOrderImage {
   position: relative;
   background: var(--paper);
 }
 
-.cartItemImage img {
+.cartItemImage img, .recentOrderImage img {
   width: 74px;
   height: 86px;
   object-fit: cover;
