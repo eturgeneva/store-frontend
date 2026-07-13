@@ -126,13 +126,19 @@ async function logoutUser() {
                             <h2>Overview</h2>
                         </div>
                     </div>
-                    <div class="profileMetric">
-                        <h4>Saved</h4>
-                        <p><span>{{ wishlistQuantity }} {{ wishlistQuantity === 1 ? 'item' : 'items' }}</span> in your wishlist</p>
-                    </div>
-                    <div class="profileMetric">
-                        <h4>Bag</h4>
-                        <p><span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span> in your cart waiting for checkout</p>
+                    <div class="profileMetrics">
+                        <div class="profileMetric">
+                            <h4>Saved</h4>
+                            <p><span>{{ wishlistQuantity }} {{ wishlistQuantity === 1 ? 'item' : 'items' }}</span> in your wishlist</p>
+                        </div>
+                        <div class="profileMetric">
+                            <h4>Bag</h4>
+                            <p><span>{{ cartQuantity }} {{ cartQuantity === 1 ? 'item' : 'items' }}</span> in your cart waiting for checkout</p>
+                        </div>
+                        <div class="profileMetric">
+                            <h4>Toy Club</h4>
+                            <p><span>Explorer tier</span> with early access to concept drops</p>
+                        </div>
                     </div>
                 </div>
 
@@ -143,7 +149,7 @@ async function logoutUser() {
                         </div>
                     </div>
                     <div>
-                        <p>{{ store.loggedInUser.orders.pop() }}</p>
+                        <p>{{ store.loggedInUser.orders.at(-1) }}</p>
                     </div>
                 </div>
                 <div class="profileCard">

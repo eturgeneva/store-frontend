@@ -756,9 +756,11 @@ form, .userLogin {
 
 .userProfile {
   display: grid;
-  grid-template-columns: 230px minmax(0, 1fr);
-  gap: 2rem;
+  grid-template-columns: minmax(230px, 300px) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
   width: var(--shell);
+  margin-inline: auto;
+  padding-bottom: clamp(5rem, 10vw, 10rem);
 }
 
 .userDetails {
@@ -785,9 +787,19 @@ form, .userLogin {
 }
 
 .profileNav {
+  position: sticky;
+  top: 112px;
+  align-self: start;
   display: grid;
   gap: 0.75rem;
-  margin-bottom: 1.25rem;
+  padding: clamp(1.3rem, 2.4vw, 2rem);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.profileOverview {
+  display: grid;
+  gap: 1rem;
 }
 
 .profileNav a {
@@ -809,8 +821,36 @@ form, .userLogin {
   transform: translateY(-1px);
 }
 
-.profileCard {
+.profileMetrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 
+.profileMetric {
+  min-width: 0;
+  padding: 1rem;
+  border-right: 1px solid var(--line);
+}
+
+.profileMetric:last-child {
+  border-right: 0;
+}
+
+.profileMetric h4 {
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.profileMetric p {
+  color: var(--text-accent);
+}
+
+.profileMetric span {
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .userDetail {
@@ -2656,7 +2696,8 @@ input#newsletter {
     padding-top: 3rem;
   }
 
-  .cartShell {
+  .cartShell,
+  .userProfile {
     grid-template-columns: 1fr;
   }
 
@@ -2664,16 +2705,33 @@ input#newsletter {
     order: -1;
   }
 
-  .orderSummarySticky {
+  .orderSummarySticky,
+  .profileNav {
     position: static;
   }
 
-  .checkoutCard {
+  .checkoutCard,
+  .profileCard,
+  .profileNav {
     padding: 1.25rem;
   }
 
-  .checkoutCardHeading {
+  .checkoutCardHeading,
+  .profileCardHeading {
     display: block;
+  }
+
+  .profileMetrics {
+    grid-template-columns: 1fr;
+  }
+
+  .profileMetric {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .profileMetric:last-child {
+    border-bottom: 0;
   }
 
   .cartActions {
