@@ -34,12 +34,12 @@ const totalPrice = computed(() => {
             class="itemImage"
         >
         <div class="itemInfo">
+            <div class="itemBrand">{{ item.brand }}</div>
             <div class="itemName">
                 <router-link :to="`/products/${item.product_id}`" class="productLink">
                     {{ item.name }}
                 </router-link>
             </div>
-            <div class="itemBrand">{{ item.brand }}</div>
             <div v-if="item.quantity" class="itemQuantity">Quantity: {{ item.quantity }}</div>
             <div class="itemPrice">Price: {{ item.price_cents / 100 + ' €'}}</div>
         </div>

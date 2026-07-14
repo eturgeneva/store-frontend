@@ -59,13 +59,7 @@ main {
   margin: 0 auto;
   width: 100%;
   min-height: 100vh;
-  /* padding: 0.1rem 0 3rem; */
-  /* background: linear-gradient(135deg, #f8f9ff 0%, var(--surface) 100%); */
   background: linear-gradient(135deg, #f8f9ff 0%, var(--paper) 100%);
-}
-
-nav {
-  /* border-bottom: 1px var(--line) solid; */
 }
 
 nav a {
@@ -355,21 +349,12 @@ a,
   line-height: 1;
 }
 
-/* .drawerOverlay {
-  position: fixed;
-  z-index: 60;
-  inset: 0;
-  background: rgba(13, 15, 11, .42);
-  backdrop-filter: blur(3px);
-} */
-
 .drawer {
   position: fixed;
   z-index: 70;
   top: 4rem;
   right: 0;
   width: min(380px, 100%);
-  /* height: 100dvh; */
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -828,7 +813,6 @@ form, .userLogin {
 .profileMetrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  /* grid-template-columns: 1.3fr 1fr 1fr; */
 }
 
 .profileMetric {
@@ -1397,6 +1381,10 @@ button:hover {
     box-shadow: none;
 }
 
+.removeButton:hover {
+  box-shadow: none;
+}
+
 .buyButton {
     height: 2.5rem;
     width: 3rem;
@@ -1540,7 +1528,6 @@ button:hover {
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    /* min-height: 7.75rem; */
     margin: 0;
     padding: 1.35rem 0 1rem;
     border-bottom: 1px solid var(--line);
@@ -1612,14 +1599,6 @@ button:hover {
 }
 
 /* Products */
-/* .productsContainer {
-    display: flex;
-    gap: 2.5rem;
-    width: 90%;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin: 0 auto;
-} */
 
 .productsContainer {
     display: grid;
@@ -1709,7 +1688,6 @@ button:hover {
     font-size: 2.2rem;
     font-weight: 700;
     color: #1f2937;
-    /* margin-bottom: 0.5rem; */
 }
 
 .productsPreviewsHeader p {
@@ -1746,7 +1724,6 @@ button:hover {
     object-fit: cover;
     object-position: center 30%;
     transition: transform 0.3s ease;
-    /* border-radius: 10px; */
     display: block;
 }
 
@@ -2065,42 +2042,48 @@ ul {
 /* Item reusable */
 
 .orderItem, .item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) auto;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
+  padding-bottom: 1rem;
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--accent-border-soft);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card-soft);
+  border-bottom: 1px solid var(--line);
 }
 
 .itemImage {
-  width: 7rem;
-  aspect-ratio: 1;
+  width: 4.75rem;
+  height: 5.2rem;
   object-fit: cover;
   margin-top: 0;
-  background: var(--surface-soft);
-  border-radius: 10px;
+  background: var(--paper);
 }
 
 .itemInfo {
     display: grid;
-    gap: 0.15rem;
-    min-width: 10rem;
-    color: var(--text-soft);
+    gap: 0;
+    min-width: 0;
 }
 
 .itemName {
   font-weight: 700;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.25;
 }
 
-.itemBrand, .itemQuantity, .itemPrice {
+.itemBrand {
+  margin-bottom: 0.55rem;
+  font-size: 0.82rem;
+  color: var(-muted);
+}
+
+.itemQuantity, .itemPrice {
   color: var(--text-muted);
+  font-size: 0.86rem;
 }
 
-.itemButtonContainer {
+.itemActions {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -2108,15 +2091,25 @@ ul {
     margin-left: auto;
 }
 
-.itemButtonContainer input {
+.itemActions input {
     width: 4.5rem;
     text-align: center;
 }
 
-.itemButtonContainer button {
+.itemActions button {
     width: 2.5rem;
     height: 2.5rem;
     margin: 0;
+    box-shadow: none;
+}
+
+.itemActions button:hover {
+  box-shadow: none;
+  background: var(--ink); 
+}
+
+.itemActions .removeButton:hover {
+  background: transparent;
 }
 
 .itemSummary {
@@ -2596,21 +2589,22 @@ input#newsletter {
     text-align: center;
     color: var(--text-muted);
     background: var(--surface);
-    /* border: 1px solid var(--accent-border-soft); */
-    /* border-radius: var(--radius-md); */
-    /* box-shadow: var(--shadow-card-soft); */
 }
 
 /* Wishlist */
-.wishlist, .wishlistContainer {
+.wishlistContainer {
     width: min(90%, 58rem);
-    margin: 6rem auto;
+    margin: 0 auto;
+    background: var(--surface);
+    border: 1px solid var(--line)
 }
 
 .wishlist {
     display: grid;
     gap: 1rem;
-    margin-top: 0;
+    margin: 1.5rem;
+    background: var(--surface);
+    padding: 1rem;
 }
 
 /* Missing Content*/
@@ -2848,11 +2842,16 @@ input#newsletter {
   }
 
   .item {
-    align-items: flex-start;
+    grid-template-columns: 4rem 1fr;
     flex-wrap: wrap;
   }
 
-  .itemButtonContainer {
+  .itemImage {
+    width: 4rem;
+    height: 4.9rem;
+  }
+
+  .itemActions {
     width: 100%;
     margin-left: 0;
   }

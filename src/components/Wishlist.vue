@@ -77,6 +77,14 @@ async function deleteProductFromWishlist(productId) {
 
 <template>
     <main>
+        <section class="hero">
+            <div class="heroInner">
+                <p class="eyebrow">Saved for later</p>
+                <h1>Your wishlist</h1>
+                <p>Add your favorites to your wishlist and shop them whenever you're ready</p>
+            </div>
+        </section>
+
         <div class="wishlistContainer">
             <div v-if="isLoading" class="emptyState">
                 <p>Wishlist is loading...</p>
@@ -89,7 +97,7 @@ async function deleteProductFromWishlist(productId) {
                 <Item 
                     :items="store.loggedInUser.wishlist">
                     <template #default="{ item }">
-                        <div class="itemButtonContainer">
+                        <div class="itemActions">
                             <button
                                 type="button"
                                 @click="addToCart(item.product_id, 1)"
@@ -104,7 +112,7 @@ async function deleteProductFromWishlist(productId) {
                                 class="removeButton"
                                 @click="deleteProductFromWishlist(item.product_id)"
                             >
-                                🗑
+                                x
                             </button>
                         </div>
                     </template>
