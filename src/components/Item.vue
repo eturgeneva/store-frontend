@@ -48,6 +48,17 @@ const totalPrice = computed(() => {
     </div>
     <div v-if="props.showSummary" 
             class="itemSummary">
-        <div>Total price: {{ (totalPrice / 100).toFixed(2) + ' €'}}</div>
+            <div class="itemSummaryLines">
+                <div>
+                    <span>Subtotal</span>
+                    <strong>{{ (totalPrice / 100).toFixed(2) + ' €'}}</strong>
+                </div>
+                <div>
+                    <span>Shipping</span><strong>free</strong>
+                </div>
+            </div>
+        <div class="itemSummaryTotal">
+            <span>Total</span><strong>{{ (totalPrice / 100).toFixed(2) + ' €'}}</strong>
+        </div>
     </div>
 </template>

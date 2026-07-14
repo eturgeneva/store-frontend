@@ -1359,7 +1359,7 @@ button:hover {
     margin: 0;
 }
 
-.checkoutButton, .cancelOrderButton {
+.checkoutButton {
     width: auto;
     padding: 0.65rem 1rem;
     margin: 0;
@@ -2029,6 +2029,7 @@ ul {
   width: min(90%, 58rem);
   margin: 0 auto;
   padding-top: 6rem;
+  border: 1px solid var(--line)
 }
 
 .order {
@@ -2113,13 +2114,47 @@ ul {
 }
 
 .itemSummary {
-  background-color: var(--surface-soft);
   width: 100%;
-  padding: 1rem;
-  border: 1px solid var(--accent-border-soft);
-  border-radius: var(--radius-sm);
-  color: var(--text-accent);
-  font-weight: 700;
+  /* padding: 1rem 0;
+  border-bottom: 1px solid var(--line); */
+  font-weight: 500;
+}
+
+.itemSummaryLines {
+  display: grid;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  padding: 1.2rem 0;
+}
+
+.itemSummaryLines div, .itemSummaryTotal {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.itemSummaryLines span {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.itemSummaryLines strong {
+  font-size: 0.88rem;
+}
+
+.itemSummaryTotal {
+  align-items: baseline;
+  padding: 1rem 0 0 0;
+}
+
+.itemSummaryTotal span {
+  font-weight: 600;
+}
+
+.itemSummaryTotal strong {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 400;
 }
 
 /* User cart */
@@ -2480,6 +2515,31 @@ input#newsletter {
 .orderSummaryHeader {
   padding-bottom: 1.2rem;
   border-bottom: 1px solid var(--line);
+}
+
+/* Button inside user order details */
+.cancelOrderButton {
+  display: inline-flex;
+  padding: 0.8rem 1.35rem;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: none;
+  min-height: 46px;
+  width: auto;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.cancelOrderButton:hover {
+  color: var(--white);
+  background: var(--ink);
+  box-shadow: none;
 }
 
 .summaryLines {
