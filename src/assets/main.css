@@ -2028,8 +2028,9 @@ ul {
 .orderContainer {
   width: min(90%, 58rem);
   margin: 0 auto;
-  padding-top: 6rem;
-  border: 1px solid var(--line)
+  padding: 2.4rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
 }
 
 .order {
@@ -2050,6 +2051,25 @@ ul {
   padding-bottom: 1rem;
   width: 100%;
   border-bottom: 1px solid var(--line);
+}
+
+.orderHeading {
+  margin-bottom: 1rem;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  /* align-items: start; */
+  /* gap: 1rem; */
+}
+
+.orderHeading h2 {
+  font-family: var(--display);
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.orderHeading span {
+  letter-spacing: 0.1em;
 }
 
 .itemImage {

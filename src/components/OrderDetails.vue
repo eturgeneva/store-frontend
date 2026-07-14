@@ -46,21 +46,36 @@ async function cancelOrder(orderId) {
 </script>
 
 <template>
-    <div class="orderContainer" v-if="orderDetails">
-        <div class="order">
-            <Item 
-                :items="orderDetails.items"
-                show-summary/>
+    <main>
+        <section class="hero">
+            <div class="heroInner">
+                <p class="eyebrow">Purchase overview</p>
+                <h1>Order details</h1>
+                <p>Review your purchase, track delivery progress and access all the details of your order whenever you need them</p>
+            </div>
+        </section>
+    
+        <div class="orderContainer" v-if="orderDetails">
+            <div class="order">
+                <div class="orderHeading">
+                    <div>
+                        <h2>Order number</h2>
+                    </div>
+                    <span>{{ orderId }}3445454359900</span>
+                </div>
+                <Item 
+                    :items="orderDetails.items"
+                    show-summary/>
+            </div>
+    
+            <button v-if="orderDetails.status !== 'cancelled'"
+                    type="button"
+                    class="cancelOrderButton"
+                    @click="cancelOrder(orderDetails.orderId)">
+                Cancel order
+            </button>
         </div>
-
-        <button v-if="orderDetails.status !== 'cancelled'"
-                type="button"
-                class="cancelOrderButton"
-                @click="cancelOrder(orderDetails.orderId)">
-            Cancel order
-        </button>
-    </div>
-
+    </main>
 </template>
 
 <style scoped>
