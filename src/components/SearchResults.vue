@@ -1,15 +1,15 @@
 <script setup>
-import { computed, getCurrentInstance, onBeforeMount, ref, watch } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useApi } from '@/api';
 import { useCart } from '@/composables/useCart';
+import { formatPrice } from '@/utils/currency';
+import { getProductCategory, getProductImageUrl } from '@/utils/products';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 const route = useRoute();
 const { addToCart } = useCart();
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const products = ref([]);
 const isLoading = ref(false);
@@ -58,9 +58,6 @@ async function loadProducts() {
     }
 }
 
-function getProductCategory(product) {
-    return product.category || product.type || product.product_type || product.brand || 'Toy';
-}
 </script>
 
 <template>
@@ -84,7 +81,7 @@ function getProductCategory(product) {
 
                     <div class="productPreviewImage">
                         <router-link :to="`/products/${product.id}`">
-                            <img :src="productImgURL + product.name + '.png'"
+                            <img :src="getProductImageUrl(product)"
                                 :alt="product.name"
                                 class="productImage"
                                 @error="e => e.target.style.display = 'none'">
@@ -98,7 +95,7 @@ function getProductCategory(product) {
                                 <h3 class="productName">{{ product.name }}</h3>
                             </router-link>
                         </div>
-                        <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) + ' €'}}</div>
+                        <div class="productPrice">{{ formatPrice(product.price_cents) }}</div>
                     </div>
 
                     <div class="productPreviewActions">

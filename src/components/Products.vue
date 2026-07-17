@@ -1,14 +1,13 @@
 <script setup>
-import { computed, ref, onBeforeMount, getCurrentInstance} from 'vue';
-import { store } from '@/store';
+import { computed, ref, onBeforeMount } from 'vue';
+import { useApi } from '@/api';
 import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
+import { formatPrice } from '@/utils/currency';
+import { getProductCategory, getProductImageUrl } from '@/utils/products';
 import ProductBadges from './ProductBadges.vue';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+const $api = useApi();
 
 const { addToCart } = useCart();
 const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
@@ -31,14 +30,14 @@ onBeforeMount(async () => {
 });
 
 const categories = computed(() => {
-    const productCategories = products.value.map(getProductCategory);
+    const productCategories = products.value.map(product => getProductCategory(product, 'All toys'));
     return ['All', ...new Set(productCategories)];
 });
 
 const filteredProducts = computed(() => {
     const categoryFiltered = selectedCategory.value === 'All'
         ? [...products.value]
-        : products.value.filter(product => getProductCategory(product) === selectedCategory.value);
+        : products.value.filter(product => getProductCategory(product, 'All toys') === selectedCategory.value);
 
     return categoryFiltered.sort((a, b) => {
         if (selectedSort.value === 'price-low') {
@@ -56,10 +55,6 @@ const filteredProducts = computed(() => {
         return 0;
     });
 });
-
-function getProductCategory(product) {
-    return product.category || product.type || product.product_type || product.brand || 'All toys';
-}
 
 </script>
 
@@ -109,7 +104,7 @@ function getProductCategory(product) {
                     <div class="productPreviewImage">
                         <ProductBadges :product="product" />
                         <router-link :to="`/products/${product.id}`">
-                            <img :src="productImgURL + product.name + '.png'"
+                            <img :src="getProductImageUrl(product)"
                                 :alt="product.name" 
                                 class="productImage"
                                 @error="e => e.target.style.display = 'none'">
@@ -129,12 +124,12 @@ function getProductCategory(product) {
     
                     <div class="productPreviewDetails">
                         <div>
-                            <p class="productPreviewType">{{ getProductCategory(product) }}</p>
+                            <p class="productPreviewType">{{ getProductCategory(product, 'All toys') }}</p>
                             <router-link :to="`/products/${product.id}`" class="productLink">
                                  <h3 class="productName">{{ product.name.charAt(0).toUpperCase() + product.name.slice(1) }}</h3>
                             </router-link>
                         </div>
-                        <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) +' €'}}</div>
+                        <div class="productPrice">{{ formatPrice(product.price_cents) }}</div>
                     </div>
 
                     <div class="productPreviewActions">

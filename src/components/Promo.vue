@@ -1,6 +1,6 @@
 <script setup>
 
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+import { PRODUCT_ASSET_URL } from '@/utils/products';
 
 </script>
 
@@ -8,7 +8,7 @@ const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
     <div class="promoSection">
             <div class="promoMedia">
                 <img
-                    :src="`${productImgURL}promo-banner-2.png`"
+                    :src="`${PRODUCT_ASSET_URL}promo-banner-2.png`"
                     alt="Toy collection for promotion"
                 />
             </div>

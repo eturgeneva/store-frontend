@@ -1,9 +1,9 @@
 <script setup>
 import { store } from '../store.js';
-import { ref, getCurrentInstance } from 'vue';
+import { ref } from 'vue';
+import { useApi } from '@/api';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 const props = defineProps(['onLogin']);
 

@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, computed, onBeforeMount } from 'vue';
+import { useApi } from '@/api';
+import { formatPrice } from '@/utils/currency';
 import { useRoute } from 'vue-router';
 import Item from './Item.vue';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 const route = useRoute();
 const orderId = route.params.id;
@@ -73,16 +74,16 @@ async function cancelOrder(orderId) {
                 >
                     <template #meta>
                         <p>Quantity: {{ item.quantity || 1 }}</p>
-                        <p>Price: {{ (item.price_cents / 100).toFixed(2) }} €</p>
+                        <p>Price: {{ formatPrice(item.price_cents) }}</p>
                     </template>
                 </Item>
                 <div class="itemSummary">
                     <div class="itemSummaryLines">
-                        <div><span>Subtotal</span><strong>{{ (totalPrice / 100).toFixed(2) }} €</strong></div>
+                        <div><span>Subtotal</span><strong>{{ formatPrice(totalPrice) }}</strong></div>
                         <div><span>Shipping</span><strong>free</strong></div>
                     </div>
                     <div class="itemSummaryTotal">
-                        <span>Total</span><strong>{{ (totalPrice / 100).toFixed(2) }} €</strong>
+                        <span>Total</span><strong>{{ formatPrice(totalPrice) }}</strong>
                     </div>
                 </div>
             </div>

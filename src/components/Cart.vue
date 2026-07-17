@@ -1,12 +1,12 @@
 <script setup>
-import { ref, computed, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, computed, onBeforeMount } from 'vue';
 import { store } from '../store.js';
 import Item from './Item.vue';
+import { useApi } from '@/api';
+import { formatPrice } from '@/utils/currency';
+import { getProductImageUrl } from '@/utils/products';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+const $api = useApi();
 
 const promoCode = ref('');
 const promoCodeApplied = ref(false);
@@ -180,12 +180,12 @@ async function checkout() {
                             :item="item"
                             :title="item.name"
                             :subtitle="item.brand"
-                            :image-src="productImgURL + item.name + '.png'"
+                            :image-src="getProductImageUrl(item)"
                             :to="`/products/${item.product_id}`"
                             variant="cart"
                         >
                             <template #meta>
-                                <span>{{ ((item.price_cents * (item.quantity || 1)) / 100).toFixed(2) }} €</span>
+                                <span>{{ formatPrice(item.price_cents * (item.quantity || 1)) }}</span>
                             </template>
                             <template #actions>
                                 <div class="cartQuantityControls">
@@ -497,7 +497,7 @@ async function checkout() {
                         </div>
                         <div>
                             <span>Subtotal</span>
-                            <strong>{{ (cartSubtotal / 100).toFixed(2) + ' €' }}</strong>
+                            <strong>{{ formatPrice(cartSubtotal) }}</strong>
                         </div>
                         <div>
                             <span>Shipping</span>
@@ -507,7 +507,7 @@ async function checkout() {
 
                     <div class="summaryTotal">
                         <span>Total</span>
-                        <strong>{{ (cartSubtotal / 100).toFixed(2) + ' €' }}</strong>
+                        <strong>{{ formatPrice(cartSubtotal) }}</strong>
                     </div>
 
                     <div class="checkoutNote">

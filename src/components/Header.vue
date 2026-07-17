@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed, watch, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, computed, watch, onBeforeMount } from 'vue';
 import { useRoute } from 'vue-router';
+import { useApi } from '@/api';
 import { store } from '../store.js';
 import CartDrawer from './CartDrawer.vue';
 
@@ -8,8 +9,7 @@ defineOptions({
     name: 'SiteHeader',
 });
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 const route = useRoute();
 const isProfilePopoverOpen = ref(false);
 let miniCartTimer = null;

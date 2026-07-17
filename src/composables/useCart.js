@@ -1,9 +1,8 @@
-import { getCurrentInstance } from "vue";
 import { store } from "@/store";
+import { useApi } from '@/api';
 
 export function useCart() {
-    const { appContext } = getCurrentInstance();
-    const $api = appContext.config.globalProperties.$api;
+    const $api = useApi();
 
     async function addToCart(productId, quantity = 1) {
         try {

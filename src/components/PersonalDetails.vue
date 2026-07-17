@@ -1,9 +1,9 @@
 <script setup>
-import { ref, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, onBeforeMount } from 'vue';
+import { useApi } from '@/api';
 import { store } from '../store.js';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 onBeforeMount(async () => {
     await getProfile();

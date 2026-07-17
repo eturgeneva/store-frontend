@@ -1,8 +1,8 @@
 <script setup>
-import { ref, getCurrentInstance } from 'vue';
+import { ref } from 'vue';
+import { useApi } from '@/api';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 const username = ref('');
 const firstName = ref('');

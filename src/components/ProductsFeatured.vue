@@ -1,13 +1,13 @@
 <script setup>
-import { ref, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, onBeforeMount } from 'vue';
+import { useApi } from '@/api';
 import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
+import { formatPrice } from '@/utils/currency';
+import { getProductCategory, getProductImageUrl } from '@/utils/products';
 import ProductBadges from './ProductBadges.vue';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+const $api = useApi();
 
 const { addToCart } = useCart();
 const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
@@ -16,10 +16,6 @@ const galleryContainer = ref(null);
 
 const showLeftArrow = ref(false);
 const showRightArrow = ref(true);
-
-function getProductCategory(product) {
-    return product.category || product.type || product.product_type || product.brand || 'Toy';
-}
 
 onBeforeMount(async () => {
     try {
@@ -84,7 +80,7 @@ function handleScroll() {
                     <div class="productPreviewImage">
                         <ProductBadges :product="product" />
                         <router-link :to="`/products/${product.id}`">
-                            <img :src="productImgURL + product.name + '.png'"
+                            <img :src="getProductImageUrl(product)"
                                 :alt="product.name" 
                                 class="productImage">
                         </router-link>
@@ -108,7 +104,7 @@ function handleScroll() {
                                 <h3 class="productName">{{ product.name.charAt(0).toUpperCase() + product.name.slice(1) }}</h3>
                             </router-link>
                         </div>
-                        <div class="productPrice">{{ (product.price_cents / 100).toFixed(2) + ' €'}}</div>
+                        <div class="productPrice">{{ formatPrice(product.price_cents) }}</div>
                     </div>
 
                     <div class="productPreviewActions">

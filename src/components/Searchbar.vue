@@ -1,16 +1,16 @@
 <script setup>
-import { computed, getCurrentInstance, onBeforeMount, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useApi } from '@/api';
+import { formatPrice } from '@/utils/currency';
+import { getProductImageUrl } from '@/utils/products';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 const searchInput = ref('');
 const products = ref([]);
 const isPopoverOpen = ref(false);
 const router = useRouter();
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
 
 const previewMatches = computed(() => {
     const query = searchInput.value.trim().toLowerCase();
@@ -102,7 +102,7 @@ function openProductDetails(productId) {
                     @mousedown.prevent.stop="openProductDetails(product.id)"
                     @touchstart.prevent.stop="openProductDetails(product.id)"
                     @click.prevent.stop="openProductDetails(product.id)">
-                    <img :src="productImgURL + product.name + '.png'"
+                    <img :src="getProductImageUrl(product)"
                         :alt="product.name"
                         @error="e => e.target.style.display = 'none'">
                     <div>
@@ -110,7 +110,7 @@ function openProductDetails(productId) {
                         <div class="searchPreviewMeta">
                             <span>{{ product.brand }}</span>
                             <span v-if="product.price_cents">
-                                {{ (product.price_cents / 100).toFixed(2) + ' €'}}
+                                {{ formatPrice(product.price_cents) }}
                             </span>
                         </div>
                     </div>

@@ -1,7 +1,10 @@
 <script setup>
-import { computed, getCurrentInstance } from 'vue';
+import { computed } from 'vue';
 import { store } from '../store.js';
 import Drawer from './Drawer.vue';
+import { useApi } from '@/api';
+import { formatPrice } from '@/utils/currency';
+import { getProductImageUrl } from '@/utils/products';
 
 defineProps({
     keepOpen: {
@@ -14,10 +17,7 @@ defineProps({
     },
 });
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+const $api = useApi();
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
@@ -76,7 +76,7 @@ async function removeItem(productId) {
             class="drawerItem"
         >
             <img
-                :src="productImgURL + item.name + '.png'"
+                :src="getProductImageUrl(item)"
                 :alt="item.name"
                 @error="e => e.target.style.display = 'none'"
             >
@@ -92,7 +92,7 @@ async function removeItem(productId) {
                 </h3>
                 <p>
                     {{ item.brand }} · Qty {{ item.quantity }}<br>
-                    {{ ((item.price_cents * (item.quantity || 1)) / 100).toFixed(2) + ' €' }}
+                    {{ formatPrice(item.price_cents * (item.quantity || 1)) }}
                 </p>
             </div>
 
@@ -111,7 +111,7 @@ async function removeItem(productId) {
         >
             <div class="drawerSubtotal">
                 <span>Subtotal</span>
-                <strong>{{ (cartSubtotal / 100).toFixed(2) + ' €' }}</strong>
+                <strong>{{ formatPrice(cartSubtotal) }}</strong>
             </div>
 
             <router-link

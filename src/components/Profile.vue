@@ -1,14 +1,13 @@
 <script setup>
-import { computed, onBeforeMount, getCurrentInstance } from 'vue';
+import { computed, onBeforeMount } from 'vue';
+import { useApi } from '@/api';
+import { getProductImageUrl } from '@/utils/products';
 import { store } from '../store.js';
 import UserLogin from './UserLogin.vue';
 import UserRegister from './UserRegister.vue';
 import Item from './Item.vue';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+const $api = useApi();
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
@@ -167,7 +166,7 @@ async function logoutUser() {
                         :item="store.loggedInUser.recentOrder.items[0]"
                         :title="store.loggedInUser.recentOrder.items[0].name"
                         :subtitle="store.loggedInUser.recentOrder.items[0].brand"
-                        :image-src="productImgURL + store.loggedInUser.recentOrder.items[0].name + '.png'"
+                        :image-src="getProductImageUrl(store.loggedInUser.recentOrder.items[0])"
                         :to="`/products/${store.loggedInUser.recentOrder.items[0].product_id}`"
                         variant="profile"
                     >
@@ -195,7 +194,7 @@ async function logoutUser() {
                         :item="store.loggedInUser.wishlist[0]"
                         :title="store.loggedInUser.wishlist[0].name"
                         :subtitle="store.loggedInUser.wishlist[0].brand"
-                        :image-src="productImgURL + store.loggedInUser.wishlist[0].name + '.png'"
+                        :image-src="getProductImageUrl(store.loggedInUser.wishlist[0])"
                         :to="`/products/${store.loggedInUser.wishlist[0].product_id}`"
                         variant="profile"
                     >

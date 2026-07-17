@@ -1,16 +1,16 @@
 <script setup>
-import { computed, onMounted, getCurrentInstance, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useApi } from '@/api';
+import { formatPrice } from '@/utils/currency';
+import { getProductImageUrl } from '@/utils/products';
 import { store } from '../store.js';
 import { useCart } from '@/composables/useCart.js';
 import { useWishlist } from '@/composables/useWishlist.js';
 import productGalleryDetailPlaceholder from '@/assets/product-gallery-placeholder-detail.png';
 import productGalleryLifestylePlaceholder from '@/assets/product-gallery-placeholder-lifestyle.png';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
-
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+const $api = useApi();
 
 const { addToCart } = useCart();
 const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
@@ -25,7 +25,7 @@ const productImages = computed(() => {
 
     return [
         {
-            src: productImgURL + store.selectedProduct.name + '.png',
+            src: getProductImageUrl(store.selectedProduct),
             alt: store.selectedProduct.name,
         },
         {
@@ -109,7 +109,7 @@ watch(() => route.params.id, async (productId) => {
 
                 <div class="productInfoTitle">
                     <h1>{{ formattedProductName }}</h1>
-                    <p>{{ (store.selectedProduct.price_cents / 100).toFixed(2) + ' €'}}</p>
+                    <p>{{ formatPrice(store.selectedProduct.price_cents) }}</p>
                 </div>
 
                 <p class="productInfoLead">

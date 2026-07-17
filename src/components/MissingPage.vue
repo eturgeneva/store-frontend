@@ -1,13 +1,13 @@
 <script setup>
 
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+import { getProductImageUrl } from '@/utils/products';
 
 </script>
 
 <template>
     <div class="missingPage">
         <h2>Oops! Something went wrong...</h2>
-        <img :src="productImgURL + 'frog' + '.png'"
+        <img :src="getProductImageUrl('frog')"
                                 :alt="frog" 
                                 @error="e => e.target.style.display = 'none'">
     </div>

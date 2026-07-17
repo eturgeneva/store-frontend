@@ -1,11 +1,13 @@
 <script setup>
-import { ref, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { store } from '@/store';
+import { useApi } from '@/api';
+import { formatPrice } from '@/utils/currency';
+import { getProductImageUrl } from '@/utils/products';
 import Item from './Item.vue';
 import { useCart } from '@/composables/useCart';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 const { addToCart } = useCart();
 const isLoading = ref(true);
@@ -94,12 +96,12 @@ async function deleteProductFromWishlist(productId) {
                     :item="item"
                     :title="item.name"
                     :subtitle="item.brand"
-                    :image-src="`https://eturgeneva.github.io/toy-store-assets/${item.name}.png`"
+                    :image-src="getProductImageUrl(item)"
                     :to="`/products/${item.product_id}`"
                     variant="wishlist"
                 >
                     <template #meta>
-                        <p>{{ (item.price_cents / 100).toFixed(2) }} €</p>
+                        <p>{{ formatPrice(item.price_cents) }}</p>
                     </template>
                     <template #actions>
                             <button

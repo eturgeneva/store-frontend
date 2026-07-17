@@ -1,9 +1,9 @@
-import { getCurrentInstance } from 'vue';
 import { store } from '@/store';
+import { useApi } from '@/api';
+import { getProductId } from '@/utils/products';
 
 export function useWishlist() {
-    const { appContext } = getCurrentInstance();
-    const $api = appContext.config.globalProperties.$api;
+    const $api = useApi();
 
     async function loadProfile() {
         if (store.loggedIn) {
@@ -69,10 +69,6 @@ export function useWishlist() {
         return null;
     }
 
-    function getWishlistProductId(item) {
-        return item.product_id || item.productId || item.id;
-    }
-
     function addProductToLocalWishlist(productId, wishlistResponse) {
         const wishlist = getWishlistArray(wishlistResponse);
         if (wishlist) {
@@ -84,7 +80,7 @@ export function useWishlist() {
             ? store.loggedInUser.wishlist
             : [];
 
-        if (currentWishlist.some(item => getWishlistProductId(item) === productId)) {
+        if (currentWishlist.some(item => getProductId(item) === productId)) {
             store.loggedInUser.wishlist = currentWishlist;
             return;
         }
@@ -108,7 +104,7 @@ export function useWishlist() {
             : [];
 
         store.loggedInUser.wishlist = currentWishlist.filter(item => {
-            return getWishlistProductId(item) !== productId;
+            return getProductId(item) !== productId;
         });
     }
 
@@ -180,7 +176,7 @@ export function useWishlist() {
             return false;
         }
 
-        return store.loggedInUser.wishlist.some(item => getWishlistProductId(item) === productId);
+        return store.loggedInUser.wishlist.some(item => getProductId(item) === productId);
     }
 
     return {

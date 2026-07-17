@@ -1,10 +1,11 @@
 <script setup>
-import { onBeforeMount, getCurrentInstance } from 'vue';
+import { onBeforeMount } from 'vue';
+import { useApi } from '@/api';
+import { formatPrice } from '@/utils/currency';
 import { store } from '../store.js';
 import Item from './Item.vue';
 
-const { appContext } = getCurrentInstance();
-const $api = appContext.config.globalProperties.$api;
+const $api = useApi();
 
 onBeforeMount(async () => {
     await getProfile();
@@ -78,7 +79,7 @@ async function loadOrders() {
             >
                 <template #meta>
                     <p>Items: {{ order.product_count }}</p>
-                    <p>Total price: {{ (order.total_price / 100).toFixed(2) }} €</p>
+                    <p>Total price: {{ formatPrice(order.total_price) }}</p>
                     <p>Placed: {{ new Date(order.placed_at).toLocaleString() }}</p>
                 </template>
                 <template #actions>
