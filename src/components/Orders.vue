@@ -6,6 +6,8 @@ import Item from './Item.vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
+const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
+
 onBeforeMount(async () => {
     await getProfile();
     await loadOrders();
