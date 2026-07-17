@@ -20,6 +20,10 @@ const cartQuantity = computed(() => {
 
 const isCartPage = computed(() => route.path === '/cart');
 
+const wishlistQuantity = computed(() => {
+    return store.loggedInUser.wishlist?.length ?? 0;
+});
+
 onBeforeMount(async() => {
     await getProfile()
     console.log('cart id', store.cartId)
@@ -95,6 +99,11 @@ async function getProfile() {
                 console.log('Store cart property:', store.cart.products);
             } 
             store.setCartIsLoading(false);
+
+            const wishlist = await $api.getWishlist();
+            if (wishlist) {
+                store.loggedInUser.wishlist = wishlist;
+            }
         }
     } catch (err) {
         console.error(err);
@@ -166,6 +175,12 @@ async function getProfile() {
                     <router-link to="/wishlist">
                         <span class="material-symbols-outlined">
                             favorite
+                        </span>
+
+                        <span v-if="store.loggedIn && wishlistQuantity"
+                            class="quantityPreview"
+                        >
+                            {{ wishlistQuantity }}
                         </span>
                     </router-link>
                     <div
