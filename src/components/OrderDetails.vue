@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, getCurrentInstance } from 'vue';
+import { ref, computed, onBeforeMount, getCurrentInstance } from 'vue';
 import { useRoute } from 'vue-router';
 import Item from './Item.vue';
 
@@ -12,6 +12,9 @@ const route = useRoute();
 const orderId = route.params.id;
 
 const orderDetails = ref(null);
+const totalPrice = computed(() => orderDetails.value?.items.reduce(
+    (total, item) => total + item.price_cents * (item.quantity || 1), 0
+) || 0);
 
 onBeforeMount(async () => {
     await showOrderDetails(orderId);
@@ -63,9 +66,29 @@ async function cancelOrder(orderId) {
                     </div>
                     <span>{{ orderId }}3445454359900</span>
                 </div>
-                <Item 
-                    :items="orderDetails.items"
-                    show-summary/>
+                <Item
+                    v-for="item in orderDetails.items"
+                    :key="item.product_id"
+                    :item="item"
+                    :title="item.name"
+                    :subtitle="item.brand"
+                    :image-src="`https://eturgeneva.github.io/toy-store-assets/${item.name}.png`"
+                    :to="`/products/${item.product_id}`"
+                >
+                    <template #meta>
+                        <p>Quantity: {{ item.quantity || 1 }}</p>
+                        <p>Price: {{ (item.price_cents / 100).toFixed(2) }} €</p>
+                    </template>
+                </Item>
+                <div class="itemSummary">
+                    <div class="itemSummaryLines">
+                        <div><span>Subtotal</span><strong>{{ (totalPrice / 100).toFixed(2) }} €</strong></div>
+                        <div><span>Shipping</span><strong>free</strong></div>
+                    </div>
+                    <div class="itemSummaryTotal">
+                        <span>Total</span><strong>{{ (totalPrice / 100).toFixed(2) }} €</strong>
+                    </div>
+                </div>
             </div>
     
             <button v-if="orderDetails.status !== 'cancelled'"

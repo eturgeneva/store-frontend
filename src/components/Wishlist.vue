@@ -94,10 +94,20 @@ async function deleteProductFromWishlist(productId) {
             </div>
             <div v-else-if="store.loggedInUser.wishlist?.length"
                 class="wishlist">
-                <Item 
-                    :items="store.loggedInUser.wishlist">
-                    <template #default="{ item }">
-                        <div class="itemActions">
+                <Item
+                    v-for="item in store.loggedInUser.wishlist"
+                    :key="item.product_id"
+                    :item="item"
+                    :title="item.name"
+                    :subtitle="item.brand"
+                    :image-src="`https://eturgeneva.github.io/toy-store-assets/${item.name}.png`"
+                    :to="`/products/${item.product_id}`"
+                    variant="wishlist"
+                >
+                    <template #meta>
+                        <p>{{ (item.price_cents / 100).toFixed(2) }} €</p>
+                    </template>
+                    <template #actions>
                             <button
                                 type="button"
                                 @click="addToCart(item.product_id, 1)"
@@ -114,7 +124,6 @@ async function deleteProductFromWishlist(productId) {
                             >
                                 x
                             </button>
-                        </div>
                     </template>
                 </Item>
             </div>

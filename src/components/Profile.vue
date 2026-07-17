@@ -1,8 +1,9 @@
 <script setup>
-import { ref, computed, onBeforeMount, getCurrentInstance } from 'vue';
+import { computed, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
 import UserLogin from './UserLogin.vue';
 import UserRegister from './UserRegister.vue';
+import Item from './Item.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -84,7 +85,10 @@ async function loadRecentOrder() {
         console.log('Unable to load orders');
         return;
     }
-    const recentOrderId = store.loggedInUser.orders.at(-1).id;
+    const recentOrderId = store.loggedInUser.orders?.at(-1)?.id;
+    if (!recentOrderId) {
+        return;
+    }
     try {
         const recentOrder = await $api.getOrderById(recentOrderId);
         if (recentOrder) {
@@ -169,27 +173,27 @@ async function logoutUser() {
                             <h2>Recent concept order</h2>
                         </div>
                     </div>
-                    <div class="recentOrderItem">
-                        <div class="recentOrderImage">
-                            <img 
-                                :src="productImgURL + store.loggedInUser.recentOrder.items[0].name + '.png'"
-                                :alt="store.loggedInUser.recentOrder.items[0].name"
-                            >
-                        </div>
-                        <div class="recentOrderDetails">
-                            <p>{{ store.loggedInUser.recentOrder.items[0].brand}}</p>
-                            <h3>{{ store.loggedInUser.recentOrder.items[0].name}}</h3>
-                            <span>
-                                <p>Placed: {{ new Date(store.loggedInUser.recentOrder.placedAt).toLocaleString() }}</p>
-                            </span>
-                        </div>
-                        <div>
-                            <!-- need to calculate each item quantity -->
+                    <Item
+                        v-if="store.loggedInUser.recentOrder?.items?.length"
+                        :item="store.loggedInUser.recentOrder.items[0]"
+                        :title="store.loggedInUser.recentOrder.items[0].name"
+                        :subtitle="store.loggedInUser.recentOrder.items[0].brand"
+                        :image-src="productImgURL + store.loggedInUser.recentOrder.items[0].name + '.png'"
+                        :to="`/products/${store.loggedInUser.recentOrder.items[0].product_id}`"
+                        variant="profile"
+                    >
+                        <template #meta>
+                            <p>Placed: {{ new Date(store.loggedInUser.recentOrder.placedAt).toLocaleString() }}</p>
+                        </template>
+                        <template #aside>
                             <p>+ {{ store.loggedInUser.recentOrder.items.length - 1 }} more item(s)</p>
-                        </div>
-
-                        <button type="button" class="orderDetailsButton">View details</button>
-                    </div>
+                        </template>
+                        <template #actions>
+                            <router-link :to="`/orders/${store.loggedInUser.recentOrder.orderId || store.loggedInUser.recentOrder.id}`">
+                                <button type="button" class="orderDetailsButton">View details</button>
+                            </router-link>
+                        </template>
+                    </Item>
                 </div>
                 <div class="profileCard">
                     <div class="profileCardHeading">
@@ -197,24 +201,24 @@ async function logoutUser() {
                             <h2>Your saved pieces</h2>
                         </div>
                     </div>
-                    <div class="wishlistFirstItem">
-                        <div class="wishlistFirstImage">
-                            <img 
-                                :src="productImgURL + store.loggedInUser.wishlist[0].name + '.png'"
-                                :alt="store.loggedInUser.wishlist[0].name"
-                            >
-                        </div>
-                        <div class="wishlistFirstDetails">
-                            <p>{{ store.loggedInUser.wishlist[0].brand}}</p>
-                            <h3>{{ store.loggedInUser.wishlist[0].name}}</h3>
-                        </div>
-                        <div>
+                    <Item
+                        v-if="store.loggedInUser.wishlist?.length"
+                        :item="store.loggedInUser.wishlist[0]"
+                        :title="store.loggedInUser.wishlist[0].name"
+                        :subtitle="store.loggedInUser.wishlist[0].brand"
+                        :image-src="productImgURL + store.loggedInUser.wishlist[0].name + '.png'"
+                        :to="`/products/${store.loggedInUser.wishlist[0].product_id}`"
+                        variant="profile"
+                    >
+                        <template #aside>
                             <p>+ {{ store.loggedInUser.wishlist.length - 1 }} more item(s)</p>
-                        </div>
-                        <router-link to="/wishlist">
-                            <button type="button" class="wishlistViewButton">View wishlist</button>
-                        </router-link>
-                    </div>
+                        </template>
+                        <template #actions>
+                            <router-link to="/wishlist">
+                                <button type="button" class="wishlistViewButton">View wishlist</button>
+                            </router-link>
+                        </template>
+                    </Item>
                 </div>
             </div>
         </section>

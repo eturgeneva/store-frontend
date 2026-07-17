@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
+import Item from './Item.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -184,29 +185,20 @@ async function checkout() {
                         v-else
                         class="cartItems"
                     >
-                        <article
+                        <Item
                             v-for="item in store.cart.products"
                             :key="item.product_id"
-                            class="cartItem"
+                            :item="item"
+                            :title="item.name"
+                            :subtitle="item.brand"
+                            :image-src="productImgURL + item.name + '.png'"
+                            :to="`/products/${item.product_id}`"
+                            variant="cart"
                         >
-                            <div class="cartItemImage">
-                                <img
-                                    :src="productImgURL + item.name + '.png'"
-                                    :alt="item.name"
-                                >
-                            </div>
-
-                            <div class="cartItemDetails">
-                                <div>
-                                    <p>{{ item.brand }}</p>
-                                    <h3>
-                                        <router-link :to="`/products/${item.product_id}`">
-                                            {{ item.name }}
-                                        </router-link>
-                                    </h3>
-                                    <span>{{ ((item.price_cents * (item.quantity || 1)) / 100).toFixed(2) + ' €' }}</span>
-                                </div>
-
+                            <template #meta>
+                                <span>{{ ((item.price_cents * (item.quantity || 1)) / 100).toFixed(2) }} €</span>
+                            </template>
+                            <template #actions>
                                 <div class="cartQuantityControls">
                                     <button
                                         type="button"
@@ -242,8 +234,8 @@ async function checkout() {
                                         X
                                     </button>
                                 </div>
-                            </div>
-                        </article>
+                            </template>
+                        </Item>
                     </div>
                 </div>
 

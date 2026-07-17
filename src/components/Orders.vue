@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onBeforeMount, getCurrentInstance } from 'vue';
+import { onBeforeMount, getCurrentInstance } from 'vue';
 import { store } from '../store.js';
+import Item from './Item.vue';
 
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
@@ -77,16 +78,25 @@ async function loadOrders() {
         </section>
 
         <div class="ordersContainer" v-if="store.loggedInUser.orders">
-
-            <div v-for="order in store.loggedInUser.orders" :key="order.id" class="orderPreview">
-                <h3>Order #{{  order.id  }}</h3>
-                <p>Items: {{  order.product_count }}</p>
-                <p>Status: {{ order.status }}</p>
-                <p>Total price: {{ order.total_price / 100 + ' €'}}</p>
-                <p>Placed: {{ new Date(order.placed_at).toLocaleString() }}</p>
-    
-                <router-link :to="`/orders/${order.id}`">Show details</router-link>
-            </div>
+            <Item
+                v-for="order in store.loggedInUser.orders"
+                :key="order.id"
+                :item="order"
+                :title="`Order #${order.id}`"
+                :subtitle="order.status"
+                variant="order"
+            >
+                <template #meta>
+                    <p>Items: {{ order.product_count }}</p>
+                    <p>Total price: {{ (order.total_price / 100).toFixed(2) }} €</p>
+                    <p>Placed: {{ new Date(order.placed_at).toLocaleString() }}</p>
+                </template>
+                <template #actions>
+                    <router-link :to="`/orders/${order.id}`">
+                        <button type="button" class="orderDetailsButton">View details</button>
+                    </router-link>
+                </template>
+            </Item>
         </div>
     </main>
 </template>
