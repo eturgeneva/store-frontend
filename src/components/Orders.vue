@@ -6,28 +6,19 @@ import Item from './Item.vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
-
 onBeforeMount(async () => {
     await getProfile();
     await loadOrders();
 });
 
 async function getProfile() {
-    console.log('store loggedIn', store.loggedIn);
-    console.log('store loggedInUser', store.loggedInUser);
     try {
         const user = await $api.getUser();
         if (user) {
-            console.log('User object', user);
-            console.log('User first name:', user.first_name);
-            console.log('User cart ID:', user.cartId);
-
             store.setLoggedIn(user.id !== null);
             if (user.id !== null) {
                 Object.assign(store.loggedInUser, user);
             }
-            console.log('Store loggedIn', store.loggedIn);
 
             let cartId = user.cartId;
             store.setCartId(cartId);
@@ -37,7 +28,6 @@ async function getProfile() {
                 store.setCartIsLoading(true);
                 const cart = await $api.getCart(cartId);
                 store.setCart(cart);
-                console.log('Store cart property:', store.cart.products);
             } 
             store.setCartIsLoading(false);
         }
@@ -57,8 +47,6 @@ async function loadOrders() {
         const ordersResponse = await $api.getOrdersByUserId(store.loggedInUser.id);
         if (ordersResponse) {
             store.loggedInUser.orders = ordersResponse.orders;
-
-            console.log('Store logged in user', store.loggedInUser);
         } else {
             console.log('Failed to fetch oder details');
         }

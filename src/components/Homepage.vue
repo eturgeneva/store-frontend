@@ -1,7 +1,6 @@
 <script setup>
 import Promo from './Promo.vue';
 import ProductsFeatured from './ProductsFeatured.vue';
-import Products from './Products.vue';
 
 </script>
 
@@ -9,6 +8,5 @@ import Products from './Products.vue';
     <main>
         <Promo />
         <ProductsFeatured />
-        <!-- <Products /> -->
     </main>
 </template>

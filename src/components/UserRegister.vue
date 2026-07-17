@@ -20,8 +20,6 @@ function comparePasswords(password1, password2) {
 }
 
 async function registerUser() {
-    console.log('Register button clicked');
-
     errorMessage.value = '';
     successMessage.value = '';
 
@@ -47,9 +45,7 @@ async function registerUser() {
 
     try {
         const response = await $api.registerUser(userData);
-        console.log('Response', response);
         if (response) {
-            console.log('Registration successful, you can now login');
             successMessage.value = 'Registration successful, you can now login';
             isLoading.value = false;
 

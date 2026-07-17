@@ -25,7 +25,6 @@ onBeforeMount(async () => {
     try {
         const fetchedProducts = await $api.getAllProducts();
         if (fetchedProducts) {
-            // products.value = fetchedProducts;
             // Display first 8 products
             products.value = fetchedProducts.slice(0, 8);
             await loadWishlist();
@@ -71,7 +70,6 @@ function handleScroll() {
             <button v-show="showLeftArrow"
                     class="scrollArrow scrollArrowLeft"
                     @click="scrollLeft">
-                <!-- <span class="arrowIcon">〈</span> -->
                 <span class="material-symbols-outlined arrowIcon">chevron_left</span>
             </button>
 
@@ -128,7 +126,6 @@ function handleScroll() {
             <button v-show="showRightArrow"
                     class="scrollArrow scrollArrowRight"
                     @click="scrollRight">
-                <!-- <span class="arrowIcon">〉</span> -->
                 <span class="material-symbols-outlined arrowIcon">chevron_right</span>
             </button>
         </div>

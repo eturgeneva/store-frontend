@@ -16,8 +16,10 @@ const badges = computed(() => {
     const generatedBadges = [];
     const productId = Number(props.product.id);
     const price = Number(props.product.price_cents || 0);
+    const randomNumber = Math.random();
 
-    if (props.product.is_new || productId % 5 === 0) {
+    // no property yet
+    if (props.product.is_new || randomNumber < 0.2) {
         generatedBadges.push('New');
     }
 
@@ -25,16 +27,13 @@ const badges = computed(() => {
         generatedBadges.push('Sale');
     }
 
+    // no property yet
     if (props.product.stock_quantity && props.product.stock_quantity <= 5) {
         generatedBadges.push('Low stock');
     }
 
-    if (!generatedBadges.length && price > 0 && price <= 2500) {
+    if (!generatedBadges.length && price > 0 && price <= 1500) {
         generatedBadges.push('Sweet deal');
-    }
-
-    if (!generatedBadges.length) {
-        generatedBadges.push('Gift pick');
     }
 
     return generatedBadges.slice(0, 2);

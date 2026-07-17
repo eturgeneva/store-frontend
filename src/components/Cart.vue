@@ -38,9 +38,6 @@ const cartSubtotal = computed(() => {
 });
 
 onBeforeMount(async () => {
-    console.log('Store cart ID', store.cartId);
-    console.log('Logged in user', store.loggedInUser);
-
     let cartId = store.cartId;
 
     if (!cartId) {
@@ -52,16 +49,14 @@ onBeforeMount(async () => {
             return;
         }
         cartId = user.cartId;
-        console.log('cartId', cartId);
         store.setCartId(cartId);
     }
     store.setCartIsLoading(true);
-    console.log('Store cart property:', store.cart.products);
+
     const cart = await $api.getCart(cartId);
 
     if (cart) {
         store.setCart(cart);
-        console.log('Store cart property:', store.cart.products);
     }
     store.setCartIsLoading(false);
 });
@@ -72,7 +67,6 @@ async function updateQuantity(productId, quantityUpdate) {
         const updatedCart = await $api.updateQuantityInCart(store.cartId, productId, quantityUpdate);
         if (updatedCart) {
             store.setCart(updatedCart);
-            console.log('Cart after quantity update', store.cart.products);
         } else {
             console.log('Unable to update product quantity in cart');
         }
@@ -92,7 +86,6 @@ async function setQuantity(productId, quantity) {
         const updatedCart = await $api.setQuantityInCart(store.cartId, productId, quantity);
         if (updatedCart) {
             store.setCart(updatedCart);
-            console.log('Cart after set quantity on input', store.cart.products);
         } else {
             console.log('Unable to set quantity on input');
         }
@@ -122,13 +115,9 @@ async function checkout() {
     try {
         const checkout = await $api.placeOrder(store.cart.products);
         if (checkout) {
-            console.log('The following order was placed', checkout);
-
             store.setCartId(null);
             store.setCart({ products: []});
             orderPlaced.value = true;
-
-            console.log('Store cart after checkout', store.cartId, store.cart);
         } else {
             console.log('Failed to place an order');
         }

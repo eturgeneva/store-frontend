@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import StoreApi from './store-api';
-
 import Homepage from './components/Homepage.vue';
 import Profile from './components/Profile.vue';
 import Products from './components/Products.vue';
@@ -13,10 +11,6 @@ import MissingPage from './components/MissingPage.vue';
 import PersonalDetails from './components/PersonalDetails.vue';
 import SearchResults from './components/SearchResults.vue';
 
-// const URL = 'http://localhost:3000';
-// const api = new StoreApi(URL);
-
-// Vue Router
 const routes = [
   { path: '/', component: Homepage },
   { path: '/products', component: Products },

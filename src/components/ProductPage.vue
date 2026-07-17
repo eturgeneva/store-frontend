@@ -54,7 +54,6 @@ async function loadProduct(productId) {
         const selectedProduct = await $api.getProductById(productId);
         if (selectedProduct) {
             store.setSelectedProduct(selectedProduct);
-            console.log('Store selectedProduct property', store.selectedProduct);
         } else {
             console.log('Failed to fetch the product');
         }
@@ -109,7 +108,6 @@ watch(() => route.params.id, async (productId) => {
                 <p class="productEyebrow">{{ store.selectedProduct.brand }} - Age 0+</p>
 
                 <div class="productInfoTitle">
-                    <!-- <h1>{{ store.selectedProduct.name.charAt(0).toUpperCase() + store.selectedProduct.name.slice(1) }}</h1> -->
                     <h1>{{ formattedProductName }}</h1>
                     <p>{{ (store.selectedProduct.price_cents / 100).toFixed(2) + ' €'}}</p>
                 </div>

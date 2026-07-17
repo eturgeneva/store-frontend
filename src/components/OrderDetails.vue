@@ -6,8 +6,6 @@ import Item from './Item.vue';
 const { appContext } = getCurrentInstance();
 const $api = appContext.config.globalProperties.$api;
 
-// const productImgURL = 'https://eturgeneva.github.io/toy-store-assets/';
-
 const route = useRoute();
 const orderId = route.params.id;
 
@@ -26,7 +24,6 @@ async function showOrderDetails(orderId) {
         const response = await $api.getOrderById(orderId);
         if (response) {
             orderDetails.value = response;
-            console.log('selected Order Details', orderDetails.value);
         }
     } catch (err) {
         console.error(err);
@@ -39,7 +36,6 @@ async function cancelOrder(orderId) {
         const response = await $api.cancelOrderById(orderId);
         if (response) {
             orderDetails.value.status = 'cancelled';
-            console.log('selected order status', orderDetails.value.status);
         }
     } catch (err) {
         console.error(err);

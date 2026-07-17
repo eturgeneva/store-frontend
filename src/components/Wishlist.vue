@@ -9,10 +9,6 @@ const $api = appContext.config.globalProperties.$api;
 
 const { addToCart } = useCart();
 const isLoading = ref(true);
-// const wishlist = ref([]);
-// console.log('wishlist', wishlist)
-// console.log('wishlist.value', wishlist.value)
-// console.log('store logged in user wishlist', store.loggedInUser.wishlist)
 
 onBeforeMount(async () => {
     try {
@@ -35,8 +31,6 @@ onBeforeMount(async () => {
         isLoading.value = false;
     }
 })
-
-console.log('store logged in user wishlist', store.loggedInUser.wishlist);
 
 async function loadProfile() {
     if (store.loggedIn) {

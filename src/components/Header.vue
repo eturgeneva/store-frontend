@@ -26,7 +26,6 @@ const wishlistQuantity = computed(() => {
 
 onBeforeMount(async() => {
     await getProfile()
-    console.log('cart id', store.cartId)
 })
 
 watch(isCartPage, (onCartPage) => {
@@ -73,20 +72,14 @@ function restartMiniCartTimer() {
 
 // Get profile (repeated in Profile and partly in Cart)
 async function getProfile() {
-    console.log('store loggedIn', store.loggedIn);
-    console.log('store loggedInUser', store.loggedInUser);
     try {
         const user = await $api.getUser();
         if (user) {
-            console.log('User object', user);
-            console.log('User first name:', user.first_name);
-            console.log('User cart ID:', user.cartId);
 
             store.setLoggedIn(user.id !== null);
             if (user.id !== null) {
                 Object.assign(store.loggedInUser, user);
             }
-            console.log('Store loggedIn', store.loggedIn);
 
             let cartId = user.cartId;
             store.setCartId(cartId);
@@ -96,7 +89,6 @@ async function getProfile() {
                 store.setCartIsLoading(true);
                 const cart = await $api.getCart(cartId);
                 store.setCart(cart);
-                console.log('Store cart property:', store.cart.products);
             } 
             store.setCartIsLoading(false);
 
@@ -109,8 +101,6 @@ async function getProfile() {
         console.error(err);
     }
 }
-
-// Get cart 
 
 </script>
 

@@ -16,17 +16,12 @@ const products = ref([]);
 const selectedCategory = ref('All');
 const selectedSort = ref('featured');
 
-console.log('Render', store.cartId);
-
 onBeforeMount(async () => {
     try {
-        console.log('onBeforeMount store cart ID', store.cartId);
-
         const fetchedProducts = await $api.getAllProducts();
         if (fetchedProducts) {
             products.value = fetchedProducts;
             await loadWishlist();
-            console.log('Products', products.value);
         } else {
             console.log('Failed to fetch products');
         }

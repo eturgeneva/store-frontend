@@ -74,7 +74,6 @@ function openProductDetails(productId) {
 
 <template>
     <div class="searchContainer">
-        <!-- <div class="search"> -->
             <input v-model="searchInput"
                     type="text"
                     name="search"
@@ -117,7 +116,6 @@ function openProductDetails(productId) {
                     </div>
                 </button>
             </div>
-        <!-- </div> -->
     </div>
 
 </template>

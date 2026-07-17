@@ -15,7 +15,6 @@ const errorMessage = ref('');
 
 // Login User:
 async function loginUser() {
-    console.log('loggedIn', store.loggedIn);
     if (!email.value || !password.value) {
         errorMessage.value = 'Please fill in all fields';
         return;
@@ -27,15 +26,11 @@ async function loginUser() {
 
     try {
         const response = await $api.loginUser(userLoginData);
-        console.log('Response', response);
         if (response) {
             await props.onLogin();
         } else {
             errorMessage.value = 'Invalid email or password';
         }
-
-        console.log('loggedInUser', store.loggedInUser);
-        console.log('loggedIn', store.loggedIn);
         isLoading.value = false;
 
     } catch (err) {
@@ -43,7 +38,6 @@ async function loginUser() {
         errorMessage.value = 'Login failed. Please try again.'
         isLoading.value = false;
         store.setLoggedIn(false);
-        console.log('loggedIn', store.loggedIn);
     }
 }
 

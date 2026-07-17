@@ -27,7 +27,6 @@ onBeforeMount(async () => {
         const wishlist = await $api.getWishlist();
         if (wishlist) {
                 store.loggedInUser.wishlist = wishlist;
-                console.log('user object from Profile',store.loggedInUser);
         } else {
                 console.log('Failed to fetch wishlist');
         }
@@ -38,20 +37,13 @@ onBeforeMount(async () => {
 
 // Get profile
 async function getProfile() {
-    console.log('store loggedIn', store.loggedIn);
-    console.log('store loggedInUser', store.loggedInUser);
     try {
         const user = await $api.getUser();
         if (user) {
-            console.log('User object', user);
-            console.log('User first name:', user.first_name);
-            console.log('User cart ID:', user.cartId);
-
             store.setLoggedIn(user.id !== null);
             if (user.id !== null) {
                 Object.assign(store.loggedInUser, user);
             }
-            console.log('Store loggedIn', store.loggedIn);
         }
     } catch (err) {
         console.error(err);
@@ -69,8 +61,6 @@ async function loadOrders() {
         const ordersResponse = await $api.getOrdersByUserId(store.loggedInUser.id);
         if (ordersResponse) {
             store.loggedInUser.orders = ordersResponse.orders;
-
-            console.log('Store logged in user', store.loggedInUser);
         } else {
             console.log('Failed to fetch oder details');
         }
@@ -107,7 +97,6 @@ async function logoutUser() {
         const response = await $api.logoutUser();
         if (response) {
             store.setLoggedIn(false);
-            console.log('loggedIn global state after logout', store.loggedIn);
         } else {
             console.log('Failed to log out');
         }
