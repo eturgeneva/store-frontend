@@ -1,5 +1,4 @@
 <script setup>
-import { store } from '../store.js';
 import { ref } from 'vue';
 import { useApi } from '@/api';
 
@@ -37,7 +36,6 @@ async function loginUser() {
         console.error(err);
         errorMessage.value = 'Login failed. Please try again.'
         isLoading.value = false;
-        store.setLoggedIn(false);
     }
 }
 

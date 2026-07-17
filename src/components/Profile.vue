@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onBeforeMount } from 'vue';
 import { useApi } from '@/api';
+import { useSession } from '@/session';
 import { getProductImageUrl } from '@/utils/products';
 import { store } from '../store.js';
 import UserLogin from './UserLogin.vue';
@@ -8,46 +9,24 @@ import UserRegister from './UserRegister.vue';
 import Item from './Item.vue';
 
 const $api = useApi();
+const { logout, refreshUser } = useSession();
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
 });
 
 const wishlistQuantity = computed(() => {
-    return store.loggedInUser.wishlist.length;
+    return store.loggedInUser.wishlist?.length ?? 0;
 });
 
 onBeforeMount(async () => {
     try {
-        await getProfile();
         await loadOrders();
         await loadRecentOrder();
-
-        const wishlist = await $api.getWishlist();
-        if (wishlist) {
-                store.loggedInUser.wishlist = wishlist;
-        } else {
-                console.log('Failed to fetch wishlist');
-        }
         } catch (err) {
             console.error(err);
     }
 });
-
-// Get profile
-async function getProfile() {
-    try {
-        const user = await $api.getUser();
-        if (user) {
-            store.setLoggedIn(user.id !== null);
-            if (user.id !== null) {
-                Object.assign(store.loggedInUser, user);
-            }
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 // Get orders by user:
 async function loadOrders() {
@@ -92,17 +71,16 @@ async function loadRecentOrder() {
 
 // Logout User:
 async function logoutUser() {
-    try {
-        const response = await $api.logoutUser();
-        if (response) {
-            store.setLoggedIn(false);
-        } else {
-            console.log('Failed to log out');
-        }
-        
-    } catch (err) {
-        console.error(err);
+    const succeeded = await logout();
+    if (!succeeded) {
+        console.log('Failed to log out');
     }
+}
+
+async function handleLogin() {
+    await refreshUser();
+    await loadOrders();
+    await loadRecentOrder();
 }
 
 </script>
@@ -117,7 +95,7 @@ async function logoutUser() {
             </div>
         </section>
         <div class="userLogin" v-if="!store.loggedIn">
-            <UserLogin :onLogin="getProfile"/>
+            <UserLogin :onLogin="handleLogin"/>
             <UserRegister />
         </div>
 

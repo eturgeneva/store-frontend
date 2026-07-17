@@ -1,32 +1,14 @@
 import { store } from '@/store';
 import { useApi } from '@/api';
+import { useSession } from '@/session';
 import { getProductId } from '@/utils/products';
 
 export function useWishlist() {
     const $api = useApi();
-
-    async function loadProfile() {
-        if (store.loggedIn) {
-            return;
-        }
-
-        try {
-            const user = await $api.getUser();
-            if (user) {
-                store.setLoggedIn(user.id !== null);
-                if (user.id !== null) {
-                    Object.assign(store.loggedInUser, user);
-                    store.setCartId(user.cartId);
-                }
-            }
-        } catch (err) {
-            console.error(err);
-            store.setLoggedIn(false);
-        }
-    }
+    const { initializeSession } = useSession();
 
     async function loadWishlist() {
-        await loadProfile();
+        await initializeSession();
 
         if (!store.loggedIn || Array.isArray(store.loggedInUser.wishlist)) {
             return;
@@ -124,7 +106,7 @@ export function useWishlist() {
     }
 
     async function toggleWishlist(productId) {
-        await loadProfile();
+        await initializeSession();
 
         if (!store.loggedIn || !store.loggedInUser.id) {
             console.log('Please log in to create a wishlist');
@@ -181,7 +163,6 @@ export function useWishlist() {
 
     return {
         isInWishlist,
-        loadProfile,
         loadWishlist,
         toggleWishlist,
     };

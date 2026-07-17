@@ -1,7 +1,6 @@
 <script setup>
-import { ref, computed, watch, onBeforeMount } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useApi } from '@/api';
 import { store } from '../store.js';
 import CartDrawer from './CartDrawer.vue';
 
@@ -9,7 +8,6 @@ defineOptions({
     name: 'SiteHeader',
 });
 
-const $api = useApi();
 const route = useRoute();
 const isProfilePopoverOpen = ref(false);
 let miniCartTimer = null;
@@ -23,10 +21,6 @@ const isCartPage = computed(() => route.path === '/cart');
 const wishlistQuantity = computed(() => {
     return store.loggedInUser.wishlist?.length ?? 0;
 });
-
-onBeforeMount(async() => {
-    await getProfile()
-})
 
 watch(isCartPage, (onCartPage) => {
     if (onCartPage) {
@@ -68,38 +62,6 @@ function restartMiniCartTimer() {
     miniCartTimer = setTimeout(() => {
         store.closeCartDrawer();
     }, 1200);
-}
-
-// Get profile (repeated in Profile and partly in Cart)
-async function getProfile() {
-    try {
-        const user = await $api.getUser();
-        if (user) {
-
-            store.setLoggedIn(user.id !== null);
-            if (user.id !== null) {
-                Object.assign(store.loggedInUser, user);
-            }
-
-            let cartId = user.cartId;
-            store.setCartId(cartId);
-
-            // If a cart exists
-            if (cartId) {
-                store.setCartIsLoading(true);
-                const cart = await $api.getCart(cartId);
-                store.setCart(cart);
-            } 
-            store.setCartIsLoading(false);
-
-            const wishlist = await $api.getWishlist();
-            if (wishlist) {
-                store.loggedInUser.wishlist = wishlist;
-            }
-        }
-    } catch (err) {
-        console.error(err);
-    }
 }
 
 </script>

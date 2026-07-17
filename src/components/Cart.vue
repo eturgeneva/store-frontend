@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue';
+import { ref, computed } from 'vue';
 import { store } from '../store.js';
 import Item from './Item.vue';
 import { useApi } from '@/api';
@@ -35,30 +35,6 @@ const cartSubtotal = computed(() => {
     return store.cart.products.reduce((acc, item) => {
         return acc + (item.price_cents * (item.quantity || 1));
     }, 0);
-});
-
-onBeforeMount(async () => {
-    let cartId = store.cartId;
-
-    if (!cartId) {
-        const user = await $api.getUser();
-
-        if (!user || !user.cartId) {
-            console.log('No cart ID found for user or the cart is empty');
-            store.setCartIsLoading(false);
-            return;
-        }
-        cartId = user.cartId;
-        store.setCartId(cartId);
-    }
-    store.setCartIsLoading(true);
-
-    const cart = await $api.getCart(cartId);
-
-    if (cart) {
-        store.setCart(cart);
-    }
-    store.setCartIsLoading(false);
 });
 
 // For '-' and '+' buttons

@@ -7,6 +7,8 @@ import {
     getProductId,
     getProductImageUrl,
 } from '../src/utils/products.js';
+import { createSession } from '../src/session.js';
+import { store } from '../src/store.js';
 
 test('formatPrice converts cents to a two-decimal euro amount', () => {
     assert.equal(formatPrice(1299), '12.99 €');
@@ -39,4 +41,59 @@ test('getProductId supports each API response shape', () => {
     assert.equal(getProductId({ id: 3 }), 3);
     assert.equal(getProductId({ product_id: 0, id: 4 }), 0);
     assert.equal(getProductId(null), null);
+});
+
+test('session initialization shares one request and loads related state', async () => {
+    let userRequestCount = 0;
+    const api = {
+        async getUser() {
+            userRequestCount += 1;
+            return { id: 7, cartId: 12, first_name: 'Elena' };
+        },
+        async getCart() {
+            return { products: [{ product_id: 1, quantity: 2 }] };
+        },
+        async getWishlist() {
+            return [{ product_id: 2 }];
+        },
+    };
+    const session = createSession(api);
+
+    await Promise.all([
+        session.initializeSession(),
+        session.initializeSession(),
+        session.initializeSession(),
+    ]);
+
+    assert.equal(userRequestCount, 1);
+    assert.equal(session.isInitialized.value, true);
+    assert.equal(session.isAuthenticated.value, true);
+    assert.equal(session.user.value.id, 7);
+    assert.equal(store.cartId, 12);
+    assert.equal(store.cart.products.length, 1);
+    assert.equal(store.loggedInUser.wishlist.length, 1);
+});
+
+test('session logout clears user and cart state', async () => {
+    const api = {
+        async getUser() {
+            return { id: 8, cartId: null };
+        },
+        async getWishlist() {
+            return [];
+        },
+        async logoutUser() {
+            return true;
+        },
+    };
+    const session = createSession(api);
+
+    await session.initializeSession();
+    const succeeded = await session.logout();
+
+    assert.equal(succeeded, true);
+    assert.equal(session.isAuthenticated.value, false);
+    assert.deepEqual(session.user.value, {});
+    assert.equal(store.cartId, null);
+    assert.deepEqual(store.cart.products, []);
 });

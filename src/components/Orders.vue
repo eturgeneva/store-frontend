@@ -8,34 +8,8 @@ import Item from './Item.vue';
 const $api = useApi();
 
 onBeforeMount(async () => {
-    await getProfile();
     await loadOrders();
 });
-
-async function getProfile() {
-    try {
-        const user = await $api.getUser();
-        if (user) {
-            store.setLoggedIn(user.id !== null);
-            if (user.id !== null) {
-                Object.assign(store.loggedInUser, user);
-            }
-
-            let cartId = user.cartId;
-            store.setCartId(cartId);
-
-            // If a cart exists
-            if (cartId) {
-                store.setCartIsLoading(true);
-                const cart = await $api.getCart(cartId);
-                store.setCart(cart);
-            } 
-            store.setCartIsLoading(false);
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 // Get orders by user:
 async function loadOrders() {

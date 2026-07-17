@@ -2,30 +2,25 @@
 import { ref, onBeforeMount } from 'vue';
 import { store } from '@/store';
 import { useApi } from '@/api';
+import { useSession } from '@/session';
 import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
 import Item from './Item.vue';
 import { useCart } from '@/composables/useCart';
 
 const $api = useApi();
+const { initializeSession } = useSession();
 
 const { addToCart } = useCart();
 const isLoading = ref(true);
 
 onBeforeMount(async () => {
     try {
-        await loadProfile();
+        await initializeSession();
 
         if (!store.loggedIn) {
             console.log('Log in to create or see the wishlist');
             return;
-        }
-
-        const wishlist = await $api.getWishlist();
-        if (wishlist) {
-            store.loggedInUser.wishlist = wishlist;
-        } else {
-            console.log('Failed to fetch wishlist');
         }
     } catch (err) {
         console.error(err);
@@ -33,26 +28,6 @@ onBeforeMount(async () => {
         isLoading.value = false;
     }
 })
-
-async function loadProfile() {
-    if (store.loggedIn) {
-        return;
-    }
-
-    try {
-        const user = await $api.getUser();
-        if (user) {
-            store.setLoggedIn(user.id !== null);
-            if (user.id !== null) {
-                Object.assign(store.loggedInUser, user);
-                store.setCartId(user.cartId);
-            }
-        }
-    } catch (err) {
-        console.error(err);
-        store.setLoggedIn(false);
-    }
-}
 
 async function deleteProductFromWishlist(productId) {
     try {

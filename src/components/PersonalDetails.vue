@@ -1,30 +1,11 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref } from 'vue';
 import { useApi } from '@/api';
 import { store } from '../store.js';
 
 const $api = useApi();
 
-onBeforeMount(async () => {
-    await getProfile();
-});
-
 const editProfile = ref(false);
-
-// Get profile
-async function getProfile() {
-    try {
-        const user = await $api.getUser();
-        if (user) {
-            store.setLoggedIn(user.id !== null);
-            if (user.id !== null) {
-                Object.assign(store.loggedInUser, user);
-            }
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
 
 // Update User Info:
 function toggleEditProfile() {
