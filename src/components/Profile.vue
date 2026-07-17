@@ -2,6 +2,8 @@
 import { computed, onBeforeMount } from 'vue';
 import { useApi } from '@/api';
 import { useSession } from '@/session';
+import { useCart } from '@/composables/useCart';
+import { useWishlist } from '@/composables/useWishlist';
 import { getProductImageUrl } from '@/utils/products';
 import { store } from '../store.js';
 import UserLogin from './UserLogin.vue';
@@ -10,6 +12,8 @@ import Item from './Item.vue';
 
 const $api = useApi();
 const { logout, refreshUser } = useSession();
+const { loadCart } = useCart();
+const { loadWishlist } = useWishlist();
 
 const cartQuantity = computed(() => {
     return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
@@ -79,6 +83,7 @@ async function logoutUser() {
 
 async function handleLogin() {
     await refreshUser();
+    await Promise.all([loadCart(), loadWishlist()]);
     await loadOrders();
     await loadRecentOrder();
 }

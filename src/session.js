@@ -21,25 +21,6 @@ export function createSession(api) {
         store.setCartIsLoading(false);
     }
 
-    async function loadRelatedState(currentUser) {
-        store.setCartId(currentUser.cartId ?? null);
-        store.setCartIsLoading(Boolean(currentUser.cartId));
-
-        try {
-            const [cart, wishlist] = await Promise.all([
-                currentUser.cartId ? api.getCart(currentUser.cartId) : null,
-                api.getWishlist(),
-            ]);
-
-            store.setCart(cart || { products: [] });
-            if (wishlist) {
-                store.loggedInUser.wishlist = wishlist;
-            }
-        } finally {
-            store.setCartIsLoading(false);
-        }
-    }
-
     async function loadSession() {
         isLoading.value = true;
         error.value = null;
@@ -54,7 +35,6 @@ export function createSession(api) {
 
             store.setLoggedIn(true);
             store.setLoggedInUser(currentUser);
-            await loadRelatedState(currentUser);
 
             return currentUser;
         } catch (err) {

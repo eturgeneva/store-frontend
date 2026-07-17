@@ -43,18 +43,12 @@ test('getProductId supports each API response shape', () => {
     assert.equal(getProductId(null), null);
 });
 
-test('session initialization shares one request and loads related state', async () => {
+test('session initialization shares one user request', async () => {
     let userRequestCount = 0;
     const api = {
         async getUser() {
             userRequestCount += 1;
             return { id: 7, cartId: 12, first_name: 'Elena' };
-        },
-        async getCart() {
-            return { products: [{ product_id: 1, quantity: 2 }] };
-        },
-        async getWishlist() {
-            return [{ product_id: 2 }];
         },
     };
     const session = createSession(api);
@@ -69,18 +63,12 @@ test('session initialization shares one request and loads related state', async 
     assert.equal(session.isInitialized.value, true);
     assert.equal(session.isAuthenticated.value, true);
     assert.equal(session.user.value.id, 7);
-    assert.equal(store.cartId, 12);
-    assert.equal(store.cart.products.length, 1);
-    assert.equal(store.loggedInUser.wishlist.length, 1);
 });
 
 test('session logout clears user and cart state', async () => {
     const api = {
         async getUser() {
             return { id: 8, cartId: null };
-        },
-        async getWishlist() {
-            return [];
         },
         async logoutUser() {
             return true;

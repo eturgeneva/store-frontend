@@ -4,6 +4,25 @@ import { useApi } from '@/api';
 export function useCart() {
     const $api = useApi();
 
+    async function loadCart() {
+        const cartId = store.loggedInUser.cartId ?? null;
+        store.setCartId(cartId);
+
+        if (!cartId) {
+            store.setCart({ products: [] });
+            store.setCartIsLoading(false);
+            return;
+        }
+
+        store.setCartIsLoading(true);
+        try {
+            const cart = await $api.getCart(cartId);
+            store.setCart(cart || { products: [] });
+        } finally {
+            store.setCartIsLoading(false);
+        }
+    }
+
     async function addToCart(productId, quantity = 1) {
         try {
             // If a new cart needs to be created
@@ -48,5 +67,6 @@ export function useCart() {
     }
     return {
         addToCart,
+        loadCart,
     }
 }
