@@ -1469,6 +1469,7 @@ button:hover {
     flex: 0 0 260px;
     background: transparent;
     border-radius: 0;
+    /* border-radius: var(--radius-md); */
     overflow: visible;
     border: 0;
     box-shadow: none;
@@ -1487,6 +1488,7 @@ button:hover {
     aspect-ratio: 4 / 4.7;
     height: auto;
     background: #f2f2ef;
+    /* border-radius: var(--radius-md) var(--radius-md) 0 0; */
 }
 
 .productBadges {
@@ -1529,8 +1531,9 @@ button:hover {
     align-items: flex-start;
     gap: 1rem;
     margin: 0;
-    padding: 1.35rem 0 1rem;
-    border-bottom: 1px solid var(--line);
+    /* padding: 1.35rem 0 1rem; */
+    padding: 1rem;
+    /* border-bottom: 1px solid var(--line); */
 }
 
 .productPreviewType {
@@ -1561,7 +1564,7 @@ button:hover {
 .productPreviewActions {
     display: flex;
     gap: 0.6rem;
-    padding-top: 1rem;
+    /* padding-top: 1rem; */
 }
 
 .productPreviewActions .buyButton {
@@ -1604,7 +1607,7 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(auto-fill, 16.25rem);
     justify-content: center;
-    gap: 2.5rem;
+    gap: 3rem;
     width: 90%;
     margin: 0 auto;
 }
@@ -1996,7 +1999,7 @@ button:hover {
 }
 
 /* Orders */
-.orders {
+.ordersContainer {
   display: grid;
   gap: 1rem;
   width: min(90%, 56rem);
@@ -2007,7 +2010,7 @@ ul {
   list-style-type: none;
 }
 
-.orders li,
+.ordersContainer div,
 .orderPreview {
   display: grid;
   gap: 0.35rem;
@@ -2055,9 +2058,9 @@ ul {
 
 .orderHeading {
   margin-bottom: 1rem;
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* align-items: start; */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   /* gap: 1rem; */
 }
 
@@ -2074,7 +2077,7 @@ ul {
 
 .itemImage {
   width: 4.75rem;
-  height: 5.2rem;
+  height: 6.5rem;
   object-fit: cover;
   margin-top: 0;
   background: var(--paper);

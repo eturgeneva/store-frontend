@@ -67,15 +67,26 @@ async function loadOrders() {
 </script>
 
 <template>
-    <ul class="orders" v-if="store.loggedInUser.orders">
-        <li v-for="order in store.loggedInUser.orders" :key="order.id" class="orderPreview">
-            <div>Order #{{  order.id  }}</div>
-            <div>Items: {{  order.product_count }}</div>
-            <div>Status: {{ order.status }}</div>
-            <div>Total price: {{ order.total_price / 100 + ' €'}}</div>
-            <div>Placed: {{ new Date(order.placed_at).toLocaleString() }}</div>
+    <main>
+        <section class="hero">
+            <div class="heroInner">
+                <p class="eyebrow">Purchase history</p>
+                <h1>Your Orders</h1>
+                <p>Browse your order history, check delivery status and access receipts whenever you need them</p>
+            </div>
+        </section>
 
-            <router-link :to="`/orders/${order.id}`">Show details</router-link>
-        </li>
-    </ul>
+        <div class="ordersContainer" v-if="store.loggedInUser.orders">
+
+            <div v-for="order in store.loggedInUser.orders" :key="order.id" class="orderPreview">
+                <h3>Order #{{  order.id  }}</h3>
+                <p>Items: {{  order.product_count }}</p>
+                <p>Status: {{ order.status }}</p>
+                <p>Total price: {{ order.total_price / 100 + ' €'}}</p>
+                <p>Placed: {{ new Date(order.placed_at).toLocaleString() }}</p>
+    
+                <router-link :to="`/orders/${order.id}`">Show details</router-link>
+            </div>
+        </div>
+    </main>
 </template>
