@@ -2164,7 +2164,8 @@ ul {
 }
 
 .itemActions button {
-    width: 2.5rem;
+    /* width: 2.5rem; */
+    width: auto;
     height: 2.5rem;
     margin: 0;
     box-shadow: none;
@@ -2423,6 +2424,14 @@ ul {
 .cartQuantityControls .quantityInput + button {
   border-width: 1px 1px 1px 0;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.item--cart .cartQuantityControls .removeButton {
+  width: 40px;
+  min-width: 40px;
+  min-height: 42px;
+  margin: 0 0 0 0.5rem;
+  padding: 0;
 }
 
 .cartQuantityControls button:not(.removeButton):hover,
