@@ -126,11 +126,6 @@ function openProductDetails(productId) {
                     :aria-expanded="isPopoverOpen"
                     aria-controls="search-suggestions"
             >
-            <button type="submit" aria-label="Submit search">
-                <span class="material-symbols-outlined">
-                    search
-                </span>
-            </button>
         </form>
             <div v-if="isPopoverOpen"
                 id="search-suggestions"

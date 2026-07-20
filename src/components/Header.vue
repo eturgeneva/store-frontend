@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
@@ -66,12 +66,36 @@ function restartMiniCartTimer() {
     }, 1200);
 }
 
+function openSearch() {
+    isSearchOpen.value = true;
+}
+
+function closeSearchOnOutsideClick(event) {
+    if (!isSearchOpen.value) {
+        return;
+    }
+
+    if (event.target.closest('.headerSearchOverlay, .headerSearchToggle')) {
+        return;
+    }
+
+    isSearchOpen.value = false;
+}
+
+onMounted(() => {
+    document.addEventListener('pointerdown', closeSearchOnOutsideClick);
+});
+
+onBeforeUnmount(() => {
+    document.removeEventListener('pointerdown', closeSearchOnOutsideClick);
+});
+
 </script>
 
 <template>
     <header>
         <nav>
-            <div class="header">
+            <div :class="['header', { searchActive: isSearchOpen }]">
                 <!-- Company logo -->
                 <router-link to="/">
                     <h3 id="logo"><span>Toyz</span>Store</h3>
@@ -87,12 +111,21 @@ function restartMiniCartTimer() {
                 
                 <!-- User section -->
                 <div class="userSection">
+                    <Transition name="searchUnwrap">
+                        <Searchbar
+                            v-if="isSearchOpen"
+                            class="headerSearchOverlay"
+                            auto-focus
+                            @close="isSearchOpen = false"
+                            @submitted="isSearchOpen = false"
+                        />
+                    </Transition>
                     <button
                         type="button"
                         class="headerSearchToggle"
                         :aria-expanded="isSearchOpen"
                         aria-label="Search products"
-                        @click="isSearchOpen = !isSearchOpen"
+                        @click="openSearch"
                     >
                         <span class="material-symbols-outlined">search</span>
                     </button>
@@ -161,15 +194,7 @@ function restartMiniCartTimer() {
                         </router-link>
                     </div>
                 </div>
-
             </div>
-            <Searchbar
-                v-if="isSearchOpen"
-                class="headerSearchOverlay"
-                auto-focus
-                @close="isSearchOpen = false"
-                @submitted="isSearchOpen = false"
-            />
         </nav>
         <CartDrawer
             :keep-open="keepMiniCartOpen"
