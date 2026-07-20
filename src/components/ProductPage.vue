@@ -17,6 +17,9 @@ const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
 const route = useRoute();
 const quantity = ref(1);
 const selectedImageIndex = ref(0);
+const isSavedToWishlist = computed(() => (
+    isInWishlist(store.selectedProduct?.id)
+));
 
 const productImages = computed(() => {
     if (!store.selectedProduct?.name) {
@@ -146,10 +149,10 @@ watch(() => route.params.id, async (productId) => {
                             type="button"
                             class="favoriteButton saveButton">
                         <span class="material-symbols-outlined"
-                                :class="isInWishlist(store.selectedProduct.id) ? 'filled' : 'outlined'">
+                                :class="isSavedToWishlist ? 'filled' : 'outlined'">
                             favorite
                         </span>
-                        Save to wishlist
+                        {{ isSavedToWishlist ? 'Remove from wishlist' : 'Save to wishlist' }}
                     </button>
                 </div>
 
