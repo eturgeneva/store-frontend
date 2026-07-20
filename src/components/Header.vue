@@ -66,8 +66,8 @@ function restartMiniCartTimer() {
     }, 1200);
 }
 
-function openSearch() {
-    isSearchOpen.value = true;
+function toggleSearch() {
+    isSearchOpen.value = !isSearchOpen.value;
 }
 
 function closeSearchOnOutsideClick(event) {
@@ -125,7 +125,7 @@ onBeforeUnmount(() => {
                         class="headerSearchToggle"
                         :aria-expanded="isSearchOpen"
                         aria-label="Search products"
-                        @click="openSearch"
+                        @click="toggleSearch"
                     >
                         <span class="material-symbols-outlined">search</span>
                     </button>

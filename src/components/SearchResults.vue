@@ -3,6 +3,7 @@ import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useProducts } from '@/products';
 import ProductCard from './ProductCard.vue';
+import PageHero from './PageHero.vue';
 
 const route = useRoute();
 const {
@@ -28,6 +29,12 @@ watch(() => route.query.q, (query) => {
 
 <template>
     <main>
+        <PageHero
+            eyebrow="Discover more"
+            title="Search results"
+            description="From classic favorites to exciting new arrivals, here are the toys that best match your search"
+        />
+        
         <div class="searchResultsPage">
             <div class="productsPreviewsHeader">
                 <h2>Search Results</h2>
