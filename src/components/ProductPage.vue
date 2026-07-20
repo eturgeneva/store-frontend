@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useApi } from '@/api';
 import { formatPrice } from '@/utils/currency';
-import { getProductImageUrl } from '@/utils/products';
+import { formatProductName, getProductImageUrl } from '@/utils/products';
 import { store } from '../store.js';
 import { useCart } from '@/composables/useCart.js';
 import { useWishlist } from '@/composables/useWishlist.js';
@@ -39,15 +39,7 @@ const productImages = computed(() => {
     ];
 });
 
-const formattedProductName = computed(() => {
-    const name = store.selectedProduct?.name?.trim();
-
-    if (!name) {
-        return '';
-    }
-
-    return name.charAt(0).toUpperCase() + name.slice(1);
-});
+const formattedProductName = computed(() => formatProductName(store.selectedProduct?.name));
 
 async function loadProduct(productId) {
     try {

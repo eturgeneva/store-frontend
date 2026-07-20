@@ -19,3 +19,11 @@ export function getProductImageUrl(productOrName) {
 export function getProductId(item) {
     return item?.product_id ?? item?.productId ?? item?.id ?? null;
 }
+
+export function formatProductName(name) {
+    const trimmedName = typeof name === 'string' ? name.trim() : '';
+
+    return trimmedName
+        ? trimmedName.charAt(0).toUpperCase() + trimmedName.slice(1)
+        : '';
+}

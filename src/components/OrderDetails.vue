@@ -2,6 +2,7 @@
 import { ref, computed, onBeforeMount } from 'vue';
 import { useApi } from '@/api';
 import { formatPrice } from '@/utils/currency';
+import { getProductImageUrl } from '@/utils/products';
 import { useRoute } from 'vue-router';
 import Item from './Item.vue';
 
@@ -69,7 +70,7 @@ async function cancelOrder(orderId) {
                     :item="item"
                     :title="item.name"
                     :subtitle="item.brand"
-                    :image-src="`https://eturgeneva.github.io/toy-store-assets/${item.name}.png`"
+                    :image-src="getProductImageUrl(item)"
                     :to="`/products/${item.product_id}`"
                 >
                     <template #meta>

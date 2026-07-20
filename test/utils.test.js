@@ -7,6 +7,7 @@ import { useWishlist } from '../src/composables/useWishlist.js';
 import { formatPrice } from '../src/utils/currency.js';
 import {
     PRODUCT_ASSET_URL,
+    formatProductName,
     getProductCategory,
     getProductId,
     getProductImageUrl,
@@ -47,6 +48,13 @@ test('getProductId supports each API response shape', () => {
     assert.equal(getProductId({ id: 3 }), 3);
     assert.equal(getProductId({ product_id: 0, id: 4 }), 0);
     assert.equal(getProductId(null), null);
+});
+
+test('formatProductName trims and capitalizes product names', () => {
+    assert.equal(formatProductName('  brown bear  '), 'Brown bear');
+    assert.equal(formatProductName('Frog'), 'Frog');
+    assert.equal(formatProductName(''), '');
+    assert.equal(formatProductName(null), '');
 });
 
 test('normalizeWishlist creates one canonical product_id shape', () => {

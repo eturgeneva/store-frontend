@@ -3,7 +3,12 @@ import { computed } from 'vue';
 import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
 import { formatPrice } from '@/utils/currency';
-import { getProductCategory, getProductImageUrl } from '@/utils/products';
+import {
+    formatProductName,
+    getProductCategory,
+    getProductId,
+    getProductImageUrl,
+} from '@/utils/products';
 import ProductBadges from './ProductBadges.vue';
 
 const props = defineProps({
@@ -32,10 +37,8 @@ const props = defineProps({
 const { addToCart } = useCart();
 const { isInWishlist, toggleWishlist } = useWishlist();
 
-const productName = computed(() => {
-    const name = props.product.name?.trim() ?? '';
-    return name ? name.charAt(0).toUpperCase() + name.slice(1) : '';
-});
+const productId = computed(() => getProductId(props.product));
+const productName = computed(() => formatProductName(props.product.name));
 </script>
 
 <template>
@@ -46,7 +49,7 @@ const productName = computed(() => {
                 :product="product"
             />
 
-            <router-link :to="`/products/${product.id}`">
+            <router-link :to="`/products/${productId}`">
                 <img
                     :src="getProductImageUrl(product)"
                     :alt="product.name"
@@ -62,12 +65,12 @@ const productName = computed(() => {
                 <button
                     type="button"
                     class="favoriteButton"
-                    :aria-label="`${isInWishlist(product.id) ? 'Remove' : 'Add'} ${product.name} ${isInWishlist(product.id) ? 'from' : 'to'} wishlist`"
-                    @click="toggleWishlist(product.id)"
+                    :aria-label="`${isInWishlist(productId) ? 'Remove' : 'Add'} ${product.name} ${isInWishlist(productId) ? 'from' : 'to'} wishlist`"
+                    @click="toggleWishlist(productId)"
                 >
                     <span
                         class="material-symbols-outlined"
-                        :class="isInWishlist(product.id) ? 'filled' : 'outlined'"
+                        :class="isInWishlist(productId) ? 'filled' : 'outlined'"
                     >
                         favorite
                     </span>
@@ -81,7 +84,7 @@ const productName = computed(() => {
                     {{ getProductCategory(product, categoryFallback) }}
                 </p>
                 <router-link
-                    :to="`/products/${product.id}`"
+                    :to="`/products/${productId}`"
                     class="productLink"
                 >
                     <h3 class="productName">{{ productName }}</h3>
@@ -97,7 +100,7 @@ const productName = computed(() => {
             <button
                 type="button"
                 class="buyButton"
-                @click="addToCart(product.id, 1)"
+                @click="addToCart(productId, 1)"
             >
                 <span>Add to cart</span>
                 <span class="material-symbols-outlined">shopping_cart</span>
