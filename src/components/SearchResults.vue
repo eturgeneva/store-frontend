@@ -1,13 +1,10 @@
 <script setup>
 import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useCart } from '@/composables/useCart';
 import { useProducts } from '@/products';
-import { formatPrice } from '@/utils/currency';
-import { getProductCategory, getProductImageUrl } from '@/utils/products';
+import ProductCard from './ProductCard.vue';
 
 const route = useRoute();
-const { addToCart } = useCart();
 const {
     error,
     isLoading,
@@ -44,38 +41,12 @@ watch(() => route.query.q, (query) => {
                 No products found for "{{ searchQuery }}"
             </div>
             <div v-else class="productsContainer">
-                <div v-for="product in searchResults"
+                <ProductCard
+                    v-for="product in searchResults"
                     :key="product.id"
-                    class="productPreview reveal visible">
-
-                    <div class="productPreviewImage">
-                        <router-link :to="`/products/${product.id}`">
-                            <img :src="getProductImageUrl(product)"
-                                :alt="product.name"
-                                class="productImage"
-                                @error="e => e.target.style.display = 'none'">
-                        </router-link>
-                    </div>
-
-                    <div class="productPreviewDetails">
-                        <div>
-                            <p class="productPreviewType">{{ getProductCategory(product) }}</p>
-                            <router-link :to="`/products/${product.id}`" class="productLink">
-                                <h3 class="productName">{{ product.name }}</h3>
-                            </router-link>
-                        </div>
-                        <div class="productPrice">{{ formatPrice(product.price_cents) }}</div>
-                    </div>
-
-                    <div class="productPreviewActions">
-                        <button @click="addToCart(product.id, 1)"
-                                type="button"
-                                class="buyButton">
-                            <span>Add to cart</span>
-                            <span class="material-symbols-outlined">shopping_cart</span>
-                        </button>
-                    </div>
-                </div>
+                    :product="product"
+                    show-cart-action
+                />
             </div>
         </div>
     </main>

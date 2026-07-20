@@ -1,18 +1,13 @@
 <script setup>
 import { computed, ref, onBeforeMount } from 'vue';
-import { useCart } from '@/composables/useCart';
-import { useWishlist } from '@/composables/useWishlist';
 import { useProducts } from '@/products';
-import { formatPrice } from '@/utils/currency';
-import { getProductCategory, getProductImageUrl } from '@/utils/products';
-import ProductBadges from './ProductBadges.vue';
+import { getProductCategory } from '@/utils/products';
+import ProductCard from './ProductCard.vue';
 
 defineOptions({
     name: 'CatalogueProducts',
 });
 
-const { addToCart } = useCart();
-const { isInWishlist, toggleWishlist } = useWishlist();
 const { loadProducts, products } = useProducts();
 const selectedCategory = ref('All');
 const selectedSort = ref('featured');
@@ -89,50 +84,15 @@ const filteredProducts = computed(() => {
             </div>
 
             <div class="productsContainer">
-                <div v-for="product in filteredProducts"
+                <ProductCard
+                    v-for="product in filteredProducts"
                     :key="product.id"
-                    class="productPreview reveal visible">
-    
-                    <div class="productPreviewImage">
-                        <ProductBadges :product="product" />
-                        <router-link :to="`/products/${product.id}`">
-                            <img :src="getProductImageUrl(product)"
-                                :alt="product.name" 
-                                class="productImage"
-                                @error="e => e.target.style.display = 'none'">
-                        </router-link>
-    
-                        <div class="buttonContainer">
-                            <button @click="toggleWishlist(product.id)"
-                                    type="button"
-                                    class="favoriteButton">
-                                <span class="material-symbols-outlined"
-                                        :class="isInWishlist(product.id) ? 'filled' : 'outlined'">
-                                    favorite
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-    
-                    <div class="productPreviewDetails">
-                        <div>
-                            <p class="productPreviewType">{{ getProductCategory(product, 'All toys') }}</p>
-                            <router-link :to="`/products/${product.id}`" class="productLink">
-                                 <h3 class="productName">{{ product.name.charAt(0).toUpperCase() + product.name.slice(1) }}</h3>
-                            </router-link>
-                        </div>
-                        <div class="productPrice">{{ formatPrice(product.price_cents) }}</div>
-                    </div>
-
-                    <div class="productPreviewActions">
-                        <button @click="addToCart(product.id, 1)"
-                                type="button"
-                                class="buyButton">
-                            <span>Add to cart</span>
-                            <span class="material-symbols-outlined">shopping_cart</span>
-                        </button>
-                    </div>
-                </div>
+                    :product="product"
+                    show-badges
+                    show-wishlist
+                    show-cart-action
+                    category-fallback="All toys"
+                />
             </div>
         </section>
     </main>
