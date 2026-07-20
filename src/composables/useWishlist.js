@@ -1,93 +1,45 @@
-import { store } from '@/store';
-import { useApi } from '@/api';
-import { useSession } from '@/session';
-import { getProductId } from '@/utils/products';
+import { computed } from 'vue';
+import { store } from '../store.js';
+import { useApi } from '../api.js';
+import { useSession } from '../session.js';
+import { normalizeWishlist, normalizeWishlistItem } from '../utils/wishlist.js';
 
 export function useWishlist() {
     const $api = useApi();
     const { initializeSession } = useSession();
 
-    async function loadWishlist() {
+    const wishlist = computed(() => (
+        Array.isArray(store.loggedInUser.wishlist)
+            ? store.loggedInUser.wishlist
+            : []
+    ));
+    const count = computed(() => wishlist.value.length);
+    const isLoading = computed(() => store.wishlistIsLoading);
+
+    function replaceWishlist(response, fallback = []) {
+        const normalized = normalizeWishlist(response);
+        store.loggedInUser.wishlist = normalized ?? fallback;
+        return normalized;
+    }
+
+    async function loadWishlist({ force = false } = {}) {
         await initializeSession();
 
-        if (!store.loggedIn || Array.isArray(store.loggedInUser.wishlist)) {
-            return;
+        if (!store.loggedIn) {
+            return [];
         }
 
+        if (!force && Array.isArray(store.loggedInUser.wishlist)) {
+            return wishlist.value;
+        }
+
+        store.setWishlistIsLoading(true);
         try {
-            const wishlist = await $api.getWishlist();
-            if (wishlist) {
-                updateWishlistInStore(wishlist);
-            }
-        } catch (err) {
-            console.error(err);
+            const response = await $api.getWishlist();
+            return replaceWishlist(response) ?? [];
+        } finally {
+            store.setWishlistIsLoading(false);
         }
-    }
-
-    function updateWishlistInStore(wishlistResponse) {
-        const wishlist = getWishlistArray(wishlistResponse);
-        if (wishlist) {
-            store.loggedInUser.wishlist = wishlist;
-        }
-    }
-
-    function getWishlistArray(wishlistResponse) {
-        if (Array.isArray(wishlistResponse)) {
-            return wishlistResponse;
-        }
-
-        if (Array.isArray(wishlistResponse?.updatedWishlist)) {
-            return wishlistResponse.updatedWishlist;
-        }
-
-        if (Array.isArray(wishlistResponse?.wishlist)) {
-            return wishlistResponse.wishlist;
-        }
-
-        if (Array.isArray(wishlistResponse?.products)) {
-            return wishlistResponse.products;
-        }
-
-        return null;
-    }
-
-    function addProductToLocalWishlist(productId, wishlistResponse) {
-        const wishlist = getWishlistArray(wishlistResponse);
-        if (wishlist) {
-            store.loggedInUser.wishlist = wishlist;
-            return;
-        }
-
-        const currentWishlist = Array.isArray(store.loggedInUser.wishlist)
-            ? store.loggedInUser.wishlist
-            : [];
-
-        if (currentWishlist.some(item => getProductId(item) === productId)) {
-            store.loggedInUser.wishlist = currentWishlist;
-            return;
-        }
-
-        const wishlistItem = wishlistResponse?.product_id || wishlistResponse?.productId
-            ? wishlistResponse
-            : { product_id: productId };
-
-        store.loggedInUser.wishlist = [...currentWishlist, wishlistItem];
-    }
-
-    function removeProductFromLocalWishlist(productId, wishlistResponse) {
-        const wishlist = getWishlistArray(wishlistResponse);
-        if (wishlist) {
-            store.loggedInUser.wishlist = wishlist;
-            return;
-        }
-
-        const currentWishlist = Array.isArray(store.loggedInUser.wishlist)
-            ? store.loggedInUser.wishlist
-            : [];
-
-        store.loggedInUser.wishlist = currentWishlist.filter(item => {
-            return getProductId(item) !== productId;
-        });
     }
 
     async function ensureWishlist() {
@@ -95,9 +47,13 @@ export function useWishlist() {
             return true;
         }
 
-        const wishlistId = await $api.createWishlist(store.loggedInUser.id);
+        const response = await $api.createWishlist(store.loggedInUser.id);
+        const wishlistId = response?.wishlistId
+            ?? response?.wishlist_id
+            ?? response?.id
+            ?? response;
+
         if (!wishlistId) {
-            console.log('Failed to create a wishlist');
             return false;
         }
 
@@ -105,65 +61,103 @@ export function useWishlist() {
         return true;
     }
 
-    async function toggleWishlist(productId) {
+    function isInWishlist(productId) {
+        return wishlist.value.some(item => item.product_id === productId);
+    }
+
+    function applyAddResponse(productId, response) {
+        const normalized = normalizeWishlist(response);
+        if (normalized) {
+            store.loggedInUser.wishlist = normalized;
+            return;
+        }
+
+        if (isInWishlist(productId)) {
+            return;
+        }
+
+        const item = normalizeWishlistItem(response)
+            ?? { product_id: productId };
+        store.loggedInUser.wishlist = [...wishlist.value, item];
+    }
+
+    function applyRemoveResponse(productId, response) {
+        const normalized = normalizeWishlist(response);
+        store.loggedInUser.wishlist = normalized
+            ?? wishlist.value.filter(item => item.product_id !== productId);
+    }
+
+    async function addToWishlist(productId) {
         await initializeSession();
 
         if (!store.loggedIn || !store.loggedInUser.id) {
-            console.log('Please log in to create a wishlist');
             store.addToast({
                 type: 'warning',
                 message: 'Log in to save favorites',
             });
-            return;
-        }
-
-        try {
-            await loadWishlist();
-            const hasWishlist = await ensureWishlist();
-            if (!hasWishlist) {
-                return;
-            }
-
-            if (isInWishlist(productId)) {
-                const updatedWishlist = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
-                if (updatedWishlist) {
-                    removeProductFromLocalWishlist(productId, updatedWishlist);
-                    store.addToast({
-                        type: 'info',
-                        message: 'Removed from wishlist',
-                    });
-                }
-                return;
-            }
-
-            const updatedWishlist = await $api.updateWishList(store.loggedInUser.id, productId);
-            if (updatedWishlist) {
-                addProductToLocalWishlist(productId, updatedWishlist);
-                store.addToast({
-                    type: 'success',
-                    message: 'Added to wishlist',
-                });
-            }
-        } catch (err) {
-            console.error(err);
-            store.addToast({
-                type: 'warning',
-                message: 'Unable to update wishlist',
-            });
-        }
-    }
-
-    function isInWishlist(productId) {
-        if (!Array.isArray(store.loggedInUser.wishlist)) {
             return false;
         }
 
-        return store.loggedInUser.wishlist.some(item => getProductId(item) === productId);
+        await loadWishlist();
+        if (isInWishlist(productId)) {
+            return true;
+        }
+
+        try {
+            if (!await ensureWishlist()) {
+                return false;
+            }
+
+            const response = await $api.updateWishList(store.loggedInUser.id, productId);
+            if (!response) {
+                return false;
+            }
+
+            applyAddResponse(productId, response);
+            store.addToast({ type: 'success', message: 'Added to wishlist' });
+            return true;
+        } catch (err) {
+            console.error(err);
+            store.addToast({ type: 'warning', message: 'Unable to update wishlist' });
+            return false;
+        }
+    }
+
+    async function removeFromWishlist(productId) {
+        if (!store.loggedIn || !store.loggedInUser.id) {
+            return false;
+        }
+
+        try {
+            const response = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
+            if (!response) {
+                return false;
+            }
+
+            applyRemoveResponse(productId, response);
+            store.addToast({ type: 'info', message: 'Removed from wishlist' });
+            return true;
+        } catch (err) {
+            console.error(err);
+            store.addToast({ type: 'warning', message: 'Unable to update wishlist' });
+            return false;
+        }
+    }
+
+    function toggleWishlist(productId) {
+        return isInWishlist(productId)
+            ? removeFromWishlist(productId)
+            : addToWishlist(productId);
     }
 
     return {
+        addToWishlist,
+        count,
         isInWishlist,
+        isLoading,
         loadWishlist,
+        removeFromWishlist,
         toggleWishlist,
+        wishlist,
     };
 }

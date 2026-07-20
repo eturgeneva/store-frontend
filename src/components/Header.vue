@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCart } from '@/composables/useCart';
+import { useWishlist } from '@/composables/useWishlist';
 import { store } from '../store.js';
 import CartDrawer from './CartDrawer.vue';
 
@@ -11,14 +12,11 @@ defineOptions({
 
 const route = useRoute();
 const { cartId, quantity: cartQuantity } = useCart();
+const { count: wishlistQuantity } = useWishlist();
 const isProfilePopoverOpen = ref(false);
 let miniCartTimer = null;
 
 const isCartPage = computed(() => route.path === '/cart');
-
-const wishlistQuantity = computed(() => {
-    return store.loggedInUser.wishlist?.length ?? 0;
-});
 
 watch(isCartPage, (onCartPage) => {
     if (onCartPage) {

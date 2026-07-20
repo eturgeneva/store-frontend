@@ -6,6 +6,7 @@ export const store = reactive({
     selectedProduct: {},
     cartId: null,
     cartIsLoading: true,
+    wishlistIsLoading: false,
     miniCartOpen: false,
     cartDrawerOpen: false,
     lastAddedProductId: null,
@@ -32,6 +33,10 @@ export const store = reactive({
 
     setCartIsLoading(boolean) {
         this.cartIsLoading = boolean;
+    },
+
+    setWishlistIsLoading(boolean) {
+        this.wishlistIsLoading = boolean;
     },
 
     setCart(cartData) {

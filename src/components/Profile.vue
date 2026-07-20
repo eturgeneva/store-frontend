@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeMount } from 'vue';
+import { onBeforeMount } from 'vue';
 import { useApi } from '@/api';
 import { useSession } from '@/session';
 import { useCart } from '@/composables/useCart';
@@ -17,11 +17,11 @@ defineOptions({
 });
 
 const { clearCart, loadCart, quantity: cartQuantity } = useCart();
-const { loadWishlist } = useWishlist();
-
-const wishlistQuantity = computed(() => {
-    return store.loggedInUser.wishlist?.length ?? 0;
-});
+const {
+    count: wishlistQuantity,
+    loadWishlist,
+    wishlist,
+} = useWishlist();
 
 onBeforeMount(async () => {
     try {
@@ -175,16 +175,16 @@ async function handleLogin() {
                         </div>
                     </div>
                     <Item
-                        v-if="store.loggedInUser.wishlist?.length"
-                        :item="store.loggedInUser.wishlist[0]"
-                        :title="store.loggedInUser.wishlist[0].name"
-                        :subtitle="store.loggedInUser.wishlist[0].brand"
-                        :image-src="getProductImageUrl(store.loggedInUser.wishlist[0])"
-                        :to="`/products/${store.loggedInUser.wishlist[0].product_id}`"
+                        v-if="wishlist.length"
+                        :item="wishlist[0]"
+                        :title="wishlist[0].name"
+                        :subtitle="wishlist[0].brand"
+                        :image-src="getProductImageUrl(wishlist[0])"
+                        :to="`/products/${wishlist[0].product_id}`"
                         variant="profile"
                     >
                         <template #aside>
-                            <p>+ {{ store.loggedInUser.wishlist.length - 1 }} more item(s)</p>
+                            <p>+ {{ wishlist.length - 1 }} more item(s)</p>
                         </template>
                         <template #actions>
                             <router-link to="/wishlist">

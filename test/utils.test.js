@@ -3,6 +3,7 @@ import test from 'node:test';
 import { createApp } from 'vue';
 import { apiKey } from '../src/api.js';
 import { useCart } from '../src/composables/useCart.js';
+import { useWishlist } from '../src/composables/useWishlist.js';
 import { formatPrice } from '../src/utils/currency.js';
 import {
     PRODUCT_ASSET_URL,
@@ -10,8 +11,9 @@ import {
     getProductId,
     getProductImageUrl,
 } from '../src/utils/products.js';
-import { createSession } from '../src/session.js';
+import { createSession, sessionKey } from '../src/session.js';
 import { store } from '../src/store.js';
+import { normalizeWishlist } from '../src/utils/wishlist.js';
 
 test('formatPrice converts cents to a two-decimal euro amount', () => {
     assert.equal(formatPrice(1299), '12.99 €');
@@ -44,6 +46,18 @@ test('getProductId supports each API response shape', () => {
     assert.equal(getProductId({ id: 3 }), 3);
     assert.equal(getProductId({ product_id: 0, id: 4 }), 0);
     assert.equal(getProductId(null), null);
+});
+
+test('normalizeWishlist creates one canonical product_id shape', () => {
+    assert.deepEqual(normalizeWishlist({
+        updatedWishlist: [
+            { productId: 1, name: 'Bear' },
+            { id: 2, name: 'Frog' },
+        ],
+    }), [
+        { productId: 1, product_id: 1, name: 'Bear' },
+        { id: 2, product_id: 2, name: 'Frog' },
+    ]);
 });
 
 test('session initialization shares one user request', async () => {
@@ -131,4 +145,37 @@ test('cart domain owns creation, totals, mutations, and clearing', async () => {
     cart.clearCart();
     assert.equal(cart.cartId.value, null);
     assert.equal(store.loggedInUser.cartId, null);
+});
+
+test('wishlist domain loads, normalizes, adds, and removes items', async () => {
+    const api = {
+        async getWishlist() {
+            return { products: [{ productId: 1, name: 'Bear' }] };
+        },
+        async updateWishList() {
+            return { wishlist: [{ id: 2, name: 'Frog' }] };
+        },
+        async deleteFromWishlist() {
+            return { updatedWishlist: [] };
+        },
+    };
+    const app = createApp({});
+    app.provide(apiKey, api);
+    app.provide(sessionKey, {
+        async initializeSession() {},
+    });
+    const wishlist = app.runWithContext(() => useWishlist());
+
+    store.setLoggedIn(true);
+    store.setLoggedInUser({ id: 7, wishlistId: 9 });
+
+    await wishlist.loadWishlist({ force: true });
+    assert.deepEqual(wishlist.wishlist.value, [
+        { productId: 1, product_id: 1, name: 'Bear' },
+    ]);
+
+    assert.equal(await wishlist.addToWishlist(2), true);
+    assert.equal(wishlist.wishlist.value[0].product_id, 2);
+    assert.equal(await wishlist.removeFromWishlist(2), true);
+    assert.deepEqual(wishlist.wishlist.value, []);
 });

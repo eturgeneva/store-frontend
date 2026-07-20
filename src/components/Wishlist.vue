@@ -1,48 +1,18 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
-import { store } from '@/store';
-import { useApi } from '@/api';
+import { useWishlist } from '@/composables/useWishlist';
 import { useSession } from '@/session';
 import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
 import Item from './Item.vue';
 import { useCart } from '@/composables/useCart';
 
-const $api = useApi();
-const { initializeSession } = useSession();
+defineOptions({
+    name: 'UserWishlist',
+});
 
+const { isAuthenticated } = useSession();
 const { addToCart } = useCart();
-const isLoading = ref(true);
-
-onBeforeMount(async () => {
-    try {
-        await initializeSession();
-
-        if (!store.loggedIn) {
-            console.log('Log in to create or see the wishlist');
-            return;
-        }
-    } catch (err) {
-        console.error(err);
-    } finally {
-        isLoading.value = false;
-    }
-})
-
-async function deleteProductFromWishlist(productId) {
-    try {
-        const updatedWishlist = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
-
-        if (!updatedWishlist) {
-            console.log('Unable to delete product from wishlist');
-            return;
-        }
-        store.loggedInUser.wishlist = updatedWishlist.updatedWishlist;
-
-    } catch (err) {
-        console.error(err);
-    }
-}
+const { isLoading, removeFromWishlist, wishlist } = useWishlist();
 
 </script>
 
@@ -60,13 +30,13 @@ async function deleteProductFromWishlist(productId) {
             <div v-if="isLoading" class="emptyState">
                 <p>Wishlist is loading...</p>
             </div>
-            <div v-else-if="!store.loggedIn" class="emptyState">
+            <div v-else-if="!isAuthenticated" class="emptyState">
                 <p>Log in to see or create a wishlist</p>
             </div>
-            <div v-else-if="store.loggedInUser.wishlist?.length"
+            <div v-else-if="wishlist.length"
                 class="wishlist">
                 <Item
-                    v-for="item in store.loggedInUser.wishlist"
+                    v-for="item in wishlist"
                     :key="item.product_id"
                     :item="item"
                     :title="item.name"
@@ -91,7 +61,7 @@ async function deleteProductFromWishlist(productId) {
                             <button
                                 type="button"
                                 class="removeButton"
-                                @click="deleteProductFromWishlist(item.product_id)"
+                                @click="removeFromWishlist(item.product_id)"
                             >
                                 x
                             </button>
