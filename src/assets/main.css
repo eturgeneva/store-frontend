@@ -115,6 +115,10 @@ header {
   transition: border-color .25s;
 }
 
+header > nav {
+    position: relative;
+}
+
 .header {
     width: var(--shell);
     height: 82px;
@@ -124,6 +128,46 @@ header {
     gap: clamp(1rem, 3vw, 3rem);
     margin-inline: auto;
     padding: 0;
+    position: relative;
+}
+
+.headerSearchOverlay {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    z-index: 40;
+    width: min(90vw, 36rem);
+    max-width: none;
+    padding: 0.75rem;
+    background: var(--surface);
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-popover);
+    transform: translateX(-50%);
+}
+
+.headerSearchOverlay input {
+    width: 100%;
+}
+
+.headerSearchToggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.headerSearchToggle:hover {
+    color: var(--purple);
+    background: transparent;
+    box-shadow: none;
+    transform: none;
 }
 
 .searchContainer {
@@ -135,12 +179,18 @@ header {
     position: relative;
 }
 
+.searchForm {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 .searchContainer input {
     width: min(100%, 30rem);
     height: 2rem;
 }
 
-.searchContainer > button {
+.searchForm > button {
     width: 5rem;
     height: 2rem;
     margin: 0 0 0 0.5rem;
@@ -163,22 +213,22 @@ header {
 }
 
 .searchContainer .searchPreview {
-    display: grid;
-    grid-template-columns: 3.25rem 1fr;
-    align-items: center;
-    gap: 0.75rem;
-    width: 100%;
-    height: auto;
-    min-height: 4rem;
-    margin: 0;
-    padding: 0.45rem;
-    color: var(--text-accent);
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-xs);
-    box-shadow: none;
-    text-align: left;
-    transition: var(--transition-standard);
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  height: auto;
+  min-height: 4rem;
+  margin: 0;
+  padding: 0.45rem;
+  color: var(--text-accent);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-xs);
+  box-shadow: none;
+  text-align: left;
+  transition: var(--transition-standard);
 }
 
 .searchContainer .searchPreview:hover {
@@ -235,6 +285,53 @@ header {
     padding: 0.75rem;
     color: var(--text-muted);
     text-align: center;
+}
+
+.searchPopoverSection {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.searchPopoverSection + .searchPopoverSection {
+    margin-top: 0.35rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--accent-border-soft);
+}
+
+.searchPopoverLabel {
+    padding: 0.25rem 0.45rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.searchContainer .recentSearch {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0.55rem;
+    color: var(--text-accent);
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-xs);
+    box-shadow: none;
+    text-align: left;
+}
+
+.searchContainer .recentSearch:hover {
+    background: var(--accent-hover);
+    box-shadow: none;
+    transform: none;
+}
+
+.recentSearch .material-symbols-outlined {
+    color: var(--text-muted);
+    font-size: 1.1rem;
 }
 
 .catalogue {

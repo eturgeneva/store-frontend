@@ -5,6 +5,7 @@ import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
 import { store } from '../store.js';
 import CartDrawer from './CartDrawer.vue';
+import Searchbar from './Searchbar.vue';
 
 defineOptions({
     name: 'SiteHeader',
@@ -14,6 +15,7 @@ const route = useRoute();
 const { cartId, quantity: cartQuantity } = useCart();
 const { count: wishlistQuantity } = useWishlist();
 const isProfilePopoverOpen = ref(false);
+const isSearchOpen = ref(false);
 let miniCartTimer = null;
 
 const isCartPage = computed(() => route.path === '/cart');
@@ -34,6 +36,10 @@ watch(() => store.cartDrawerOpen, (isOpen) => {
             store.closeCartDrawer();
         }, 5000);
     }
+});
+
+watch(() => route.fullPath, () => {
+    isSearchOpen.value = false;
 });
 
 function openCartDrawerOnHover() {
@@ -71,9 +77,6 @@ function restartMiniCartTimer() {
                     <h3 id="logo"><span>Toyz</span>Store</h3>
                 </router-link>
 
-                <!-- Searchbar -->
-                <!-- <Searchbar /> -->
-
                 <!-- Catalogue -->
                 <div class="catalogue">
                     <router-link to="/new">New Collection</router-link>
@@ -84,9 +87,15 @@ function restartMiniCartTimer() {
                 
                 <!-- User section -->
                 <div class="userSection">
-                    <span class="material-symbols-outlined">
-                        search
-                    </span>
+                    <button
+                        type="button"
+                        class="headerSearchToggle"
+                        :aria-expanded="isSearchOpen"
+                        aria-label="Search products"
+                        @click="isSearchOpen = !isSearchOpen"
+                    >
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
                     <router-link to="/">
                         <span class="material-symbols-outlined">
                             home
@@ -152,7 +161,15 @@ function restartMiniCartTimer() {
                         </router-link>
                     </div>
                 </div>
+
             </div>
+            <Searchbar
+                v-if="isSearchOpen"
+                class="headerSearchOverlay"
+                auto-focus
+                @close="isSearchOpen = false"
+                @submitted="isSearchOpen = false"
+            />
         </nav>
         <CartDrawer
             :keep-open="keepMiniCartOpen"
