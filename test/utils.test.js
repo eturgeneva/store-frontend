@@ -230,3 +230,29 @@ test('wishlist domain loads, normalizes, adds, and removes items', async () => {
     assert.equal(await wishlist.removeFromWishlist(2), true);
     assert.deepEqual(wishlist.wishlist.value, []);
 });
+
+test('wishlist keeps its current items when a refresh fails', async () => {
+    const app = createApp({});
+    app.provide(apiKey, {
+        async getWishlist() {
+            return false;
+        },
+    });
+    app.provide(sessionKey, {
+        async initializeSession() {},
+    });
+
+    store.setLoggedIn(true);
+    store.setLoggedInUser({
+        id: 7,
+        wishlistId: 9,
+        wishlist: [{ product_id: 1, name: 'Bear' }],
+    });
+
+    const wishlist = app.runWithContext(() => useWishlist());
+    await wishlist.loadWishlist({ force: true });
+
+    assert.deepEqual(wishlist.wishlist.value, [
+        { product_id: 1, name: 'Bear' },
+    ]);
+});

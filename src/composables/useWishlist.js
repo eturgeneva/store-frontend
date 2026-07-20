@@ -1,8 +1,8 @@
 import { computed } from 'vue';
-import { store } from '../store.js';
 import { useApi } from '../api.js';
 import { useSession } from '../session.js';
-import { normalizeWishlist, normalizeWishlistItem } from '../utils/wishlist.js';
+import { store } from '../store.js';
+import { normalizeWishlist } from '../utils/wishlist.js';
 
 export function useWishlist() {
     const $api = useApi();
@@ -16,10 +16,16 @@ export function useWishlist() {
     const count = computed(() => wishlist.value.length);
     const isLoading = computed(() => store.wishlistIsLoading);
 
-    function replaceWishlist(response, fallback = []) {
-        const normalized = normalizeWishlist(response);
-        store.loggedInUser.wishlist = normalized ?? fallback;
-        return normalized;
+    function syncWishlist(response, fallback = wishlist.value) {
+        store.loggedInUser.wishlist = normalizeWishlist(response) ?? fallback;
+    }
+
+    function notify(type, message) {
+        store.addToast({ type, message });
+    }
+
+    function isAuthenticated() {
+        return Boolean(store.loggedIn && store.loggedInUser.id);
     }
 
     async function loadWishlist({ force = false } = {}) {
@@ -35,8 +41,8 @@ export function useWishlist() {
 
         store.setWishlistIsLoading(true);
         try {
-            const response = await $api.getWishlist();
-            return replaceWishlist(response) ?? [];
+            syncWishlist(await $api.getWishlist());
+            return wishlist.value;
         } finally {
             store.setWishlistIsLoading(false);
         }
@@ -44,57 +50,32 @@ export function useWishlist() {
 
     async function ensureWishlist() {
         if (store.loggedInUser.wishlistId) {
-            return true;
+            return store.loggedInUser.wishlistId;
         }
 
         const response = await $api.createWishlist(store.loggedInUser.id);
         const wishlistId = response?.wishlistId
             ?? response?.wishlist_id
             ?? response?.id
-            ?? response;
+            ?? response
+            ?? null;
 
-        if (!wishlistId) {
-            return false;
+        if (wishlistId) {
+            store.loggedInUser.wishlistId = wishlistId;
         }
 
-        store.loggedInUser.wishlistId = wishlistId;
-        return true;
+        return wishlistId;
     }
 
     function isInWishlist(productId) {
         return wishlist.value.some(item => item.product_id === productId);
     }
 
-    function applyAddResponse(productId, response) {
-        const normalized = normalizeWishlist(response);
-        if (normalized) {
-            store.loggedInUser.wishlist = normalized;
-            return;
-        }
-
-        if (isInWishlist(productId)) {
-            return;
-        }
-
-        const item = normalizeWishlistItem(response)
-            ?? { product_id: productId };
-        store.loggedInUser.wishlist = [...wishlist.value, item];
-    }
-
-    function applyRemoveResponse(productId, response) {
-        const normalized = normalizeWishlist(response);
-        store.loggedInUser.wishlist = normalized
-            ?? wishlist.value.filter(item => item.product_id !== productId);
-    }
-
     async function addToWishlist(productId) {
         await initializeSession();
 
-        if (!store.loggedIn || !store.loggedInUser.id) {
-            store.addToast({
-                type: 'warning',
-                message: 'Log in to save favorites',
-            });
+        if (!isAuthenticated()) {
+            notify('warning', 'Log in to save favorites');
             return false;
         }
 
@@ -104,43 +85,53 @@ export function useWishlist() {
         }
 
         try {
-            if (!await ensureWishlist()) {
-                return false;
-            }
+            const wishlistId = await ensureWishlist();
+            const response = wishlistId
+                ? await $api.updateWishList(store.loggedInUser.id, productId)
+                : false;
 
-            const response = await $api.updateWishList(store.loggedInUser.id, productId);
             if (!response) {
-                return false;
+                throw new Error('Wishlist request failed');
             }
 
-            applyAddResponse(productId, response);
+            syncWishlist(response, [
+                ...wishlist.value,
+                { product_id: productId },
+            ]);
             await loadWishlist({ force: true });
-            store.addToast({ type: 'success', message: 'Added to wishlist' });
+            notify('success', 'Added to wishlist');
             return true;
-        } catch (err) {
-            console.error(err);
-            store.addToast({ type: 'warning', message: 'Unable to update wishlist' });
+        } catch (error) {
+            console.error(error);
+            notify('warning', 'Unable to update wishlist');
             return false;
         }
     }
 
     async function removeFromWishlist(productId) {
-        if (!store.loggedIn || !store.loggedInUser.id) {
+        if (!isAuthenticated()) {
             return false;
         }
 
         try {
-            const response = await $api.deleteFromWishlist(store.loggedInUser.id, productId);
+            const response = await $api.deleteFromWishlist(
+                store.loggedInUser.id,
+                productId,
+            );
+
             if (!response) {
-                return false;
+                throw new Error('Wishlist request failed');
             }
 
-            applyRemoveResponse(productId, response);
-            store.addToast({ type: 'info', message: 'Removed from wishlist' });
+            syncWishlist(
+                response,
+                wishlist.value.filter(item => item.product_id !== productId),
+            );
+            notify('info', 'Removed from wishlist');
             return true;
-        } catch (err) {
-            console.error(err);
-            store.addToast({ type: 'warning', message: 'Unable to update wishlist' });
+        } catch (error) {
+            console.error(error);
+            notify('warning', 'Unable to update wishlist');
             return false;
         }
     }
