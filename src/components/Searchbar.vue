@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import { useProducts } from '@/products';
 import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
+import Item from './Item.vue';
 
 defineOptions({
     name: 'ProductSearchbar',
@@ -167,7 +168,7 @@ function openProductDetails(productId) {
                             {{ search }}
                         </button>
                     </div>
-                    <div class="searchPopoverSection">
+                    <!-- <div class="searchPopoverSection">
                         <div class="searchPopoverLabel">Popular products</div>
                         <button v-for="product in popularProducts"
                             :key="product.id"
@@ -184,6 +185,38 @@ function openProductDetails(productId) {
                             </div>
                         </button>
                         <div v-if="popularProducts.length === 0" class="searchPopoverEmpty">
+                            Loading suggestions...
+                        </div>
+                    </div> -->
+
+                    <div class="searchPopoverSection">
+                        <div class="searchPopoverLabel">Popular products</div>
+                        <Item
+                            v-for="product in popularProducts"
+                            :key="product.id"
+                            :item="product"
+                            :title="product.name"
+                            :subtitle="product.brand"
+                            :image-src="getProductImageUrl(product)"
+                            :image-alt="product.name"
+                            variant="search"
+                            role="button"
+                            tabindex="0"
+                            @click="openProductDetails(product.id)"
+                            @keydown.enter.prevent="openProductDetails(product.id)"
+                            @keydown.space.prevent="openProductDetails(product.id)"
+                        >
+                            <template #meta>
+                                <span v-if="product.price_cents">
+                                    {{ formatPrice(product.price_cents) }}
+                                </span>
+                            </template>
+                        </Item>
+
+                        <div
+                            v-if="popularProducts.length === 0"
+                            class="searchPopoverEmpty"
+                        >
                             Loading suggestions...
                         </div>
                     </div>
