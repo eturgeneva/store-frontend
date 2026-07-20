@@ -5,6 +5,7 @@ import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
 import { useRoute } from 'vue-router';
 import Item from './Item.vue';
+import PageHero from './PageHero.vue';
 
 const $api = useApi();
 
@@ -48,13 +49,11 @@ async function cancelOrder(orderId) {
 
 <template>
     <main>
-        <section class="hero">
-            <div class="heroInner">
-                <p class="eyebrow">Purchase overview</p>
-                <h1>Order details</h1>
-                <p>Review your purchase, track delivery progress and access all the details of your order whenever you need them</p>
-            </div>
-        </section>
+        <PageHero
+            eyebrow="Purchase overview"
+            title="Order details"
+            description="Review your purchase, track delivery progress and access all the details of your order whenever you need them"
+        />
     
         <div class="orderContainer" v-if="orderDetails">
             <div class="order">

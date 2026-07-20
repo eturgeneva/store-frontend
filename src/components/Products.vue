@@ -3,6 +3,7 @@ import { computed, ref, onBeforeMount } from 'vue';
 import { useProducts } from '@/products';
 import { getProductCategory } from '@/utils/products';
 import ProductCard from './ProductCard.vue';
+import PageHero from './PageHero.vue';
 
 defineOptions({
     name: 'CatalogueProducts',
@@ -47,13 +48,11 @@ const filteredProducts = computed(() => {
 
 <template>
     <main>
-        <section class="hero">
-            <div class="heroInner">
-                <p class="eyebrow">Browse and discover</p>
-                <h1>Products</h1>
-                <p>Find the right toy by category, price or name</p>
-            </div>
-        </section>
+        <PageHero
+            eyebrow="Browse and discover"
+            title="Products"
+            description="Find the right toy by category, price or name"
+        />
         
         <section class="productsPreviews">
             <div class="productFilters">

@@ -9,6 +9,7 @@ import { store } from '../store.js';
 import UserLogin from './UserLogin.vue';
 import UserRegister from './UserRegister.vue';
 import Item from './Item.vue';
+import PageHero from './PageHero.vue';
 
 const $api = useApi();
 const { logout, refreshUser } = useSession();
@@ -94,13 +95,11 @@ async function handleLogin() {
 
 <template>
     <main>
-        <section class="hero">
-            <div class="heroInner">
-                <p class="eyebrow">Welcome back</p>
-                <h1>Your profile</h1>
-                <p>Manage your personal information, orders and account settings in one place</p>
-            </div>
-        </section>
+        <PageHero
+            eyebrow="Welcome back"
+            title="Your profile"
+            description="Manage your personal information, orders and account settings in one place"
+        />
         <div class="userLogin" v-if="!store.loggedIn">
             <UserLogin :onLogin="handleLogin"/>
             <UserRegister />

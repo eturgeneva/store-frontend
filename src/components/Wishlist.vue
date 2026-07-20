@@ -5,6 +5,7 @@ import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
 import Item from './Item.vue';
 import { useCart } from '@/composables/useCart';
+import PageHero from './PageHero.vue';
 
 defineOptions({
     name: 'UserWishlist',
@@ -18,13 +19,11 @@ const { isLoading, removeFromWishlist, wishlist } = useWishlist();
 
 <template>
     <main>
-        <section class="hero">
-            <div class="heroInner">
-                <p class="eyebrow">Saved for later</p>
-                <h1>Your wishlist</h1>
-                <p>Add your favorites to your wishlist and shop them whenever you're ready</p>
-            </div>
-        </section>
+        <PageHero
+            eyebrow="Saved for later"
+            title="Your wishlist"
+            description="Add your favorites to your wishlist and shop them whenever you're ready"
+        />
 
         <div class="wishlistContainer">
             <div v-if="isLoading" class="emptyState">

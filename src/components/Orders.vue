@@ -4,6 +4,7 @@ import { useApi } from '@/api';
 import { formatPrice } from '@/utils/currency';
 import { store } from '../store.js';
 import Item from './Item.vue';
+import PageHero from './PageHero.vue';
 
 const $api = useApi();
 
@@ -34,13 +35,11 @@ async function loadOrders() {
 
 <template>
     <main>
-        <section class="hero">
-            <div class="heroInner">
-                <p class="eyebrow">Purchase history</p>
-                <h1>Your Orders</h1>
-                <p>Browse your order history, check delivery status and access receipts whenever you need them</p>
-            </div>
-        </section>
+        <PageHero
+            eyebrow="Purchase history"
+            title="Your Orders"
+            description="Browse your order history, check delivery status and access receipts whenever you need them"
+        />
 
         <div class="ordersContainer" v-if="store.loggedInUser.orders">
             <Item

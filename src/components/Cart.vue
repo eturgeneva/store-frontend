@@ -5,6 +5,7 @@ import { useApi } from '@/api';
 import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
 import { useCart } from '@/composables/useCart';
+import PageHero from './PageHero.vue';
 
 defineOptions({
     name: 'ShoppingCart',
@@ -77,13 +78,11 @@ async function checkout() {
 
 <template>
     <main>
-        <section class="hero">
-            <div class="heroInner">
-                <p class="eyebrow">Secure checkout</p>
-                <h1>Review your order</h1>
-                <p>This is a portfolio project. No orders will be processed and no items will be shipped</p>
-            </div>
-        </section>
+        <PageHero
+            eyebrow="Secure checkout"
+            title="Review your order"
+            description="This is a portfolio project. No orders will be processed and no items will be shipped"
+        />
 
         <!-- Items -->
         <section class="cartShell">
