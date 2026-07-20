@@ -16,9 +16,6 @@ export function createSession(api) {
     function clearSessionState() {
         store.setLoggedIn(false);
         store.setLoggedInUser({});
-        store.setCartId(null);
-        store.setCart({ products: [] });
-        store.setCartIsLoading(false);
     }
 
     async function loadSession() {

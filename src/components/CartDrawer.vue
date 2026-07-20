@@ -1,8 +1,7 @@
 <script setup>
-import { computed } from 'vue';
 import { store } from '../store.js';
 import Drawer from './Drawer.vue';
-import { useApi } from '@/api';
+import { useCart } from '@/composables/useCart';
 import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
 
@@ -17,28 +16,13 @@ defineProps({
     },
 });
 
-const $api = useApi();
-
-const cartQuantity = computed(() => {
-    return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
-});
-
-const cartSubtotal = computed(() => {
-    return store.cart.products.reduce((acc, item) => {
-        return acc + (item.price_cents * (item.quantity || 1));
-    }, 0);
-});
-
-async function removeItem(productId) {
-    try {
-        const updatedCart = await $api.setQuantityInCart(store.cartId, productId, 0);
-        if (updatedCart) {
-            store.setCart(updatedCart);
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
+const {
+    cart,
+    isLoading,
+    quantity: cartQuantity,
+    removeItem,
+    subtotal: cartSubtotal,
+} = useCart();
 </script>
 
 <template>
@@ -55,14 +39,14 @@ async function removeItem(productId) {
         </template>
 
         <div
-            v-if="store.cartIsLoading"
+            v-if="isLoading"
             class="emptyState drawerEmptyState"
         >
             Cart is loading...
         </div>
 
         <div
-            v-else-if="store.cart.products.length === 0"
+            v-else-if="cart.products.length === 0"
             class="emptyState drawerEmptyState"
         >
             <b>Your cart is empty.</b>
@@ -70,7 +54,7 @@ async function removeItem(productId) {
         </div>
 
         <article
-            v-for="item in store.cart.products"
+            v-for="item in cart.products"
             v-else
             :key="item.product_id"
             class="drawerItem"
@@ -106,7 +90,7 @@ async function removeItem(productId) {
         </article>
 
         <template
-            v-if="store.cart.products.length > 0"
+            v-if="cart.products.length > 0"
             #footer
         >
             <div class="drawerSubtotal">

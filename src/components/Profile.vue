@@ -12,12 +12,12 @@ import Item from './Item.vue';
 
 const $api = useApi();
 const { logout, refreshUser } = useSession();
-const { loadCart } = useCart();
-const { loadWishlist } = useWishlist();
-
-const cartQuantity = computed(() => {
-    return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
+defineOptions({
+    name: 'UserProfile',
 });
+
+const { clearCart, loadCart, quantity: cartQuantity } = useCart();
+const { loadWishlist } = useWishlist();
 
 const wishlistQuantity = computed(() => {
     return store.loggedInUser.wishlist?.length ?? 0;
@@ -78,7 +78,9 @@ async function logoutUser() {
     const succeeded = await logout();
     if (!succeeded) {
         console.log('Failed to log out');
+        return;
     }
+    clearCart();
 }
 
 async function handleLogin() {

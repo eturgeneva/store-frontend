@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { createApp } from 'vue';
+import { apiKey } from '../src/api.js';
+import { useCart } from '../src/composables/useCart.js';
 import { formatPrice } from '../src/utils/currency.js';
 import {
     PRODUCT_ASSET_URL,
@@ -65,7 +68,7 @@ test('session initialization shares one user request', async () => {
     assert.equal(session.user.value.id, 7);
 });
 
-test('session logout clears user and cart state', async () => {
+test('session logout clears authentication state', async () => {
     const api = {
         async getUser() {
             return { id: 8, cartId: null };
@@ -82,6 +85,50 @@ test('session logout clears user and cart state', async () => {
     assert.equal(succeeded, true);
     assert.equal(session.isAuthenticated.value, false);
     assert.deepEqual(session.user.value, {});
-    assert.equal(store.cartId, null);
-    assert.deepEqual(store.cart.products, []);
+});
+
+test('cart domain owns creation, totals, mutations, and clearing', async () => {
+    const api = {
+        async createCart() {
+            return 42;
+        },
+        async updateQuantityInCart(cartId, productId, quantityChange) {
+            assert.equal(cartId, 42);
+            return {
+                products: [{
+                    product_id: productId,
+                    price_cents: 750,
+                    quantity: quantityChange,
+                }],
+            };
+        },
+        async setQuantityInCart(cartId, productId, newQuantity) {
+            assert.equal(cartId, 42);
+            return {
+                products: newQuantity > 0
+                    ? [{ product_id: productId, price_cents: 750, quantity: newQuantity }]
+                    : [],
+            };
+        },
+    };
+    const app = createApp({});
+    app.provide(apiKey, api);
+    const cart = app.runWithContext(() => useCart());
+
+    store.setLoggedInUser({ id: 7 });
+    cart.clearCart();
+
+    assert.equal(await cart.ensureCart(), 42);
+    assert.equal(await cart.incrementQuantity(3, 2), true);
+    assert.equal(cart.quantity.value, 2);
+    assert.equal(cart.subtotal.value, 1500);
+
+    assert.equal(await cart.setQuantity(3, 4), true);
+    assert.equal(cart.quantity.value, 4);
+    assert.equal(await cart.removeItem(3), true);
+    assert.deepEqual(cart.cart.value.products, []);
+
+    cart.clearCart();
+    assert.equal(cart.cartId.value, null);
+    assert.equal(store.loggedInUser.cartId, null);
 });

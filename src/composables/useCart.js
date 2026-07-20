@@ -1,72 +1,151 @@
-import { store } from "@/store";
-import { useApi } from '@/api';
+import { computed } from 'vue';
+import { store } from '../store.js';
+import { useApi } from '../api.js';
 
 export function useCart() {
     const $api = useApi();
 
-    async function loadCart() {
-        const cartId = store.loggedInUser.cartId ?? null;
-        store.setCartId(cartId);
+    const cart = computed(() => store.cart);
+    const cartId = computed(() => store.cartId);
+    const isLoading = computed(() => store.cartIsLoading);
+    const quantity = computed(() => store.cart.products.reduce(
+        (total, item) => total + (item.quantity || 0),
+        0,
+    ));
+    const subtotal = computed(() => store.cart.products.reduce(
+        (total, item) => total + (item.price_cents * (item.quantity || 1)),
+        0,
+    ));
 
-        if (!cartId) {
-            store.setCart({ products: [] });
+    async function loadCart() {
+        const userCartId = store.loggedInUser.cartId ?? null;
+        store.setCartId(userCartId);
+
+        if (!userCartId) {
+            clearCart();
             store.setCartIsLoading(false);
             return;
         }
 
         store.setCartIsLoading(true);
         try {
-            const cart = await $api.getCart(cartId);
-            store.setCart(cart || { products: [] });
+            const loadedCart = await $api.getCart(userCartId);
+            store.setCart(loadedCart || { products: [] });
         } finally {
             store.setCartIsLoading(false);
         }
     }
 
-    async function addToCart(productId, quantity = 1) {
+    async function ensureCart() {
+        if (store.cartId) {
+            return store.cartId;
+        }
+
+        const newCartId = await $api.createCart();
+        if (!newCartId) {
+            return null;
+        }
+
+        store.setCartId(newCartId);
+        store.loggedInUser.cartId = newCartId;
+        store.setCart({ products: [] });
+        return newCartId;
+    }
+
+    async function incrementQuantity(productId, quantityChange = 1) {
+        if (!store.cartId) {
+            return false;
+        }
+
+        const updatedCart = await $api.updateQuantityInCart(
+            store.cartId,
+            productId,
+            quantityChange,
+        );
+
+        if (!updatedCart) {
+            return false;
+        }
+
+        store.setCart(updatedCart);
+        return true;
+    }
+
+    async function setQuantity(productId, newQuantity) {
+        if (!store.cartId || newQuantity < 0) {
+            return false;
+        }
+
+        const updatedCart = await $api.setQuantityInCart(
+            store.cartId,
+            productId,
+            newQuantity,
+        );
+
+        if (!updatedCart) {
+            return false;
+        }
+
+        store.setCart(updatedCart);
+        return true;
+    }
+
+    function removeItem(productId) {
+        return setQuantity(productId, 0);
+    }
+
+    function clearCart() {
+        store.setCartId(null);
+        store.setCart({ products: [] });
+
+        if ('cartId' in store.loggedInUser) {
+            store.loggedInUser.cartId = null;
+        }
+    }
+
+    async function addToCart(productId, addedQuantity = 1) {
         try {
-            // If a new cart needs to be created
-            if (!store.cartId) {
-                const newCartId = await $api.createCart();
+            const id = await ensureCart();
+            const updated = id
+                ? await incrementQuantity(productId, addedQuantity)
+                : false;
 
-                if (!newCartId) {
-                    console.log('Failed to create cart');
-                    return;
-                }
-                store.setCartId(newCartId);
-                const newCart = await $api.getCart(newCartId);
-
-                if (newCart) {
-                    store.setCart(newCart);
-                }
-    
-            }
-            // If a cart already exists, but needs to be updated
-            const cartUpdate = await $api.updateQuantityInCart(store.cartId, productId, quantity);
-            if (cartUpdate) {
-                store.setCart(cartUpdate);
-                store.showMiniCart(productId);
-                store.addToast({
-                    type: 'success',
-                    message: 'Added to cart',
-                });
-            } else {
-                console.log('Failed to update cart');
+            if (!updated) {
                 store.addToast({
                     type: 'warning',
                     message: 'Unable to update cart',
                 });
+                return false;
             }
+
+            store.showMiniCart(productId);
+            store.addToast({
+                type: 'success',
+                message: 'Added to cart',
+            });
+            return true;
         } catch (err) {
             console.error(err);
             store.addToast({
                 type: 'warning',
                 message: 'Unable to update cart',
             });
+            return false;
         }
     }
+
     return {
         addToCart,
+        cart,
+        cartId,
+        clearCart,
+        ensureCart,
+        incrementQuantity,
+        isLoading,
         loadCart,
-    }
+        quantity,
+        removeItem,
+        setQuantity,
+        subtotal,
+    };
 }

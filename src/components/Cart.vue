@@ -1,12 +1,27 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { store } from '../store.js';
+import { ref } from 'vue';
 import Item from './Item.vue';
 import { useApi } from '@/api';
 import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
+import { useCart } from '@/composables/useCart';
+
+defineOptions({
+    name: 'ShoppingCart',
+});
 
 const $api = useApi();
+const {
+    cart,
+    cartId,
+    clearCart,
+    incrementQuantity,
+    isLoading,
+    quantity: cartQuantity,
+    removeItem,
+    setQuantity,
+    subtotal: cartSubtotal,
+} = useCart();
 
 const promoCode = ref('');
 const promoCodeApplied = ref(false);
@@ -27,49 +42,6 @@ const cardNumber = ref('');
 const cardExpiry = ref('');
 const cardSecurityCode = ref('');
 
-const cartQuantity = computed(() => {
-    return store.cart.products.reduce((acc, item) => acc + item.quantity, 0);
-});
-
-const cartSubtotal = computed(() => {
-    return store.cart.products.reduce((acc, item) => {
-        return acc + (item.price_cents * (item.quantity || 1));
-    }, 0);
-});
-
-// For '-' and '+' buttons
-async function updateQuantity(productId, quantityUpdate) {
-    try {
-        const updatedCart = await $api.updateQuantityInCart(store.cartId, productId, quantityUpdate);
-        if (updatedCart) {
-            store.setCart(updatedCart);
-        } else {
-            console.log('Unable to update product quantity in cart');
-        }
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-// For input field and delete button
-async function setQuantity(productId, quantity) {
-    if (quantity < 0 ) {
-        console.log('The amount is too low');
-        return;
-    }
-
-    try {
-        const updatedCart = await $api.setQuantityInCart(store.cartId, productId, quantity);
-        if (updatedCart) {
-            store.setCart(updatedCart);
-        } else {
-            console.log('Unable to set quantity on input');
-        }
-    } catch (err) {
-        console.error(err);
-    }
-}
-
 // Promo code (unfinished)
 function applyPromoCode() {
     promoCode.value = '';
@@ -83,16 +55,15 @@ function removePromoCode() {
 
 // Checkout
 async function checkout() {
-    if (!store.cartId || !store.cart.products) {
+    if (!cartId.value || !cart.value.products.length) {
         console.log('Unable to place order, your cart is empty');
         return;
     }
 
     try {
-        const checkout = await $api.placeOrder(store.cart.products);
+        const checkout = await $api.placeOrder(cart.value.products);
         if (checkout) {
-            store.setCartId(null);
-            store.setCart({ products: []});
+            clearCart();
             orderPlaced.value = true;
         } else {
             console.log('Failed to place an order');
@@ -126,14 +97,14 @@ async function checkout() {
                     </div>
 
                     <div
-                        v-if="store.cartIsLoading"
+                        v-if="isLoading"
                         class="checkoutEmpty"
                     >
                         Cart is loading...
                     </div>
 
                     <div
-                        v-else-if="store.cart.products.length === 0"
+                        v-else-if="cart.products.length === 0"
                         class="checkoutEmpty"
                     >
                         <b>Your cart is empty.</b>
@@ -151,7 +122,7 @@ async function checkout() {
                         class="cartItems"
                     >
                         <Item
-                            v-for="item in store.cart.products"
+                            v-for="item in cart.products"
                             :key="item.product_id"
                             :item="item"
                             :title="item.name"
@@ -168,7 +139,7 @@ async function checkout() {
                                     <button
                                         type="button"
                                         :aria-label="`Decrease quantity for ${item.name}`"
-                                        @click="updateQuantity(item.product_id, -1)"
+                                            @click="incrementQuantity(item.product_id, -1)"
                                     >
                                         -
                                     </button>
@@ -185,7 +156,7 @@ async function checkout() {
                                     <button
                                         type="button"
                                         :aria-label="`Increase quantity for ${item.name}`"
-                                        @click="updateQuantity(item.product_id, 1)"
+                                            @click="incrementQuantity(item.product_id, 1)"
                                     >
                                         +
                                     </button>
@@ -194,7 +165,7 @@ async function checkout() {
                                         type="button"
                                         class="removeButton"
                                         :aria-label="`Remove ${item.name}`"
-                                        @click="setQuantity(item.product_id, 0)"
+                                        @click="removeItem(item.product_id)"
                                     >
                                         X
                                     </button>
@@ -205,7 +176,7 @@ async function checkout() {
                 </div>
 
                 <!-- Contact form -->
-                <div class="checkoutCard" v-if="store.cart.products.length > 0">
+                <div class="checkoutCard" v-if="cart.products.length > 0">
                     <h2>Contact</h2>
                     <div class="checkoutContactForm">
                         <label for="email" class="formLabel">
@@ -231,7 +202,7 @@ async function checkout() {
                 </div>
 
                 <!-- Shipping info -->
-                <div class="checkoutCard" v-if="store.cart.products.length > 0">
+                <div class="checkoutCard" v-if="cart.products.length > 0">
                     <h2>Shipping details</h2>
                     <div class="checkoutForm">
                         <!-- First name -->
@@ -326,7 +297,7 @@ async function checkout() {
                 </div>
 
                 <!-- Payment info -->
-                <div class="checkoutCard" v-if="store.cart.products.length > 0">
+                <div class="checkoutCard" v-if="cart.products.length > 0">
                     <h2>Payment method</h2>
                     <div class="paymentOptions" aria-label="payment options">
                         <label>
@@ -409,7 +380,7 @@ async function checkout() {
                 
                 <!-- Checkout buttons -->
                 <div
-                    v-if="store.cart.products.length > 0"
+                    v-if="cart.products.length > 0"
                     class="cartActions"
                 >
                     <router-link

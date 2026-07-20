@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useCart } from '@/composables/useCart';
 import { store } from '../store.js';
 import CartDrawer from './CartDrawer.vue';
 
@@ -9,12 +10,9 @@ defineOptions({
 });
 
 const route = useRoute();
+const { cartId, quantity: cartQuantity } = useCart();
 const isProfilePopoverOpen = ref(false);
 let miniCartTimer = null;
-
-const cartQuantity = computed(() => {
-    return store.cart.products.reduce((acc, { quantity }) => acc + quantity, 0);
-});
 
 const isCartPage = computed(() => route.path === '/cart');
 
@@ -149,7 +147,7 @@ function restartMiniCartTimer() {
                             <span class="material-symbols-outlined">
                                 shopping_bag
                             </span>
-                            <span v-if="store.cartId && cartQuantity"
+                            <span v-if="cartId && cartQuantity"
                                 class="quantityPreview">
                                 {{ cartQuantity }}
                             </span>
