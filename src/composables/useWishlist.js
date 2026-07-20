@@ -114,6 +114,7 @@ export function useWishlist() {
             }
 
             applyAddResponse(productId, response);
+            await loadWishlist({ force: true });
             store.addToast({ type: 'success', message: 'Added to wishlist' });
             return true;
         } catch (err) {

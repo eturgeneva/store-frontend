@@ -191,12 +191,17 @@ test('cart domain owns creation, totals, mutations, and clearing', async () => {
 });
 
 test('wishlist domain loads, normalizes, adds, and removes items', async () => {
+    let products = [{ productId: 1, name: 'Bear' }];
     const api = {
         async getWishlist() {
-            return { products: [{ productId: 1, name: 'Bear' }] };
+            return { products };
         },
         async updateWishList() {
-            return { wishlist: [{ id: 2, name: 'Frog' }] };
+            products = [
+                ...products,
+                { productId: 2, name: 'Frog' },
+            ];
+            return { wishlist: [{ productId: 1 }, { productId: 2 }] };
         },
         async deleteFromWishlist() {
             return { updatedWishlist: [] };
@@ -218,7 +223,10 @@ test('wishlist domain loads, normalizes, adds, and removes items', async () => {
     ]);
 
     assert.equal(await wishlist.addToWishlist(2), true);
-    assert.equal(wishlist.wishlist.value[0].product_id, 2);
+    assert.deepEqual(wishlist.wishlist.value, [
+        { productId: 1, product_id: 1, name: 'Bear' },
+        { productId: 2, product_id: 2, name: 'Frog' },
+    ]);
     assert.equal(await wishlist.removeFromWishlist(2), true);
     assert.deepEqual(wishlist.wishlist.value, []);
 });
