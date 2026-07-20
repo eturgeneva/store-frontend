@@ -1896,17 +1896,20 @@ button:hover {
 }
 
 .searchResultsPage {
-    /* width: min(90%, 72rem); */
-    /* margin: 6rem auto 0; */
     margin: 0 auto;
     padding: 3rem 0;
+}
+
+.searchResultsHeader {
+  margin: 0 auto 2rem;
+  text-align: center;
 }
 
 /* Catalogue presentation */
 
 .productsPreviewsHeader {
     text-align: center;
-    margin-bottom: 2.5rem;
+    margin: 2.5rem 0;
 }
 
 .productsPreviewsHeader h2 {

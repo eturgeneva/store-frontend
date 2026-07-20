@@ -36,8 +36,8 @@ watch(() => route.query.q, (query) => {
         />
         
         <div class="searchResultsPage">
-            <div class="productsPreviewsHeader">
-                <h2>Search Results</h2>
+            <div class="searchResultsHeader">
+                <!-- <h2>Search Results</h2> -->
                 <p v-if="searchQuery">Results for "{{ searchQuery }}"</p>
                 <p v-else>Type a product name in the search bar</p>
             </div>
