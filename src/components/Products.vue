@@ -1,32 +1,24 @@
 <script setup>
 import { computed, ref, onBeforeMount } from 'vue';
-import { useApi } from '@/api';
 import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
+import { useProducts } from '@/products';
 import { formatPrice } from '@/utils/currency';
 import { getProductCategory, getProductImageUrl } from '@/utils/products';
 import ProductBadges from './ProductBadges.vue';
 
-const $api = useApi();
+defineOptions({
+    name: 'CatalogueProducts',
+});
 
 const { addToCart } = useCart();
-const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
-const products = ref([]);
+const { isInWishlist, toggleWishlist } = useWishlist();
+const { loadProducts, products } = useProducts();
 const selectedCategory = ref('All');
 const selectedSort = ref('featured');
 
 onBeforeMount(async () => {
-    try {
-        const fetchedProducts = await $api.getAllProducts();
-        if (fetchedProducts) {
-            products.value = fetchedProducts;
-            await loadWishlist();
-        } else {
-            console.log('Failed to fetch products');
-        }
-    } catch (err) {
-        console.error(err);
-    }
+    await loadProducts();
 });
 
 const categories = computed(() => {

@@ -1,41 +1,26 @@
 <script setup>
 import { computed, onBeforeMount, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useApi } from '@/api';
+import { useProducts } from '@/products';
 import { formatPrice } from '@/utils/currency';
 import { getProductImageUrl } from '@/utils/products';
 
-const $api = useApi();
-
-const searchInput = ref('');
-const products = ref([]);
-const isPopoverOpen = ref(false);
-const router = useRouter();
-
-const previewMatches = computed(() => {
-    const query = searchInput.value.trim().toLowerCase();
-
-    if (!query) {
-        return [];
-    }
-
-    return products.value.filter((product) => {
-        const name = product.name?.toLowerCase() || '';
-        const brand = product.brand?.toLowerCase() || '';
-
-        return name.includes(query) || brand.includes(query);
-    }).slice(0, 5);
+defineOptions({
+    name: 'ProductSearchbar',
 });
 
+const searchInput = ref('');
+const isPopoverOpen = ref(false);
+const router = useRouter();
+const { loadProducts, searchProducts } = useProducts();
+
+const previewMatches = computed(() => searchProducts(
+    searchInput.value,
+    { limit: 5 },
+));
+
 onBeforeMount(async () => {
-    try {
-        const fetchedProducts = await $api.getAllProducts();
-        if (fetchedProducts) {
-            products.value = fetchedProducts;
-        }
-    } catch (err) {
-        console.error(err);
-    }
+    await loadProducts();
 });
 
 function showSearchResults() {

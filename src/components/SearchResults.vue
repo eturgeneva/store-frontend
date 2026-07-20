@@ -1,35 +1,23 @@
 <script setup>
 import { computed, onBeforeMount, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useApi } from '@/api';
 import { useCart } from '@/composables/useCart';
+import { useProducts } from '@/products';
 import { formatPrice } from '@/utils/currency';
 import { getProductCategory, getProductImageUrl } from '@/utils/products';
 
-const $api = useApi();
-
 const route = useRoute();
 const { addToCart } = useCart();
+const {
+    error,
+    isLoading,
+    loadProducts,
+    searchProducts,
+} = useProducts();
 
-const products = ref([]);
-const isLoading = ref(false);
-const errorMessage = ref('');
 const searchQuery = ref((route.query.q || '').toString());
 
-const searchResults = computed(() => {
-    const normalizedQuery = searchQuery.value.trim().toLowerCase();
-
-    if (!normalizedQuery) {
-        return [];
-    }
-
-    return products.value.filter((product) => {
-        const name = product.name?.toLowerCase() || '';
-        const brand = product.brand?.toLowerCase() || '';
-
-        return name.includes(normalizedQuery) || brand.includes(normalizedQuery);
-    });
-});
+const searchResults = computed(() => searchProducts(searchQuery.value));
 
 onBeforeMount(async () => {
     await loadProducts();
@@ -38,25 +26,6 @@ onBeforeMount(async () => {
 watch(() => route.query.q, (query) => {
     searchQuery.value = (query || '').toString();
 });
-
-async function loadProducts() {
-    isLoading.value = true;
-    errorMessage.value = '';
-
-    try {
-        const fetchedProducts = await $api.getAllProducts();
-        if (fetchedProducts) {
-            products.value = fetchedProducts;
-        } else {
-            errorMessage.value = 'Unable to load search results';
-        }
-    } catch (err) {
-        console.error(err);
-        errorMessage.value = 'Unable to load search results';
-    } finally {
-        isLoading.value = false;
-    }
-}
 
 </script>
 
@@ -70,7 +39,7 @@ async function loadProducts() {
             </div>
 
             <div v-if="isLoading" class="emptyState">Searching...</div>
-            <div v-else-if="errorMessage" class="emptyState">{{ errorMessage }}</div>
+            <div v-else-if="error" class="emptyState">Unable to load search results</div>
             <div v-else-if="searchQuery && searchResults.length === 0" class="emptyState">
                 No products found for "{{ searchQuery }}"
             </div>

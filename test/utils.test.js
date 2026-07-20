@@ -12,6 +12,7 @@ import {
     getProductImageUrl,
 } from '../src/utils/products.js';
 import { createSession, sessionKey } from '../src/session.js';
+import { createProducts } from '../src/products.js';
 import { store } from '../src/store.js';
 import { normalizeWishlist } from '../src/utils/wishlist.js';
 
@@ -58,6 +59,40 @@ test('normalizeWishlist creates one canonical product_id shape', () => {
         { productId: 1, product_id: 1, name: 'Bear' },
         { id: 2, product_id: 2, name: 'Frog' },
     ]);
+});
+
+test('product repository shares loading and provides consistent search', async () => {
+    let requestCount = 0;
+    const api = {
+        async getAllProducts() {
+            requestCount += 1;
+            return [
+                { id: 1, name: 'Brown Bear', brand: 'Woodland' },
+                { id: 2, name: 'Green Frog', brand: 'Pond Friends' },
+                { id: 3, name: 'Fox', brand: 'Woodland' },
+            ];
+        },
+    };
+    const repository = createProducts(api);
+
+    await Promise.all([
+        repository.loadProducts(),
+        repository.loadProducts(),
+        repository.loadProducts(),
+    ]);
+    await repository.loadProducts();
+
+    assert.equal(requestCount, 1);
+    assert.equal(repository.products.value.length, 3);
+    assert.deepEqual(
+        repository.searchProducts('woodland').map(product => product.id),
+        [1, 3],
+    );
+    assert.deepEqual(
+        repository.searchProducts('  r ', { limit: 2 }).map(product => product.id),
+        [1, 2],
+    );
+    assert.deepEqual(repository.searchProducts(''), []);
 });
 
 test('session initialization shares one user request', async () => {

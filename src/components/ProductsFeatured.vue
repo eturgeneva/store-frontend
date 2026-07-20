@@ -1,36 +1,23 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
-import { useApi } from '@/api';
+import { computed, ref, onBeforeMount } from 'vue';
 import { useCart } from '@/composables/useCart';
 import { useWishlist } from '@/composables/useWishlist';
+import { useProducts } from '@/products';
 import { formatPrice } from '@/utils/currency';
 import { getProductCategory, getProductImageUrl } from '@/utils/products';
 import ProductBadges from './ProductBadges.vue';
 
-const $api = useApi();
-
 const { addToCart } = useCart();
-const { isInWishlist, loadWishlist, toggleWishlist } = useWishlist();
-const products = ref([]);
+const { isInWishlist, toggleWishlist } = useWishlist();
+const { loadProducts, products } = useProducts();
+const featuredProducts = computed(() => products.value.slice(0, 8));
 const galleryContainer = ref(null);
 
 const showLeftArrow = ref(false);
 const showRightArrow = ref(true);
 
 onBeforeMount(async () => {
-    try {
-        const fetchedProducts = await $api.getAllProducts();
-        if (fetchedProducts) {
-            // Display first 8 products
-            products.value = fetchedProducts.slice(0, 8);
-            await loadWishlist();
-            console.log('Products Previews', products.value);
-        } else {
-            console.log('Failed to fetch products');
-        }
-    } catch (err) {
-        console.error(err);
-    }
+    await loadProducts();
 });
 
 function scrollLeft() {
@@ -73,7 +60,7 @@ function handleScroll() {
             <div ref="galleryContainer"
                 class="galleryContainer"
                 @scroll="handleScroll">
-                <div v-for="product in products"
+                <div v-for="product in featuredProducts"
                     :key="product.id"
                     class="productPreview reveal visible">
 
