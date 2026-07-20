@@ -1,3 +1,24 @@
+/*
+ * TABLE OF CONTENTS
+ *  1. Foundations: reset and design tokens
+ *  2. Base elements and application shell
+ *  3. Site header, navigation, search, drawers
+ *  4. Promotional content
+ *  5. Account, authentication, forms
+ *  6. Shared controls and UI states
+ *  7. Product catalogue and product details
+ *  8. Orders and reusable items
+ *  9. Page hero
+ * 10. Cart and checkout
+ * 11. Wishlist
+ * 12. Missing content
+ * 13. Responsive overrides
+ */
+
+/* ==========================================================================
+   1. Foundations: reset and design tokens
+   ========================================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,6 +26,7 @@
 }
 
 :root {
+  /* Core palette */
   --ink: #171914;
   --muted: #696b63;
   --paper: #f7f7f3;
@@ -12,6 +34,8 @@
   --forest: #24382b;
   --line: #d9dbd3;
   --purple: #8b5cf6;
+
+  /* Surfaces and text */
   --surface: #ffffff;
   --surface-soft: #f9f6ff;
   --surface-input: #fafafa;
@@ -20,12 +44,16 @@
   --text-muted: #6b7280;
   --text-soft: #4b5563;
   --text-accent: #4b3b74;
+
+  /* Accents */
   --accent-strong: #6d28d9;
   --accent-border: rgba(139, 92, 246, 0.18);
   --accent-border-soft: rgba(139, 92, 246, 0.14);
   --accent-border-subtle: rgba(139, 92, 246, 0.12);
   --accent-hover: rgba(199, 179, 246, 0.2);
   --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+
+  /* Shape, elevation, and motion */
   --radius-xs: 6px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -35,10 +63,16 @@
   --shadow-card-soft: 0 4px 8px rgba(30, 20, 60, 0.08);
   --focus-ring: 0 0 0 3px rgba(139, 92, 246, 0.1);
   --transition-standard: all 0.3s ease;
+
+  /* Layout and typography */
   --shell: min(92vw, 1380px);
   --display: "Michroma", sans-serif;
   --body: "DM Sans", Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
+
+/* ==========================================================================
+   2. Base elements and application shell
+   ========================================================================== */
 
 #app {
   margin: 0 auto;
@@ -66,6 +100,10 @@ nav a {
   color: inherit;
   height: auto;
 }
+
+/* ==========================================================================
+   3. Site header, navigation, search, drawers
+   ========================================================================== */
 
 header {
   position: sticky;
@@ -600,7 +638,9 @@ a,
   background-color: var(--accent-hover);
 }
 
-/* Promo */
+/* ==========================================================================
+   4. Promotional content
+   ========================================================================== */
 
 .promoSection {
   position: relative;
@@ -690,6 +730,7 @@ a,
   text-transform: uppercase;
 }
 
+/* Promo responsive adjustments */
 @media (max-width: 760px) {
   .promoSection {
     width: 100%;
@@ -714,9 +755,13 @@ a,
   }
 }
 
-/* User area */
+/* ==========================================================================
+   5. Account, authentication, forms
+   ========================================================================== */
 
-form, .userLogin {
+.loginForm,
+.registerForm,
+.userLogin {
     display: flex;
     padding: 1rem;
 }
@@ -1054,7 +1099,7 @@ input:focus,
     animation: success-bounce 0.8s ease-out;
 }
 
-/* Successful registration animation */
+/* Registration success animation */
 @keyframes success-bounce {
     0% {
         transform: scale(0.3) translateY(30px);
@@ -1131,7 +1176,7 @@ input:focus,
     }
 }
 
-/* Confetti */
+/* Registration confetti */
 .confettiContainer {
     position: absolute;
     top: 0;
@@ -1211,7 +1256,7 @@ input:focus,
     }
 }
 
-/* Login and register buttons */
+/* Authentication actions */
 .formActions {
     display: flex;
     flex-direction: column;
@@ -1287,7 +1332,9 @@ input:focus,
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Buttons */
+/* ==========================================================================
+   6. Shared controls and UI states
+   ========================================================================== */
 
 .buttonContainer {
     display: flex;
@@ -1395,7 +1442,56 @@ button:hover {
   transform: translateY(-1px) scale(1.04);
 }
 
-/* Gallery for featured products */
+/* Empty and loading states */
+.emptyState {
+    padding: 2rem;
+    color: var(--text-muted);
+    background: var(--surface);
+    text-align: center;
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+  display: inline-block;
+  font-family: 'Material Symbols Outlined';
+  font-size: 24px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 200,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.material-symbols-outlined:hover {
+    color: inherit;
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.material-symbols-outlined.outlined {
+    font-variation-settings: 'FILL' 0;
+}
+
+.material-symbols-outlined.filled {
+    font-variation-settings: 'FILL' 1;
+}
+
+/* ==========================================================================
+   7. Product catalogue and product details
+   ========================================================================== */
+
+/* Featured-product gallery */
 .galleryWrapper {
     position: relative;
     max-width: 1200px;
@@ -1421,7 +1517,7 @@ button:hover {
     display: none; /* Chrome, Safari, Opera */
 }
 
-/* Scroll Arrows */
+/* Gallery controls */
 .scrollArrow {
     position: absolute;
     display: flex;
@@ -1463,7 +1559,7 @@ button:hover {
     color: currentColor;
 }
 
-/* Product preview cards */
+/* Product cards */
 .productPreview {
     flex: 0 0 260px;
     background: transparent;
@@ -1595,7 +1691,7 @@ button:hover {
     transform: none;
 }
 
-/* Products */
+/* Catalogue and search results */
 
 .productsContainer {
     display: grid;
@@ -1671,7 +1767,7 @@ button:hover {
     padding: 3rem 0;
 }
 
-/* Same as products previews, but without gallery and arrows */
+/* Catalogue presentation */
 
 .productsPreviewsHeader {
     text-align: center;
@@ -1689,6 +1785,8 @@ button:hover {
     color: var(--text-muted);
     font-weight: 400;
 }
+
+/* Product-detail page */
 
 .product {
   display: grid;
@@ -1986,16 +2084,16 @@ button:hover {
   width: 6rem;
 }
 
-/* Orders */
+/* ==========================================================================
+   8. Orders and reusable items
+   ========================================================================== */
+
+/* Order lists and details */
 .ordersContainer {
   display: grid;
   gap: 1rem;
   width: min(90%, 56rem);
   margin: 0 auto;
-}
-
-ul {
-  list-style-type: none;
 }
 
 .orderPreview {
@@ -2031,7 +2129,33 @@ ul {
   margin: 0 0 1rem;
   width: 100%;
 }
-/* Item reusable */
+
+/* Order cancellation action */
+.cancelOrderButton {
+  display: inline-flex;
+  width: auto;
+  min-height: 46px;
+  margin: 0;
+  padding: 0.8rem 1.35rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cancelOrderButton:hover {
+  color: var(--white);
+  background: var(--ink);
+  box-shadow: none;
+}
+
+/* Reusable item rows */
 
 .orderItem, .item {
   display: grid;
@@ -2201,19 +2325,18 @@ ul {
   font-weight: 400;
 }
 
-/* User cart */
+/* ==========================================================================
+   9. Page hero
+   ========================================================================== */
+
 .hero {
   padding: clamp(3rem, 6vw, 5.4rem) 0 clamp(1.4rem, 3vw, 2.8rem);
   background: linear-gradient(180deg, var(--surface) 0%, var(--paper) 100%);
 }
 
-.heroInner,
-.cartShell {
+.heroInner {
   width: var(--shell);
   margin-inline: auto;
-}
-
-.heroInner {
   max-width: 780px;
 }
 
@@ -2231,10 +2354,16 @@ ul {
   font-size: 1.08rem;
 }
 
+/* ==========================================================================
+   10. Cart and checkout
+   ========================================================================== */
+
 .cartShell {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(360px, 470px);
   gap: clamp(2rem, 5vw, 5rem);
+  width: var(--shell);
+  margin-inline: auto;
   padding-bottom: clamp(5rem, 10vw, 10rem);
 }
 
@@ -2419,6 +2548,7 @@ ul {
   box-shadow: none;
 }
 
+/* Checkout forms */
 .checkoutContactForm {
   display: flex;
   flex-direction: column;
@@ -2456,6 +2586,8 @@ input#newsletter {
   gap: 0.8rem;
   margin-top: 1rem;
 }
+
+/* Delivery and payment choices */
 
 .deliveryOptions label, .paymentOptions label {
   display: grid;
@@ -2496,6 +2628,8 @@ input#newsletter {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
+/* Checkout actions */
 
 .checkoutButton:hover {
   background: var(--ink);
@@ -2558,6 +2692,8 @@ input#newsletter {
   align-self: start;
 }
 
+/* Order summary and promo code */
+
 .orderSummarySticky {
   position: sticky;
   top: 112px;
@@ -2567,31 +2703,6 @@ input#newsletter {
 .orderSummaryHeader {
   padding-bottom: 1.2rem;
   border-bottom: 1px solid var(--line);
-}
-
-/* Button inside user order details */
-.cancelOrderButton {
-  display: inline-flex;
-  padding: 0.8rem 1.35rem;
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: none;
-  min-height: 46px;
-  width: auto;
-  border: 1px solid var(--accent-border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-.cancelOrderButton:hover {
-  color: var(--white);
-  background: var(--ink);
-  box-shadow: none;
 }
 
 .summaryLines {
@@ -2696,14 +2807,10 @@ input#newsletter {
   font-size: 0.78rem;
 }
 
-.emptyState {
-    padding: 2rem;
-    text-align: center;
-    color: var(--text-muted);
-    background: var(--surface);
-}
+/* ==========================================================================
+   11. Wishlist
+   ========================================================================== */
 
-/* Wishlist */
 .wishlistContainer {
     width: min(90%, 58rem);
     margin: 0 auto;
@@ -2719,7 +2826,10 @@ input#newsletter {
     padding: 1rem;
 }
 
-/* Missing Content*/
+/* ==========================================================================
+   12. Missing content
+   ========================================================================== */
+
 .missingPage {
     margin-top: 7rem;
     text-align: center;
@@ -2736,48 +2846,17 @@ input#newsletter {
     margin: 2rem;
 }
 
-/* Google Fonts Icons */
-.material-symbols-outlined {
-  font-family: 'Material Symbols Outlined';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 200,
-  'GRAD' 0,
-  'opsz' 24
-}
-
-.material-symbols-outlined:hover {
-    font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-    color: inherit;
-}
-
-.material-symbols-outlined.outlined {
-    font-variation-settings: 'FILL' 0;
-}
-
-.material-symbols-outlined.filled {
-    font-variation-settings: 'FILL' 1;
-}
+/* ==========================================================================
+   13. Responsive overrides
+   ========================================================================== */
 
 @media (max-width: 760px) {
+  /* Application shell */
   main {
     margin-top: 0;
   }
 
+  /* Site header and navigation */
   .header {
     height: 68px;
     grid-template-columns: 1fr auto;
@@ -2828,12 +2907,10 @@ input#newsletter {
     min-height: 38px;
   }
 
-  .cartShell,
-  .userProfile {
-    grid-template-columns: 1fr;
-  }
-
-  form, .userLogin {
+  /* Authentication and account */
+  .loginForm,
+  .registerForm,
+  .userLogin {
     flex-direction: column;
     padding: 1rem;
   }
@@ -2843,60 +2920,19 @@ input#newsletter {
     max-width: 25rem;
   }
 
-  .sortControl {
-    min-width: 0;
-  }
-
-  .product {
-    grid-template-columns: 1fr;
-    width: 100%;
-    padding: 1rem 0 4rem;
-  }
-
-  .productThumbnails,
-  .productBuyPanel {
-    width: 90%;
-    margin-inline: auto;
-  }
-
-  .productBuyPanel {
-    position: static;
-    padding-top: 1.5rem;
-  }
-
-  .productInfoTitle {
-    align-items: end;
-  }
-
-  .purchaseRow {
-    grid-template-columns: 105px 1fr;
-  }
-
-  .hero {
-    padding-top: 3rem;
-  }
-
-  .cartShell,
   .userProfile {
     grid-template-columns: 1fr;
   }
 
-  .orderSummary {
-    order: -1;
-  }
-
-  .orderSummarySticky,
   .profileNav {
     position: static;
-  }
-
-  .checkoutCard,
-  .profileCard,
-  .profileNav {
     padding: 1.25rem;
   }
 
-  .checkoutCardHeading,
+  .profileCard {
+    padding: 1.25rem;
+  }
+
   .profileCardHeading {
     display: block;
   }
@@ -2930,6 +2966,65 @@ input#newsletter {
     grid-column: 2;
   }
 
+  .userDetail {
+    flex-direction: column;
+  }
+
+  /* Catalogue and product details */
+  .sortControl {
+    min-width: 0;
+  }
+
+  .product {
+    grid-template-columns: 1fr;
+    width: 100%;
+    padding: 1rem 0 4rem;
+  }
+
+  .productThumbnails,
+  .productBuyPanel {
+    width: 90%;
+    margin-inline: auto;
+  }
+
+  .productBuyPanel {
+    position: static;
+    padding-top: 1.5rem;
+  }
+
+  .productInfoTitle {
+    align-items: end;
+  }
+
+  .purchaseRow {
+    grid-template-columns: 105px 1fr;
+  }
+
+  .hero {
+    padding-top: 3rem;
+  }
+
+  /* Cart and checkout */
+  .cartShell {
+    grid-template-columns: 1fr;
+  }
+
+  .orderSummary {
+    order: -1;
+  }
+
+  .orderSummarySticky {
+    position: static;
+  }
+
+  .checkoutCard {
+    padding: 1.25rem;
+  }
+
+  .checkoutCardHeading {
+    display: block;
+  }
+
   .cartActions {
     flex-direction: column-reverse;
   }
@@ -2953,6 +3048,7 @@ input#newsletter {
     margin-top: -0.8rem;
   }
 
+  /* Reusable item rows */
   .item {
     grid-template-columns: 4rem 1fr;
     flex-wrap: wrap;
@@ -2968,7 +3064,4 @@ input#newsletter {
     margin-left: 0;
   }
 
-  .userDetail {
-    flex-direction: column;
-  }
 }
